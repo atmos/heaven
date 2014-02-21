@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/octokit/octokit.rb.git
+  revision: 2afe6c9e45cef980ddbc5212ccb127fd269a29f4
+  ref: 2afe6c9
+  specs:
+    octokit (3.0.0.pre)
+      sawyer (~> 0.5.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,8 +83,6 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.8.4)
     multipart-post (2.0.0)
-    octokit (2.7.1)
-      sawyer (~> 0.5.2)
     pg (0.17.1)
     polyglot (0.3.4)
     pry (0.9.12.6)
@@ -192,6 +198,7 @@ DEPENDENCIES
   foreman
   heroku-api
   meta_request
+  octokit!
   pg
   pry
   rails (~> 4.0.0)

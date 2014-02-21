@@ -31,5 +31,6 @@ end
 
 gem "resque"
 gem "unicorn"
+gem "octokit", :github => "octokit/octokit.rb", :ref => "2afe6c9"
 gem "yajl-ruby"
 gem "warden-github-rails"
