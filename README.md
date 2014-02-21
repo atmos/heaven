@@ -1,6 +1,4 @@
-# GitHub -> Heroku
-
-[![Build Status](https://travis-ci.org/tampopo/heroku-deploy.png?branch=master)](https://travis-ci.org/tampopo/heroku-deploy)
+# GitHub -> Heroku [![Build Status](https://travis-ci.org/tampopo/heroku-deploy.png?branch=master)](https://travis-ci.org/tampopo/heroku-deploy)
 
 Receives deployment events from GitHub, ships to heroku.
 
