@@ -7,14 +7,14 @@ describe Output do
     params = {
       :files => {:clone => {:content => "Deployment 42 pending" } },
       :public => false,
-      :description => "HerokuDeploy number 42 for atmos-oiran"
+      :description => "HerokuDeploy number 42 for heroku-deploy"
     }
 
     stub_request(:post, "https://api.github.com/gists").
       with(:body => params.to_json).
       to_return(:status => 200, :body => gist, :headers => {})
 
-    output = Output.new(42, "atmos-oiran", "nfi")
+    output = Output.new("heroku-deploy", 42, SecureRandom.uuid, "<secret>")
     expect { output.create }.to_not raise_error
 
     params = {

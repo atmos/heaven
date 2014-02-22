@@ -1,7 +1,8 @@
 class Output
-  attr_accessor :name, :number, :token
+  attr_accessor :guid, :name, :number, :token
 
-  def initialize(number, name, token)
+  def initialize(name, number, guid, token)
+    @guid   = guid
     @name   = name
     @token  = token
     @number = number

@@ -1,11 +1,12 @@
 class Receiver
   @queue = :events
 
-  attr_accessor :event, :guid, :payload
+  attr_accessor :event, :guid, :payload, :token
 
   def initialize(event, guid, payload)
     @guid    = guid
     @event   = event
+    @token   = ENV['GITHUB_DEPLOY_TOKEN'] || '<unknown>'
     @payload = payload
   end
 
