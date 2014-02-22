@@ -1,12 +1,13 @@
 ruby '2.0.0'
 source 'https://rubygems.org'
 
-gem 'dpl',      '1.5.8.travis.336.1'
-gem 'rails',    '~>4.0.0'
+gem "dpl",      "1.5.7"
+gem "rails",    "~>4.0.0"
 gem "resque"
 gem "unicorn"
 gem "yajl-ruby"
-gem 'heroku-api'
+gem "heroku-api"
+gem "rendezvous"
 gem "warden-github-rails"
 
 # Pre-release for the deployments API
