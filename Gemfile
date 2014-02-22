@@ -1,10 +1,16 @@
 ruby '2.0.0'
 source 'https://rubygems.org'
 
+gem 'dpl',      '1.5.8.travis.336.1'
+gem 'rails',    '~>4.0.0'
+gem "resque"
+gem "unicorn"
+gem "yajl-ruby"
 gem 'heroku-api'
-gem 'rails', '~>4.0.0'
+gem "warden-github-rails"
 
-gem 'dpl', '1.5.8.travis.336.1'
+# Pre-release for the deployments API
+gem "octokit", :github => "octokit/octokit.rb", :ref => "2afe6c9"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -30,9 +36,3 @@ group :staging, :production do
   gem "pg"
   gem "rails_12factor"
 end
-
-gem "resque"
-gem "unicorn"
-gem "octokit", :github => "octokit/octokit.rb", :ref => "2afe6c9"
-gem "yajl-ruby"
-gem "warden-github-rails"
