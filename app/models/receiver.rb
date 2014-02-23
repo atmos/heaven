@@ -35,7 +35,7 @@ class Receiver
   end
 
   def custom_payload
-    data['payload']
+    @custom_payload ||= JSON.parse(data['payload'])
   end
 
   def app_name
