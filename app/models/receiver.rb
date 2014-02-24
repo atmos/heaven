@@ -38,8 +38,12 @@ class Receiver
     @custom_payload ||= JSON.parse(data['payload'])
   end
 
+  def custom_payload_config
+    custom_payload && custom_payload['config']
+  end
+
   def app_name
-    custom_payload && custom_payload['heroku_name']
+    custom_payload_config && custom_payload_config['heroku_name']
   end
 
   def default_branch
