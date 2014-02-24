@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HerokuDeploy::Application.load_tasks
+Heaven::Application.load_tasks

@@ -1,4 +1,4 @@
-HerokuDeploy::Application.configure do
+Heaven::Application.configure do
   config.force_ssl = true
   # Settings specified here will take precedence over those in config/application.rb.
 

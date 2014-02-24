@@ -16,7 +16,7 @@ class Output
     params = {
       :files       => { 'clone' => {:content => "Deployment #{number} pending" } },
       :public      => false,
-      :description => "HerokuDeploy number #{number} for #{name}"
+      :description => "Heaven number #{number} for #{name}"
     }
     @gist = api.create_gist(params)
   end

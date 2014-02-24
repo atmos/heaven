@@ -1,4 +1,4 @@
-module HerokuDeploy
+module Heaven
   REDIS_PREFIX = "heroku-deploy:#{Rails.env}"
 
   def self.redis
@@ -22,4 +22,4 @@ module HerokuDeploy
 end
 
 # initialize early to ensure proper resque prefixes
-HerokuDeploy.redis
+Heaven.redis

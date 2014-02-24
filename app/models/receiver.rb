@@ -15,7 +15,7 @@ class Receiver
   end
 
   def redis
-    HerokuDeploy.redis
+    Heaven.redis
   end
 
   def number

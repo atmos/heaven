@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-HerokuDeploy::Application.config.secret_key_base = 'f31aa46f25a694424df9ba71c098ac642f676d8284174914cefa85175be26040f487243b0f6171a80af43a428e13bcd7ee9739dc1e6450a95727b7b49c2129c8'
+Heaven::Application.config.secret_key_base = 'f31aa46f25a694424df9ba71c098ac642f676d8284174914cefa85175be26040f487243b0f6171a80af43a428e13bcd7ee9739dc1e6450a95727b7b49c2129c8'

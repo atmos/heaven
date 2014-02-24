@@ -1,4 +1,4 @@
-HerokuDeploy::Application.routes.draw do
+Heaven::Application.routes.draw do
   get  "/" => redirect("https://github.com/tampopo/heroku-deploy")
 
   github_authenticate(:team => :employees) do

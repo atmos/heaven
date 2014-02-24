@@ -7,7 +7,7 @@ describe Output do
     params = {
       :files => {:clone => {:content => "Deployment 42 pending" } },
       :public => false,
-      :description => "HerokuDeploy number 42 for heroku-deploy"
+      :description => "Heaven number 42 for heroku-deploy"
     }
 
     stub_request(:post, "https://api.github.com/gists").
