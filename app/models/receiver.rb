@@ -146,6 +146,43 @@ class Receiver
     end
   end
 
+  # Internal: Map detailing required attributes for a provider. If an attribute
+  # isn't present in the ENV, or it doesn't declare a default value, then we
+  # raise an error during deployment.
+  DPL_ARGUMENTS = {
+    "heroku" => [
+      ["strategy", "git"],
+      "api-key",
+      "username",
+      "password",
+      "app"
+    ]
+  }
+
+  def dpl_arguments(source = ENV)
+    cli_args = source.each.with_object({}) do |(key, val), args|
+      next unless key =~ /\ADPL_/
+      args[key.sub("DPL_", "").dasherize.downcase] = val
+    end
+
+    provider = cli_args["provider"] ||= "heroku"
+
+    required_args = DPL_ARGUMENTS.fetch(provider) do
+      fail "`#{provider}` isn't a supported dpl provider"
+    end
+
+    required_args.each do |arg|
+      arg, default = arg if Array === arg
+      cli_args[arg] ||= default if default
+      cli_args.fetch(arg) do
+        env_name = arg.underscore.upcase
+        fail "`#{provider}` requires `DPL_#{env_name}` to be set in your ENV"
+      end
+    end
+
+    cli_args.map { |k,v| "--#{k}=#{v}" }
+  end
+
   def execute_deployment
     return execute_and_log("true") if Rails.env.test?
 
@@ -158,10 +195,7 @@ class Receiver
       log "Fetching the latest code"
       execute_and_log("git fetch && git reset --hard #{sha}")
       log "Pushing to heroku"
-      deploy_string = [ "#{dpl_path}", "--provider=heroku", "--strategy=git",
-                        "--api-key=#{heroku_api_key}",
-                        "--username=#{heroku_username}", "--password=#{heroku_password}",
-                        "--app=#{app_name}"].join(" ")
+      deploy_string = [ "#{dpl_path}", *dpl_arguments ]
       execute_and_log(deploy_string)
     end
   end
