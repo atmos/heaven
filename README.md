@@ -1,6 +1,36 @@
 # GitHub -> Heroku [![Build Status](https://travis-ci.org/atmos/heaven.png?branch=master)](https://travis-ci.org/atmos/heaven)
 
-Receives deployment events from GitHub, ships to heroku.
+Receives deployment events from GitHub, ships to heroku. Here's how it all fits together.
+
+I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
+
+<pre>
++---------+             +--------+            +----------+         +-------------+
+|  Hubot  |             | GitHub |            |  Heaven  |         | Your Server |
++---------+             +--------+            +----------+         +-------------+
+     |                      |                       |                     |
+     |  Create Deployment   |                       |                     |
+     |--------------------->|                       |                     |
+     |                      |                       |                     |
+     |  Deployment Created  |                       |                     |
+     |<---------------------|                       |                     |
+     |                      |                       |                     |
+     |                      |   Deployment Event    |                     |
+     |                      |---------------------->|                     |
+     |                      |                       |     SSH+Deploys     |
+     |                      |                       |-------------------->|
+     |                      |                       |                     |
+     |                      |   Deployment Status   |                     |
+     |                      |<----------------------|                     |
+     |                      |                       |                     |
+     |                      |                       |   Deploy Completed  |
+     |                      |                       |<--------------------|
+     |                      |                       |                     |
+     |                      |   Deployment Status   |                     |
+     |                      |<----------------------|                     |
+     |                      |                       |                     |
+</pre>
+
 
 # Running Locally
 
