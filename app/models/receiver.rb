@@ -162,7 +162,6 @@ class Receiver
                         "--api-key=#{heroku_api_key}",
                         "--username=#{heroku_username}", "--password=#{heroku_password}",
                         "--app=#{app_name}"].join(" ")
-      log deploy_string
       execute_and_log(deploy_string)
     end
   end
