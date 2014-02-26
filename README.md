@@ -4,7 +4,7 @@ Receives deployment events from GitHub, ships to heroku. Here's how it all fits 
 
 I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 
-<pre>
+```
 +---------+             +--------+            +----------+         +-------------+
 |  Hubot  |             | GitHub |            |  Heaven  |         | Your Server |
 +---------+             +--------+            +----------+         +-------------+
@@ -29,7 +29,8 @@ I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
      |                      |   Deployment Status   |                     |
      |                      |<----------------------|                     |
      |                      |                       |                     |
-</pre>
+
+```
 
 
 # Running Locally
