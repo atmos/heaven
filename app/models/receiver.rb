@@ -11,7 +11,7 @@ class Receiver
   end
 
   def data
-    @data ||= JSON.parse(@payload)
+    @data ||= JSON.parse(payload)
   end
 
   def redis
