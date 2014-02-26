@@ -31,7 +31,6 @@ I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
      |                      |                       |                     |
 </pre>
 
-
 # Running Locally
 
     $ bundle install --local --path vendor/gems
@@ -40,7 +39,7 @@ I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 # Hosting on heroku
 
     $ heroku addons:add openredis:micro
-    $ heroku ps:scale worker=2
+    $ heroku ps:scale worker=1
     $ heroku config:add GITHUB_CLIENT_ID=<key>
     Setting config vars and restarting heroku-deployer... done, v8
     GITHUB_CLIENT_ID: <key>
@@ -50,9 +49,8 @@ I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
     $ heroku config:add RAILS_SECRET_KEY_BASE=`ruby -rsecurerandom -e "print SecureRandom.hex"`
     RAILS_SECRET_KEY_BASE: <secret>
 
-## Environmental Variables
+## Extra Environmental Variables
 
-* `RAILS_SECRET_KEY_BASE`: The key configured in [secret_token.rb](/config/initializers/secret_token.rb).
 * `GITHUB_TEAM_ID`: The GitHub team id to restrict resque access to.
 * `GITHUB_DEPLOY_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for cloning.
 * `HEROKU_DEPLOY_PRIVATE_KEY`: Your private ssh key that is allowed to push to heroku
