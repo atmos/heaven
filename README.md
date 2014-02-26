@@ -32,11 +32,6 @@ I use this with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 
 ```
 
-# Running Locally
-
-    $ bundle install --local --path vendor/gems
-    $ bundle exec foreman
-
 # Hosting on heroku
 
     $ heroku addons:add openredis:micro
