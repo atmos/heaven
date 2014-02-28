@@ -42,8 +42,13 @@ class Receiver
     custom_payload && custom_payload['config']
   end
 
+  def environment
+    (custom_payload && custom_payload['environment']) || "production"
+  end
+
   def app_name
-    custom_payload_config && custom_payload_config['heroku_name']
+    return nil unless custom_payload_config
+    environment == "staging" ? custom_payload_config['heroku_staging_name'] : custom_payload_config['heroku_name']
   end
 
   def default_branch
