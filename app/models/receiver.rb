@@ -43,7 +43,7 @@ class Receiver
   end
 
   def environment
-    (custom_payload && custom_payload['environment']) || "production"
+    custom_payload && custom_payload.fetch("environment", "production")
   end
 
   def app_name
