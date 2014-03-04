@@ -29,11 +29,11 @@ module Statuses
       to_return(:status => 200, :body => StubDeployment.new("atmos/my-robot", 721), :headers => {})
 
     stub_request(:post, "https://api.github.com/repos/atmos/my-robot/deployments/721/statuses").
-      with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"state\":\"pending\"}").
+      with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"description\":\"Deploying from Heaven v#{Heaven::VERSION}\",\"state\":\"pending\"}").
       to_return(:status => 201, :body => {}, :headers => {})
 
     stub_request(:post, "https://api.github.com/repos/atmos/my-robot/deployments/721/statuses").
-      with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"state\":\"success\"}").
+      with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"description\":\"Deploying from Heaven v#{Heaven::VERSION}\",\"state\":\"success\"}").
       to_return(:status => 201, :body => {}, :headers => {})
   end
 
