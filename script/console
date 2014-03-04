@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# GitHub CI paths
+if [ -d /usr/share/rbenv/shims ]; then
+  export PATH=/usr/share/rbenv/shims:$PATH
+  export RBENV_VERSION="1.9.3-p231-tcs-github"
+fi
+
+bundle exec rails c
