@@ -11,7 +11,7 @@ gem "rendezvous"
 gem "warden-github-rails"
 
 # Pre-release for the deployments API
-gem "octokit", :github => "octokit/octokit.rb", :ref => "2afe6c9"
+gem "octokit", :github => "atmos/octokit.rb", :ref => "6b1f968b"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
