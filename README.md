@@ -6,7 +6,7 @@ It works really well with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 
 ![](https://f.cloud.github.com/assets/38/2330090/208fce50-a42a-11e3-94e6-46beaac78bfb.jpg)
 
-You configure it via a [GitHub Webhook][2] and it processes incoming payloads with [resque][3].
+It's configure it via a [GitHub Webhook][2] and it processes incoming payloads with [resque][3]. Heaven stores standard input and error contents to a [gist][4].
 
 ```
 +---------+             +--------+            +----------+         +-------------+
@@ -67,3 +67,4 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
+[4]: https://gist.github.com/
