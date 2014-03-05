@@ -4,6 +4,8 @@ Heaven is a rails app that receives [Deployment][1] events from GitHub and deplo
 
 It works really well with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 
+![](https://f.cloud.github.com/assets/38/2330090/208fce50-a42a-11e3-94e6-46beaac78bfb.jpg)
+
 You configure it via a [GitHub Webhook][2] and it processes incoming payloads with [resque][3].
 
 ```
@@ -34,7 +36,11 @@ You configure it via a [GitHub Webhook][2] and it processes incoming payloads wi
 
 ```
 
+Heaven is just an example of what a [webhook listener][2] on a repo can do. You can set up as many systems as you need to handle your web, mobile, native, compiled, and docker images while keeping the tooling the same. You can also start evaluating new systems on a per-repo basis without introducing widespread breakage across a deployment systems userbase.
+
 # Hosting on heroku
+
+You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
 
     $ heroku addons:add openredis:micro
     $ heroku ps:scale worker=1
