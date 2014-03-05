@@ -35,7 +35,7 @@ class Receiver
   end
 
   def custom_payload
-    @custom_payload ||= JSON.parse(data['payload'] || "")
+    @custom_payload ||= data['payload']
   end
 
   def custom_payload_config

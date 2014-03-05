@@ -1,6 +1,6 @@
 rvm:
   - "2.0.0"
 script:
-  - bundle exec rspec
+  - script/cibuild
 services:
   - redis-server
