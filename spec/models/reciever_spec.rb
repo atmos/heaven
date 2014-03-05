@@ -5,7 +5,7 @@ describe Receiver do
   context "production environment" do
 
     let(:payload) { fixture_data('deployment') }
-    let!(:data) { JSON.parse(JSON.parse(payload)['payload']) }
+    let!(:data) { JSON.parse(payload)['payload'] }
     let!(:receiver) { Receiver.new('deployment', '1', payload) }
 
     it "returns production" do
@@ -21,7 +21,7 @@ describe Receiver do
   context "staging environment" do
 
     let(:payload) { fixture_data('deployment_staging') }
-    let!(:data) { JSON.parse(JSON.parse(payload)['payload']) }
+    let!(:data) { JSON.parse(payload)['payload'] }
     let!(:receiver) { Receiver.new('deployment', '1', payload) }
 
     it "returns staging" do
