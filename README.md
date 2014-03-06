@@ -62,7 +62,7 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 # See Also
 
 * [hubot-deploy](https://github.com/atmos/hubot-deploy) - Kick off deployments from chat.
-* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listents for DeploymentStatus events from GitHub and notifies you.
+* [heaven-notifier](https://github.com/atmos/heaven-notifier) - Listens for DeploymentStatus events from GitHub and notifies you.
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
