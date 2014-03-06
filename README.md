@@ -6,8 +6,6 @@ It works really well with [hubot-deploy](https://github.com/atmos/hubot-deploy).
 
 ![](https://f.cloud.github.com/assets/38/2330090/208fce50-a42a-11e3-94e6-46beaac78bfb.jpg)
 
-Configure it from a [GitHub Webhook][2] and it processes incoming payloads with [resque][3]. Heaven stores the shell output to a [gist][4].
-
 ```
 +---------+             +--------+            +----------+         +-------------+
 |  Hubot  |             | GitHub |            |  Heaven  |         | Your Server |
@@ -35,6 +33,8 @@ Configure it from a [GitHub Webhook][2] and it processes incoming payloads with 
      |                      |                       |                     |
 
 ```
+
+Configure it from a [GitHub Webhook][2] and it processes incoming payloads with [resque][3]. Heaven stores the shell output to a [gist][4].
 
 Heaven is just an example of what a [webhook listener][2] on a repo can do. You can set up as many systems as you need to handle your web, mobile, native, compiled, and docker images while keeping the tooling the same. You can also start evaluating new systems on a per-repo basis without introducing widespread breakage across a deployment systems userbase.
 
