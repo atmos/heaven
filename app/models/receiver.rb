@@ -73,8 +73,19 @@ class Receiver
     uri.to_s
   end
 
-  def execute_and_log(cmd)
-    `#{cmd} >> #{stdout_file} 2>> #{stderr_file}`
+  def log_stdout(out)
+    File.open(stdout_file, 'a') { |f| f.write(out) }
+  end
+
+  def log_stderr(err)
+    File.open(stderr_file, 'a') { |f| f.write(err) }
+  end
+
+  def execute_and_log(cmds)
+    child = POSIX::Spawn::Child.new(*cmds)
+    log_stdout(child.out)
+    log_stderr(child.err)
+    child
   end
 
   def working_directory
@@ -95,7 +106,7 @@ class Receiver
   end
 
   def log(line)
-    Rails.logger.info "#{app_name}-#{guid}: #{line}"
+    Rails.logger.info "#{app_name}-#{guid}(#{remote_ip}): #{line}"
   end
 
 
@@ -166,7 +177,7 @@ class Receiver
   end
 
   def execute_deployment
-    return execute_and_log("true") if Rails.env.test?
+    return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
     unless File.exists?(checkout_directory)
       log "Cloning #{repository_url} into #{checkout_directory}"
@@ -175,12 +186,12 @@ class Receiver
 
     Dir.chdir(checkout_directory) do
       log "Fetching the latest code"
-      execute_and_log("git fetch && git reset --hard #{sha}")
+      execute_and_log(["git", "fetch", "&&", "git", "reset", "--hard", sha])
       log "Pushing to heroku"
       deploy_string = [ "#{dpl_path}", "--provider=heroku", "--strategy=git",
                         "--api-key=#{heroku_api_key}",
                         "--username=#{heroku_username}", "--password=#{heroku_password}",
-                        "--app=#{app_name}"].join(" ")
+                        "--app=#{app_name}"]
       execute_and_log(deploy_string)
     end
   end
