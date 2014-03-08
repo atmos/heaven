@@ -1,7 +1,7 @@
 GIT
-  remote: git://github.com/atmos/octokit.rb.git
-  revision: 6b1f968bf628c7fa230236549bb826473a61d274
-  ref: 6b1f968b
+  remote: git://github.com/octokit/octokit.rb.git
+  revision: ca5136632e1c0013b94eb855095565f843bf5d14
+  ref: ca5136632
   specs:
     octokit (3.0.0.pre)
       sawyer (~> 0.5.3)
