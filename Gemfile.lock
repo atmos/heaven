@@ -86,6 +86,7 @@ GEM
     multipart-post (2.0.0)
     pg (0.17.1)
     polyglot (0.3.4)
+    posix-spawn (0.3.8)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -203,6 +204,7 @@ DEPENDENCIES
   meta_request
   octokit!
   pg
+  posix-spawn
   pry
   rails (~> 4.0.0)
   rails_12factor

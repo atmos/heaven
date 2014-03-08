@@ -8,6 +8,7 @@ gem "unicorn"
 gem "yajl-ruby"
 gem "heroku-api"
 gem "rendezvous"
+gem "posix-spawn"
 gem "warden-github-rails"
 
 # Pre-release for the deployments API
