@@ -1,7 +1,7 @@
 class Receiver
   @queue = :events
 
-  attr_accessor :event, :guid, :payload, :remote_ip, :token
+  attr_accessor :event, :guid, :last_child, :payload, :remote_ip, :token
 
   def initialize(remote_ip, event, guid, payload)
     @guid      = guid
@@ -82,10 +82,10 @@ class Receiver
   end
 
   def execute_and_log(cmds)
-    child = POSIX::Spawn::Child.new(*cmds)
-    log_stdout(child.out)
-    log_stderr(child.err)
-    child
+    @last_child = POSIX::Spawn::Child.new(*cmds)
+    log_stdout(last_child.out)
+    log_stderr(last_child.err)
+    last_child
   end
 
   def working_directory
@@ -152,7 +152,7 @@ class Receiver
       FileUtils.mkdir_p working_directory
     end
     execute_deployment
-    deploy_completed($?.success?)
+    deploy_completed(last_child.success?)
   end
 
   def heroku_username
@@ -181,7 +181,7 @@ class Receiver
 
     unless File.exists?(checkout_directory)
       log "Cloning #{repository_url} into #{checkout_directory}"
-      log `git clone #{clone_url} #{checkout_directory} 2>&1`
+      execute_and_log(["git", "clone", clone_url, checkout_directory])
     end
 
     Dir.chdir(checkout_directory) do
