@@ -6,7 +6,7 @@ describe Receiver do
 
     let(:payload) { fixture_data('deployment') }
     let!(:data) { JSON.parse(payload)['payload'] }
-    let!(:receiver) { Receiver.new('deployment', '1', payload) }
+    let!(:receiver) { Receiver.new('127.0.0.1', 'deployment', '1', payload) }
 
     it "returns production" do
       expect(receiver.environment).to eq('production')
@@ -22,7 +22,7 @@ describe Receiver do
 
     let(:payload) { fixture_data('deployment_staging') }
     let!(:data) { JSON.parse(payload)['payload'] }
-    let!(:receiver) { Receiver.new('deployment', '1', payload) }
+    let!(:receiver) { Receiver.new('127.0.0.1', 'deployment', '1', payload) }
 
     it "returns staging" do
       expect(receiver.environment).to eq('staging')
