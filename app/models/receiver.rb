@@ -186,7 +186,8 @@ class Receiver
 
     Dir.chdir(checkout_directory) do
       log "Fetching the latest code"
-      execute_and_log(["git", "fetch", "&&", "git", "reset", "--hard", sha])
+      execute_and_log(["git", "fetch"])
+      execute_and_log(["git", "reset", "--hard", sha])
       log "Pushing to heroku"
       deploy_string = [ "#{dpl_path}", "--provider=heroku", "--strategy=git",
                         "--api-key=#{heroku_api_key}",
