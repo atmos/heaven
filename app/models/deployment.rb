@@ -100,7 +100,7 @@ class Deployment
   end
 
   def log(line)
-    Rails.logger.info "#{app_name}-#{guid}(#{remote_ip}): #{line}"
+    Rails.logger.info "#{app_name}-#{guid}: #{line}"
   end
 
   def heroku_username
