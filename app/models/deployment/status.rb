@@ -19,13 +19,17 @@ class Deployment
       "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
+    def payload
+      {:target_url => output, :description => description}
+    end
+
     def pending!
-      api.create_deployment_status(url, 'pending', {:target_url => output, :description => description})
+      api.create_deployment_status(url, 'pending', payload)
     end
 
     def complete!(successful)
       state = successful ? "success" : "failure"
-      api.create_deployment_status(url, state, {:target_url => output, :description => description})
+      api.create_deployment_status(url, state, payload)
     end
   end
 end
