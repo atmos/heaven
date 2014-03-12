@@ -17,7 +17,7 @@ class CommitStatus
 
   # This Commit Status succeeded
   def successful?
-    data["state"] == "success"
+    state == "success"
   end
 
   # All Commit Statuses across contexts were successful
@@ -27,6 +27,10 @@ class CommitStatus
 
   def sha
     data["sha"]
+  end
+
+  def state
+    data["state"]
   end
 
   def aggregate
@@ -57,7 +61,7 @@ class CommitStatus
     if auto_deployable?
       Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha}"
     else
-      Rails.logger.info "Ignoring commit status for #{name_with_owner}@#{sha}"
+      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}@#{sha}"
     end
   end
 end

@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe SshConfig do
+describe Deployment::SshConfig do
   it "knows the path" do
     root = "#{Dir.pwd}/tmp"
-    config = SshConfig.new(File.expand_path("../../../tmp", __FILE__))
+    config = Deployment::SshConfig.new(File.expand_path("../../../../tmp", __FILE__))
     expect(config.root).to eql(root)
     expect(config.path).to eql("#{root}/.ssh")
     expect(config.config_path).to eql("#{root}/.ssh/config")
