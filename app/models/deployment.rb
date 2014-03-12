@@ -1,6 +1,4 @@
 class Deployment
-  @queue = :deployments
-
   attr_accessor :guid, :payload, :token, :last_child
 
   def initialize(guid, payload, token)
