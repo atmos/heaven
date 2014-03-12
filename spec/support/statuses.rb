@@ -33,6 +33,10 @@ module Statuses
       to_return(:status => 201, :body => {}, :headers => {})
 
     stub_request(:post, "https://api.github.com/repos/atmos/my-robot/deployments/721/statuses").
+      with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"description\":\"Deploying from Heaven v#{Heaven::VERSION}\",\"state\":\"failure\"}").
+      to_return(:status => 201, :body => {}, :headers => {})
+
+    stub_request(:post, "https://api.github.com/repos/atmos/my-robot/deployments/721/statuses").
       with(:body => "{\"target_url\":\"https://gist.github.com/cd520d99c3087f2d18b4\",\"description\":\"Deploying from Heaven v#{Heaven::VERSION}\",\"state\":\"success\"}").
       to_return(:status => 201, :body => {}, :headers => {})
   end
