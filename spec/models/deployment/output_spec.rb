@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Output do
+describe Deployment::Output do
   let(:gist) { Octokit::Gist.new("deadbeef") }
 
   it "creates a gist for storing output" do
@@ -14,7 +14,7 @@ describe Output do
       with(:body => params.to_json).
       to_return(:status => 200, :body => gist, :headers => {})
 
-    output = Output.new("heroku-deploy", 42, SecureRandom.uuid, "<secret>")
+    output = Deployment::Output.new("heroku-deploy", 42, SecureRandom.uuid, "<secret>")
     expect { output.create }.to_not raise_error
 
     params = {
