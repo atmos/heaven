@@ -31,10 +31,11 @@ class Receiver
 
   def run!
     return unless valid_remote_ip?
-    redis.set("deployment:#{guid}", payload)
 
     if event == "deployment"
       Deployment.new(guid, payload, token).run!
+    elsif event == "status"
+      CommitStatus.new(guid, payload, token).run!
     else
       Rails.logger.info "Unhandled event type, #{event}."
     end
