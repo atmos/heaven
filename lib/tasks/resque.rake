@@ -1,8 +1,6 @@
+require 'resque/tasks'
 
-    require 'resque/tasks'
-
-    namespace :resque do
-      task :setup => [:environment] do
-      end
-    end
-  
+namespace :resque do
+  task :setup => [:environment] do
+  end
+end
