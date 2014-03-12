@@ -15,12 +15,22 @@ class CommitStatus
     @api ||= Octokit::Client.new(:access_token => token)
   end
 
-  def redis
-    Heaven.redis
-  end
-
+  # This Commit Status succeeded
   def successful?
     data["state"] == "success"
+  end
+
+  # All Commit Statuses across contexts were successful
+  def green?
+    aggregate["state"] == "success"
+  end
+
+  def sha
+    data["sha"]
+  end
+
+  def aggregate
+    @aggregate ||= api.get "/repos/#{name_with_owner}}/commits/#{data["sha"]}/status"
   end
 
   def branches
