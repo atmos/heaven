@@ -61,7 +61,8 @@ class CommitStatus
     if auto_deployable?
       Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha}"
     else
-      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}@#{sha}"
+      branch = branches && branches.first['name']
+      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}/#{branch}@#{sha[0..7]}"
     end
   end
 end
