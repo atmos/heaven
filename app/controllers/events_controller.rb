@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     guid  = request.headers['HTTP_X_GITHUB_DELIVERY']
     event = request.headers['HTTP_X_GITHUB_EVENT']
 
-    if %w(deployment ping).include?(event)
+    if %w(deployment status ping).include?(event)
       Resque.enqueue(Receiver, request.ip, event, guid, data)
       render :status => 201, :json => "{}"
     else
