@@ -46,7 +46,7 @@ class CommitStatus
   end
 
   def name_with_owner
-    data["full_name"]
+    data["repository"]["full_name"]
   end
 
   def auto_deployable?
