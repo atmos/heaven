@@ -11,7 +11,7 @@ module ApplicationHelper
       VERIFIER_KEY
     end
 
-    def ttl
+    def default_ttl
       %w(staging production).include?(Rails.env) ? 60 : 2
     end
 
@@ -21,7 +21,7 @@ module ApplicationHelper
       else
         addresses = Octokit::Client.new.get("/meta").hooks
         Heaven.redis.set(source_key, JSON.dump(addresses))
-        Heaven.redis.expire(source_key, ttl)
+        Heaven.redis.expire(source_key, default_ttl)
         Rails.logger.info "Refreshed GitHub hook sources"
         addresses
       end
