@@ -1,0 +1,9 @@
+{
+  "verifiable_password_authentication": true,
+  "hooks": [
+    "192.30.252.0/22"
+  ],
+  "git": [
+    "192.30.252.0/22"
+  ]
+}
