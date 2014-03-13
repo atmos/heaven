@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:create]
+
   def create
     request.body.rewind
     data = request.body.read
