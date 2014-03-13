@@ -1,14 +1,12 @@
 class Verifier
   VERIFIER_KEY = "hook-sources-#{Rails.env}"
 
-  attr_accessor :key
-
-  def initialize
-    @key = VERIFIER_KEY
+  def key
+    VERIFIER_KEY
   end
 
   def ttl
-    Rails.env == "production" ? 60 : 2
+    %w(staging production).include?(Rails.env) ? 60 : 2
   end
 
   def hook_source_ips
@@ -16,9 +14,9 @@ class Verifier
       JSON.parse(addresses)
     else
       addresses = Octokit::Client.new.get("/meta").hooks
-      Rails.logger.info "Refreshed GitHub hook sources"
       Heaven.redis.set(key, JSON.dump(addresses))
       Heaven.redis.expire(key, ttl)
+      Rails.logger.info "Refreshed GitHub hook sources"
       addresses
     end
   end
