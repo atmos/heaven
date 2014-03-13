@@ -1,5 +1,5 @@
 module Heaven
-  REDIS_PREFIX = "heroku-deploy:#{Rails.env}"
+  REDIS_PREFIX = "heaven:#{Rails.env}"
 
   def self.redis
     @redis ||= if ENV["OPENREDIS_URL"]
