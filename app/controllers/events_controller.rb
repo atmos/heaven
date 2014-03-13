@@ -5,14 +5,14 @@ class EventsController < ApplicationController
 
   def create
     if incoming_ip_valid?(request.ip)
-      guid  = request.headers['HTTP_X_GITHUB_DELIVERY']
-      event = request.headers['HTTP_X_GITHUB_EVENT']
+      event    = request.headers['HTTP_X_GITHUB_EVENT']
+      delivery = request.headers['HTTP_X_GITHUB_DELIVERY']
 
       if %w(deployment status ping).include?(event)
         request.body.rewind
         data = request.body.read
 
-        Resque.enqueue(Receiver, event, guid, data)
+        Resque.enqueue(Receiver, event, delivery, data)
         render :status => 201, :json => "{}"
       else
         render :status => 404, :json => "{}"
