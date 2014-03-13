@@ -1,17 +1,24 @@
 class EventsController < ApplicationController
+  include ApplicationHelper
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
+
   def create
-    request.body.rewind
-    data = request.body.read
+    if incoming_ip_valid?(request.ip)
+      event    = request.headers['HTTP_X_GITHUB_EVENT']
+      delivery = request.headers['HTTP_X_GITHUB_DELIVERY']
 
-    guid  = request.headers['HTTP_X_GITHUB_DELIVERY']
-    event = request.headers['HTTP_X_GITHUB_EVENT']
+      if %w(deployment status ping).include?(event)
+        request.body.rewind
+        data = request.body.read
 
-    if %w(deployment status ping).include?(event)
-      Resque.enqueue(Receiver, request.ip, event, guid, data)
-      render :status => 201, :json => "{}"
+        Resque.enqueue(Receiver, event, delivery, data)
+        render :status => 201, :json => "{}"
+      else
+        render :status => 404, :json => "{}"
+      end
     else
+      Rails.logger.info "Invalid IP posting to the app, #{request.ip}"
       render :status => 404, :json => "{}"
     end
   end

@@ -27,10 +27,14 @@ RSpec.configure do |config|
     File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
   end
 
-  def default_headers(event)
+  def default_headers(event, remote_ip = "127.0.0.1")
     {
       'ACCEPT'                 => 'application/json' ,
       'CONTENT_TYPE'           => 'application/json',
+
+      'REMOTE_ADDR'            => remote_ip,
+      'HTTP_X_FORWARDED_FOR'   => remote_ip,
+
       'HTTP_X_GITHUB_EVENT'    => event,
       'HTTP_X_GITHUB_DELIVERY' => SecureRandom.uuid
     }
