@@ -177,6 +177,8 @@ class Deployment
     else
       status.failure!
     end
+  rescue StandardError => e
+    Rails.logger.info e.message
   ensure
     status.failure! unless completed?
   end
