@@ -143,8 +143,8 @@ class Deployment
     end
   end
 
-  def deploy_output
-    @deploy_output ||= Deployment::Output.new(app_name, number, guid, token)
+  def output
+    @output ||= Deployment::Output.new(app_name, number, guid, token)
   end
 
   def status
@@ -152,8 +152,8 @@ class Deployment
   end
 
   def deploy_started
-    deploy_output.create
-    status.output = deploy_output.url
+    output.create
+    status.output = output.url
     status.pending!
   end
 
@@ -170,7 +170,7 @@ class Deployment
 
     execute_deployment
 
-    deploy_output.update(File.read(stdout_file), File.read(stderr_file))
+    output.update(File.read(stdout_file), File.read(stderr_file))
 
     if last_child.success?
       status.success!
