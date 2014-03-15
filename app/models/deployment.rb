@@ -157,9 +157,8 @@ class Deployment
     deploy_status.pending!
   end
 
-  def deploy_completed(successful)
-    deploy_output.update(File.read(stdout_file), File.read(stderr_file))
-    deploy_status.complete!(successful)
+  def completed?
+    @deploy_status.completed?
   end
 
   def run!
@@ -168,7 +167,17 @@ class Deployment
     unless File.exists?(working_directory)
       FileUtils.mkdir_p working_directory
     end
+
     execute_deployment
-    deploy_completed(last_child.success?)
+
+    deploy_output.update(File.read(stdout_file), File.read(stderr_file))
+
+    if last_child.success?
+      deploy_status.success!
+    else
+      deploy_status.failure!
+    end
+  ensure
+    deploy_status.failure! unless completed?
   end
 end
