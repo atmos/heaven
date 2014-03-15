@@ -143,23 +143,22 @@ class Deployment
     end
   end
 
-  def deploy_output
-    @deploy_output ||= Deployment::Output.new(app_name, number, guid, token)
+  def output
+    @output ||= Deployment::Output.new(app_name, number, guid, token)
   end
 
-  def deploy_status
-    @deploy_status ||= Deployment::Status.new(token, name_with_owner, number)
+  def status
+    @status ||= Deployment::Status.new(token, name_with_owner, number)
   end
 
   def deploy_started
-    deploy_output.create
-    deploy_status.output = deploy_output.url
-    deploy_status.pending!
+    output.create
+    status.output = output.url
+    status.pending!
   end
 
-  def deploy_completed(successful)
-    deploy_output.update(File.read(stdout_file), File.read(stderr_file))
-    deploy_status.complete!(successful)
+  def completed?
+    @status.completed?
   end
 
   def run!
@@ -168,7 +167,19 @@ class Deployment
     unless File.exists?(working_directory)
       FileUtils.mkdir_p working_directory
     end
+
     execute_deployment
-    deploy_completed(last_child.success?)
+
+    output.update(File.read(stdout_file), File.read(stderr_file))
+
+    if last_child.success?
+      status.success!
+    else
+      status.failure!
+    end
+  rescue StandardError => e
+    Rails.logger.info e.message
+  ensure
+    status.failure! unless completed?
   end
 end
