@@ -2,9 +2,10 @@ class Deployment
   class Status
     attr_accessor :number, :nwo, :output, :token
     def initialize(token, nwo, number)
-      @nwo    = nwo
-      @token  = token
-      @number = number
+      @nwo       = nwo
+      @token     = token
+      @number    = number
+      @completed = false
     end
 
     def api
@@ -27,9 +28,18 @@ class Deployment
       api.create_deployment_status(url, 'pending', payload)
     end
 
-    def complete!(successful)
-      state = successful ? "success" : "failure"
-      api.create_deployment_status(url, state, payload)
+    def success!
+      api.create_deployment_status(url, "success", payload)
+      @completed = true
+    end
+
+    def failure!
+      api.create_deployment_status(url, "failure", payload)
+      @completed = true
+    end
+
+    def completed?
+      @completed
     end
   end
 end

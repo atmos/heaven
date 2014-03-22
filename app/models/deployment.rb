@@ -111,5 +111,9 @@ class Deployment
     started
     execute
     completed
+  rescue StandardError => e
+    Rails.logger.info e.message
+  ensure
+    status.failure! unless completed?
   end
 end
