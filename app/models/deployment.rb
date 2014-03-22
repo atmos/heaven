@@ -104,11 +104,15 @@ class Deployment
   def completed
     successful = true
     output.update("", "")
-    status.complete!(successful)
+    if successful
+      status.success!
+    else
+      status.failure!
+    end
   end
 
   def completed?
-    @status.completed?
+    status.completed?
   end
 
   def run!
