@@ -107,6 +107,10 @@ class Deployment
     status.complete!(successful)
   end
 
+  def completed?
+    @status.completed?
+  end
+
   def run!
     started
     execute
