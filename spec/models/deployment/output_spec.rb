@@ -5,7 +5,7 @@ describe Deployment::Output do
 
   it "creates a gist for storing output" do
     params = {
-      :files => {:clone => {:content => "Deployment 42 pending" } },
+      :files => {:stdout => {:content => "Deployment 42 pending" } },
       :public => false,
       :description => "Heaven number 42 for heaven"
     }
@@ -14,13 +14,12 @@ describe Deployment::Output do
       with(:body => params.to_json).
       to_return(:status => 200, :body => gist, :headers => {})
 
-    output = Deployment::Output.new("heaven", 42, SecureRandom.uuid, "<secret>")
+    output = Deployment::Output.new("heaven", "<secret>", 42, SecureRandom.uuid)
     expect { output.create }.to_not raise_error
 
     params = {
       :public => false,
       :files  => {
-        :clone  => {:content => nil },
         :stdout => {:content => "push to limit" },
         :stderr => {:content => "chasing dreams" }
       }
