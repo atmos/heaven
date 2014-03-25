@@ -68,17 +68,10 @@ module Provider
     end
 
     def setup
+      super
       unless File.exists?(working_directory)
         FileUtils.mkdir_p working_directory
       end
-
-      output.create
-      status.output = output.url
-      status.pending!
-    end
-
-    def completed?
-      @status.completed?
     end
 
     def notify 

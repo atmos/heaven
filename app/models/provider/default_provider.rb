@@ -70,6 +70,16 @@ module Provider
       custom_payload && custom_payload.fetch("environment", "production")
     end
 
+    def setup
+      output.create
+      status.output = output.url
+      status.pending!
+    end
+
+    def completed?
+      status.completed?
+    end
+
     def run!
       setup
       execute
