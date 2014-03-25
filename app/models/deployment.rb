@@ -25,33 +25,6 @@ class Deployment
     data['id']
   end
 
-  def http_options
-    {
-      :url     => "https://api.heroku.com",
-      :headers => {
-        "Accept"        => "application/vnd.heroku+json; version=3",
-        "Content-Type"  => "application/json",
-        "Authorization" => Base64.encode64(":#{ENV['HEROKU_API_KEY']}")
-      }
-    }
-  end
-
-  def http
-    @http ||= Faraday.new(http_options) do |faraday|
-      faraday.request  :url_encoded             # form-encode POST params
-      faraday.response :logger                  # log requests to STDOUT
-      faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
-    end
-  end
-
-  def post_build
-    response = http.post do |req|
-      req.url "/apps/#{app_name}/builds"
-      req.body = JSON.dump(:source_blob => {:url => archive_link})
-    end
-    JSON.parse(response.body)
-  end
-
   def build_id
     @build_id ||= post_build['id']
   end
@@ -95,13 +68,13 @@ class Deployment
     log build_id
   end
 
-  def started
+  def setup
     output.create
     status.output = output.url
     status.pending!
   end
 
-  def completed
+  def summarize
     successful = true
     output.update("", "")
     if successful
@@ -116,12 +89,40 @@ class Deployment
   end
 
   def run!
-    started
+    setup
     execute
-    completed
+    summarize
   rescue StandardError => e
     Rails.logger.info e.message
   ensure
     status.failure! unless completed?
   end
+
+  private
+    def http_options
+      {
+        :url     => "https://api.heroku.com",
+        :headers => {
+          "Accept"        => "application/vnd.heroku+json; version=3",
+          "Content-Type"  => "application/json",
+          "Authorization" => Base64.encode64(":#{ENV['HEROKU_API_KEY']}")
+        }
+      }
+    end
+
+    def http
+      @http ||= Faraday.new(http_options) do |faraday|
+        faraday.request  :url_encoded
+        faraday.response :logger
+        faraday.adapter  Faraday.default_adapter
+      end
+    end
+
+    def post_build
+      response = http.post do |req|
+        req.url "/apps/#{app_name}/builds"
+        req.body = JSON.dump(:source_blob => {:url => archive_link})
+      end
+      JSON.parse(response.body)
+    end
 end
