@@ -20,11 +20,11 @@ module Provider
     end
 
     def output
-      @output ||= Deployment::Output.new(app_name, number, guid, token)
+      @output ||= Deployment::Output.new(app_name, token, number, guid)
     end
 
     def status
-      @status ||= Deployment::Status.new(token, name_with_owner, number)
+      @status ||= Deployment::Status.new(name_with_owner, token, number)
     end
 
     def redis
