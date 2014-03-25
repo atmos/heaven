@@ -1,4 +1,4 @@
-class Deployment
+module Deployment
   class SshConfig
     attr_accessor :root
 

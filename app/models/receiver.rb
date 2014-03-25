@@ -1,7 +1,7 @@
 class Receiver
   @queue = :events
 
-  attr_accessor :event, :guid, :last_child, :payload, :token
+  attr_accessor :event, :guid, :payload, :token
 
   def initialize(event, guid, payload)
     @guid      = guid
@@ -14,17 +14,10 @@ class Receiver
     new(event, guid, data).run!
   end
 
-  def redis
-    Heaven.redis
-  end
-
-  def api
-    @api ||= Octokit::Client.new(:access_token => token)
-  end
-
   def run!
     if event == "deployment"
-      Deployment.new(guid, payload, token).run!
+      provider = Provider.from_payload(guid, payload, token)
+      provider.run!
     elsif event == "status"
       CommitStatus.new(guid, payload, token).run!
     else

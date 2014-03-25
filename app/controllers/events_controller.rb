@@ -1,10 +1,8 @@
 class EventsController < ApplicationController
-  include ApplicationHelper
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
-
   def create
-    if incoming_ip_valid?(request.ip)
+    if IpValidator.new(request.ip).valid?
       event    = request.headers['HTTP_X_GITHUB_EVENT']
       delivery = request.headers['HTTP_X_GITHUB_DELIVERY']
 

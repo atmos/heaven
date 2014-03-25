@@ -1,7 +1,7 @@
-class Deployment
+module Deployment
   class Status
     attr_accessor :number, :nwo, :output, :token
-    def initialize(token, nwo, number)
+    def initialize(nwo, token, number)
       @nwo       = nwo
       @token     = token
       @number    = number

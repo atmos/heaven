@@ -1,8 +1,8 @@
-class Deployment
+module Deployment
   class Output
     attr_accessor :guid, :name, :number, :token
 
-    def initialize(name, number, guid, token)
+    def initialize(name, token, number, guid)
       @guid   = guid
       @name   = name
       @token  = token
@@ -15,7 +15,7 @@ class Deployment
 
     def create
       params = {
-        :files       => { 'clone' => {:content => "Deployment #{number} pending" } },
+        :files       => { 'stdout' => {:content => "Deployment #{number} pending" } },
         :public      => false,
         :description => "Heaven number #{number} for #{name}"
       }
@@ -24,7 +24,6 @@ class Deployment
 
     def update(stdout, stderr)
       params = {
-        'clone'  => { :content => nil },
         'stdout' => { :content => stdout },
         'stderr' => { :content => stderr }
       }
