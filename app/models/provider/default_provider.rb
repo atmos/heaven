@@ -80,6 +80,10 @@ module Provider
       status.completed?
     end
 
+    def execute
+      warn "Heaven Provider(#{name}) didn't implement execute"
+    end
+
     def run!
       setup
       execute
