@@ -34,10 +34,6 @@ module Provider
       end
     end
 
-    def completed?
-      status.completed?
-    end
-
     private
       def http_options
         {
