@@ -1,4 +1,4 @@
-class Deployment
+module Deployment
   class Output
     attr_accessor :guid, :name, :number, :token
 
