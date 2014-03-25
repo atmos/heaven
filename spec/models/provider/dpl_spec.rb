@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Deployment do
+describe Provider::Dpl do
   context "production environment" do
     let(:payload) { fixture_data('deployment') }
     let!(:data) { JSON.parse(payload)['payload'] }
-    let!(:deployment) { Deployment.new(SecureRandom.uuid, payload, SecureRandom.hex) }
+    let!(:deployment) { Provider::Dpl.new(SecureRandom.uuid, payload, SecureRandom.hex) }
 
     it "returns production" do
       expect(deployment.environment).to eq('production')
@@ -18,7 +18,7 @@ describe Deployment do
   context "staging environment" do
     let(:payload) { fixture_data('deployment_staging') }
     let!(:data) { JSON.parse(payload)['payload'] }
-    let!(:deployment) { Deployment.new(SecureRandom.uuid, payload, SecureRandom.hex) }
+    let!(:deployment) { Provider::Dpl.new(SecureRandom.uuid, payload, SecureRandom.hex) }
 
     it "returns staging" do
       expect(deployment.environment).to eq('staging')
