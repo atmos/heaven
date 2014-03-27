@@ -57,7 +57,6 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 
 * `GITHUB_TEAM_ID`: The GitHub team id to restrict resque access to.
 * `GITHUB_DEPLOY_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for cloning.
-* `HEROKU_DEPLOY_PRIVATE_KEY`: Your private ssh key that is allowed to push to heroku
 
 # See Also
 
