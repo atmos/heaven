@@ -20,6 +20,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before do
+    stub_meta
     Resque.inline = true
   end
 
@@ -27,7 +28,7 @@ RSpec.configure do |config|
     File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
   end
 
-  def default_headers(event, remote_ip = "127.0.0.1")
+  def default_headers(event, remote_ip = "192.30.252.41")
     {
       'ACCEPT'                 => 'application/json' ,
       'CONTENT_TYPE'           => 'application/json',

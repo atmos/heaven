@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "receiving GitHub hooks" do
   before do
-    stub_meta
     stub_gists
     stub_deploy_statuses
   end

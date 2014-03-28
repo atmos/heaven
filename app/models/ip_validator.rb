@@ -6,7 +6,6 @@ class IpValidator
   end
 
   def valid?
-    return true if ["127.0.0.1", "0.0.0.0"].include?(ip) && Rails.env == "test"
     hook_source_ips.any? { |block| IPAddr.new(block).include?(ip) }
   end
 
