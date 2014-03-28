@@ -21,7 +21,7 @@ module Provider
     end
 
     def execute
-      log build_id
+      Rails.logger.info "Build heroku #{build_id}"
     end
 
     def notify
