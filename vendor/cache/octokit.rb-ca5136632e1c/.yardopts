@@ -1,7 +1,0 @@
---no-private
---title=""
---markup=markdown
---template-path=./yard
---exclude lib/octokit/arguments.rb
---exclude lib/octokit/repo_arguments.rb
---exclude lib/octokit/response
