@@ -1,6 +1,6 @@
 module Provider
   def self.from(guid, payload, token)
-    klass = provider_class_from(payload)
+    klass = provider_class_for(payload)
     klass.new(guid, payload, token)
   end
 
