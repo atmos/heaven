@@ -16,7 +16,7 @@ class Receiver
 
   def run!
     if event == "deployment"
-      provider = Provider.from_payload(guid, payload, token)
+      provider = Provider.from(guid, payload, token)
       provider.run!
     elsif event == "status"
       CommitStatus.new(guid, payload, token).run!
