@@ -11,7 +11,7 @@ gem "rendezvous"
 gem "posix-spawn"
 gem "warden-github-rails"
 
-gem "octokit", :github => "octokit/octokit.rb", :ref => "ca5136632"
+gem "octokit"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
