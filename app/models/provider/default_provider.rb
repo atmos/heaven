@@ -35,12 +35,24 @@ module Provider
       data['id']
     end
 
+    def name
+      custom_payload_name || name_with_owner
+    end
+
     def name_with_owner
       data['repository']['full_name']
     end
 
     def sha
       data['sha'][0..7]
+    end
+
+    def ref
+      custom_payload_ref || default_branch
+    end
+
+    def environment
+      custom_payload && custom_payload.fetch("environment", "production")
     end
 
     def repository_url
@@ -62,12 +74,16 @@ module Provider
       @custom_payload ||= data['payload']
     end
 
-    def custom_payload_config
-      custom_payload && custom_payload['config']
+    def custom_payload_ref
+      custom_payload && custom_payload['ref']
     end
 
-    def environment
-      custom_payload && custom_payload.fetch("environment", "production")
+    def custom_payload_name
+      custom_payload && custom_payload['name']
+    end
+
+    def custom_payload_config
+      custom_payload && custom_payload['config']
     end
 
     def setup
@@ -84,10 +100,22 @@ module Provider
       warn "Heaven Provider(#{name}) didn't implement execute"
     end
 
+    def record
+      Deployment.create(:custom_payload  => JSON.dump(custom_payload),
+                        :environment     => environment,
+                        :guid            => guid,
+                        :name            => name,
+                        :name_with_owner => name_with_owner,
+                        :output          => output.url,
+                        :ref             => ref,
+                        :sha             => sha)
+    end
+
     def run!
       setup
       execute
       notify
+      record
     rescue StandardError => e
       Rails.logger.info e.message
     ensure
