@@ -3,6 +3,7 @@ class CreateDeployments < ActiveRecord::Migration
     create_table :deployments do |t|
       t.string :guid,            :required => true
       t.string :environment,     :required => true, :default => "production"
+      t.string :name,            :required => true
       t.string :name_with_owner, :required => true
       t.string :output
       t.text   :payload

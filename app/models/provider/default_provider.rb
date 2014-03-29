@@ -35,6 +35,10 @@ module Provider
       data['id']
     end
 
+    def name
+      custom_payload_name || name_with_owner
+    end
+
     def name_with_owner
       data['repository']['full_name']
     end
@@ -74,6 +78,10 @@ module Provider
       custom_payload && custom_payload['ref']
     end
 
+    def custom_payload_name
+      custom_payload && custom_payload['name']
+    end
+
     def custom_payload_config
       custom_payload && custom_payload['config']
     end
@@ -95,6 +103,7 @@ module Provider
     def record
       Deployment.create(:environment     => environment,
                         :guid            => guid,
+                        :name            => name,
                         :name_with_owner => name_with_owner,
                         :output          => output.url,
                         :payload         => JSON.dump(custom_payload),

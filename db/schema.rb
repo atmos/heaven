@@ -15,10 +15,12 @@ ActiveRecord::Schema.define(version: 20140329200427) do
 
   create_table "deployments", force: true do |t|
     t.string   "guid"
-    t.string   "environment"
+    t.string   "environment",     default: "production"
+    t.string   "name"
     t.string   "name_with_owner"
     t.string   "output"
     t.text     "payload"
+    t.string   "ref"
     t.string   "sha"
     t.datetime "created_at"
     t.datetime "updated_at"
