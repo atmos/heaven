@@ -97,7 +97,7 @@ module Provider
                         :guid            => guid,
                         :name_with_owner => name_with_owner,
                         :output          => output.url,
-                        :payload         => payload,
+                        :payload         => custom_payload,
                         :ref             => ref,
                         :sha             => sha)
     end
