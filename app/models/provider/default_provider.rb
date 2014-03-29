@@ -101,12 +101,12 @@ module Provider
     end
 
     def record
-      Deployment.create(:environment     => environment,
+      Deployment.create(:custom_payload  => JSON.dump(custom_payload),
+                        :environment     => environment,
                         :guid            => guid,
                         :name            => name,
                         :name_with_owner => name_with_owner,
                         :output          => output.url,
-                        :payload         => JSON.dump(custom_payload),
                         :ref             => ref,
                         :sha             => sha)
     end
