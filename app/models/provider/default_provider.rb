@@ -97,7 +97,7 @@ module Provider
                         :guid            => guid,
                         :name_with_owner => name_with_owner,
                         :output          => output.url,
-                        :payload         => custom_payload,
+                        :payload         => JSON.dump(custom_payload),
                         :ref             => ref,
                         :sha             => sha)
     end
