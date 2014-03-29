@@ -5,8 +5,12 @@ module Provider
       @name = "heroku"
     end
 
+    def build
+      @build ||= post_build
+    end
+
     def build_id
-      @build_id ||= post_build['id']
+      build["id"]
     end
 
     def app_name
