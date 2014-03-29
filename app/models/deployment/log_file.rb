@@ -1,4 +1,4 @@
-module Deployment
+class Deployment
   module LogFile
     def working_directory
       @working_directory ||= "/tmp/" + \

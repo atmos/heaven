@@ -43,6 +43,14 @@ module Provider
       data['sha'][0..7]
     end
 
+    def ref
+      custom_payload_ref || default_branch
+    end
+
+    def environment
+      custom_payload && custom_payload.fetch("environment", "production")
+    end
+
     def repository_url
       data['repository']['clone_url']
     end
@@ -62,12 +70,12 @@ module Provider
       @custom_payload ||= data['payload']
     end
 
-    def custom_payload_config
-      custom_payload && custom_payload['config']
+    def custom_payload_ref
+      custom_payload && custom_payload['ref']
     end
 
-    def environment
-      custom_payload && custom_payload.fetch("environment", "production")
+    def custom_payload_config
+      custom_payload && custom_payload['config']
     end
 
     def setup
@@ -84,10 +92,21 @@ module Provider
       warn "Heaven Provider(#{name}) didn't implement execute"
     end
 
+    def record
+      Deployment.create(:environment     => environment,
+                        :guid            => guid,
+                        :name_with_owner => name_with_owner,
+                        :output          => output.url,
+                        :payload         => payload,
+                        :ref             => ref,
+                        :sha             => sha)
+    end
+
     def run!
       setup
       execute
       notify
+      record
     rescue StandardError => e
       Rails.logger.info e.message
     ensure
