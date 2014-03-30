@@ -1,13 +1,13 @@
 module Provider
   class DefaultProvider
-    include Deployment::LogFile
+    include ApiClient
+    include LocalLogFile
 
-    attr_accessor :guid, :name, :payload, :token
+    attr_accessor :guid, :name, :payload
 
-    def initialize(guid, payload, token)
+    def initialize(guid, payload)
       @guid    = guid
       @name    = "unknown"
-      @token   = token
       @payload = payload
     end
 
@@ -15,16 +15,12 @@ module Provider
       @data ||= JSON.parse(payload)
     end
 
-    def api
-      @api ||= Octokit::Client.new(:access_token => token)
-    end
-
     def output
-      @output ||= Deployment::Output.new(app_name, token, number, guid)
+      @output ||= Deployment::Output.new(app_name, number, guid)
     end
 
     def status
-      @status ||= Deployment::Status.new(name_with_owner, token, number)
+      @status ||= Deployment::Status.new(name_with_owner, number)
     end
 
     def redis
