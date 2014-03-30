@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe WebhookValidations::Validator do
-  class ModuleTester
+describe WebhookValidations do
+  class WebhookValidationsTester
     class Request
       def initialize(ip)
         @ip = ip
@@ -19,11 +19,11 @@ describe WebhookValidations::Validator do
     end
   end
 
-  context "instances methods" do
-    it "makes methods available" do
-      expect(ModuleTester.new("192.30.252.41")).to be_valid_incoming_webhook_address
-      expect(ModuleTester.new("127.0.0.1")).to_not be_valid_incoming_webhook_address
-    end
+  it "makes methods available" do
+    klass = WebhookValidationsTester.new("192.30.252.41")
+    expect(klass).to be_valid_incoming_webhook_address
+    klass = WebhookValidationsTester.new("127.0.0.1")
+    expect(klass).to_not be_valid_incoming_webhook_address
   end
 
   context "verifies IPs" do
