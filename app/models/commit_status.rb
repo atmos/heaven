@@ -48,8 +48,8 @@ class CommitStatus
     if successful?
       if default_branch?
         Deployment.latest_for_name_with_owner(name_with_owner).each do |deployment|
-          Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
-          AutoDeployment.new(deployment, self, token).execute
+          Rails.logger.info "tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
+          AutoDeployment.new(deployment, self).execute
         end
       else
         branch = branches && branches.any? && branches.first['name']
