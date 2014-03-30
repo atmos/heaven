@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe WebhookValidations::Validator do
   class ModuleTester
-    class Ip
+    class Request
       def ip
         "192.30.252.41"
       end
@@ -10,7 +10,7 @@ describe WebhookValidations::Validator do
     include WebhookValidations
 
     def request
-      Ip.new
+      Request.new
     end
   end
 
