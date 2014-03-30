@@ -1,10 +1,14 @@
 module WebhookValidations
   extend ActiveSupport::Concern
 
-  def valid_incoming_webhook_address?
-    unless Validator.new(request.ip).valid?
+  def verify_incoming_webhook_address!
+    unless valid_incoming_webhook_address?
       render :status => 404, :json => "{}"
     end
+  end
+
+  def valid_incoming_webhook_address?
+    Validator.new(request.ip).valid?
   end
 
   class Validator
