@@ -1,8 +1,9 @@
 class AutoDeployment
-  attr_accessor :api, :commit_status, :deployment
+  include ApiClient
 
-  def initialize(deployment, commit_status, token)
-    @api           = Octokit::Client.new(:access_token => token)
+  attr_accessor :commit_status, :deployment
+
+  def initialize(deployment, commit_status)
     @commit_status = commit_status
     @deployment    = deployment
   end
