@@ -36,7 +36,7 @@ describe Deployment do
 
     deployments = Deployment.latest_for_name_with_owner("github/hubot")
 
-    expect(deployments.to_a.size).to be 3
+    expect(deployments.size).to be 3
     expect(deployments).to match_array(present)
   end
 end

@@ -26,7 +26,7 @@ class CommitStatus
   end
 
   def sha
-    data["sha"]
+    data["sha"][0..7]
   end
 
   def state
@@ -34,7 +34,7 @@ class CommitStatus
   end
 
   def aggregate
-    @aggregate ||= api.get "/repos/#{name_with_owner}}/commits/#{data["sha"]}/status"
+    @aggregate ||= api.combined_status(name_with_owner, sha)
   end
 
   def branches
@@ -53,16 +53,33 @@ class CommitStatus
     data["repository"]["full_name"]
   end
 
-  def auto_deployable?
-    default_branch? && successful?
+  def author
+    data["commit"]["commit"]["author"]["login"]
+  end
+
+  def auto_deploy(deployment)
+    compare = api.compare(name_with_owner, deployment.sha, sha)
+    if compare.ahead_by > 0
+      updated_payload = deployment.auto_deploy_payload(author, sha)
+
+      Rails.logger.info "Trying to deploy #{sha}"
+      api.create_deployment(name_with_owner, sha, :payload => updated_payload)
+    else
+      Rails.logger.info "#{sha} doesn't share a common commit with #{deployment.sha}"
+    end
   end
 
   def run!
-    if auto_deployable?
-      Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha}"
-    elsif successful?
-      branch = branches && branches.any? && branches.first['name']
-      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha[0..7]}"
+    if successful?
+      if default_branch?
+        Deployment.latest_for_name_with_owner(name_with_owner).each do |deployment|
+          Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
+          auto_deploy(deployment)
+        end
+      else
+        branch = branches && branches.any? && branches.first['name']
+        Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha}"
+      end
     end
   end
 end
