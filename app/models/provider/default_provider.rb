@@ -1,7 +1,7 @@
 module Provider
   class DefaultProvider
     include ApiClient
-    include Deployment::LogFile
+    include LocalLogFile
 
     attr_accessor :guid, :name, :payload
 
