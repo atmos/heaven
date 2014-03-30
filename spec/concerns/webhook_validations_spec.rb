@@ -16,7 +16,7 @@ describe WebhookValidations::Validator do
 
   context "instances methods" do
     it "makes methods available" do
-      expect(ModuleTester.new).to be_github_ip_address
+      expect(ModuleTester.new).to be_valid_incoming_webhook_address
     end
   end
 

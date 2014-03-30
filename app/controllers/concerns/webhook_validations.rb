@@ -1,8 +1,10 @@
 module WebhookValidations
   extend ActiveSupport::Concern
 
-  def github_ip_address?
-    Validator.new(request.ip).valid?
+  def valid_incoming_webhook_address?
+    unless Validator.new(request.ip).valid?
+      render :status => 404, :json => "{}"
+    end
   end
 
   class Validator
