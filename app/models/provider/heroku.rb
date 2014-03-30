@@ -1,6 +1,6 @@
 module Provider
   class Heroku < DefaultProvider
-    def initialize(guid, payload, token)
+    def initialize(guid, payload)
       super
       @name = "heroku"
     end

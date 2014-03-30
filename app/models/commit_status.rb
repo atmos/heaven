@@ -1,18 +1,15 @@
 class CommitStatus
-  attr_accessor :guid, :payload, :token
+  include ApiClient
 
-  def initialize(guid, payload, token)
+  attr_accessor :guid, :payload
+
+  def initialize(guid, payload)
     @guid    = guid
-    @token   = token
     @payload = payload
   end
 
   def data
     @data ||= JSON.parse(payload)
-  end
-
-  def api
-    @api ||= Octokit::Client.new(:access_token => token)
   end
 
   def successful?

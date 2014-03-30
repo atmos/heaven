@@ -14,7 +14,7 @@ describe Deployment::Output do
       with(:body => params.to_json).
       to_return(:status => 200, :body => gist, :headers => {})
 
-    output = Deployment::Output.new("heaven", "<secret>", 42, SecureRandom.uuid)
+    output = Deployment::Output.new("heaven", 42, SecureRandom.uuid)
     expect { output.create }.to_not raise_error
 
     params = {

@@ -2,7 +2,7 @@ module Provider
   class Dpl < DefaultProvider
     attr_accessor :last_child
 
-    def initialize(guid, payload, token)
+    def initialize(guid, payload)
       super
       @name = "dpl"
     end

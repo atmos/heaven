@@ -1,16 +1,12 @@
 class Deployment
   class Output
-    attr_accessor :guid, :name, :number, :token
+    include ApiClient
+    attr_accessor :guid, :name, :number
 
-    def initialize(name, token, number, guid)
+    def initialize(name, number, guid)
       @guid   = guid
       @name   = name
-      @token  = token
       @number = number
-    end
-
-    def api
-      @api ||= Octokit::Client.new(:access_token => token)
     end
 
     def create

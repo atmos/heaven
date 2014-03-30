@@ -1,15 +1,12 @@
 class Deployment
   class Status
-    attr_accessor :number, :nwo, :output, :token
-    def initialize(nwo, token, number)
+    include ApiClient
+
+    attr_accessor :number, :nwo, :output
+    def initialize(nwo, number)
       @nwo       = nwo
-      @token     = token
       @number    = number
       @completed = false
-    end
-
-    def api
-      @api ||= Octokit::Client.new(:access_token => @token)
     end
 
     def url
