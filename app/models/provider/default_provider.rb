@@ -61,7 +61,7 @@ module Provider
 
     def clone_url
       uri = Addressable::URI.parse(repository_url)
-      uri.user = token
+      uri.user = github_token
       uri.password = ""
       uri.to_s
     end
