@@ -12,26 +12,16 @@ class CommitStatus
     @data ||= JSON.parse(payload)
   end
 
-  # This Commit Status succeeded
   def successful?
     state == "success"
   end
 
-  # All Commit Statuses across contexts were successful
-  def green?
-    aggregate["state"] == "success"
-  end
-
   def sha
-    data["sha"]
+    data["sha"][0..7]
   end
 
   def state
     data["state"]
-  end
-
-  def aggregate
-    @aggregate ||= api.get "/repos/#{name_with_owner}}/commits/#{data["sha"]}/status"
   end
 
   def branches
@@ -50,16 +40,21 @@ class CommitStatus
     data["repository"]["full_name"]
   end
 
-  def auto_deployable?
-    default_branch? && successful?
+  def author
+    data["commit"]["commit"]["author"]["login"]
   end
 
   def run!
-    if auto_deployable?
-      Rails.logger.info "Finna tryna deploy #{name_with_owner}@#{sha}"
-    elsif successful?
-      branch = branches && branches.any? && branches.first['name']
-      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha[0..7]}"
+    if successful?
+      if default_branch?
+        Deployment.latest_for_name_with_owner(name_with_owner).each do |deployment|
+          Rails.logger.info "tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
+          AutoDeployment.new(deployment, self).execute
+        end
+      else
+        branch = branches && branches.any? && branches.first['name']
+        Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha}"
+      end
     end
   end
 end
