@@ -19,10 +19,13 @@ class Deployment
     end
 
     def update(stdout, stderr)
-      params = {
-        'stdout' => { :content => stdout },
-        'stderr' => { :content => stderr }
-      }
+      Rails.logger.info stdout
+      Rails.logger.info stderr
+
+      params = { 'stdout' => { :content => stdout } }
+
+      params.merge('stderr' => stderr) unless stderr.empty?
+
       api.edit_gist(@gist.id, :public => false, :files => params)
     rescue Octokit::UnprocessableEntity
       Rails.logger.info "Unable to update #{@gist.id}, shit's fucked up."
