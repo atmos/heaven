@@ -113,7 +113,10 @@ module Provider
     end
 
     def notify
-      output.update(build.stdout, build.stderr)
+      output.stderr = build.stderr
+      output.stdout = build.stdout
+
+      output.update!
       if build.success?
         status.success!
       else

@@ -1,12 +1,14 @@
 class Deployment
   class Output
     include ApiClient
-    attr_accessor :guid, :name, :number
+    attr_accessor :guid, :name, :number, :stderr, :stdout
 
     def initialize(name, number, guid)
       @guid   = guid
       @name   = name
       @number = number
+      @stdout = ""
+      @stderr = ""
     end
 
     def create
@@ -18,10 +20,7 @@ class Deployment
       @gist = api.create_gist(params)
     end
 
-    def update(stdout, stderr)
-      Rails.logger.info stdout
-      Rails.logger.info stderr
-
+    def update!
       params = { 'stdout' => { :content => stdout } }
 
       params.merge('stderr' => stderr) unless stderr.empty?
