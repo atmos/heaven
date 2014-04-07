@@ -9,6 +9,7 @@ gem "yajl-ruby"
 gem "heroku-api"
 gem "rendezvous"
 gem "posix-spawn"
+gem "secure_headers"
 gem "warden-github-rails"
 
 gem "octokit"

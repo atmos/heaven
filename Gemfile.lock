@@ -143,6 +143,7 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    secure_headers (1.1.1)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -206,6 +207,7 @@ DEPENDENCIES
   resque
   rspec-rails
   sdoc
+  secure_headers
   sqlite3
   unicorn
   warden-github-rails
