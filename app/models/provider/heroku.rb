@@ -116,7 +116,7 @@ module Provider
       output.stderr = build.stderr
       output.stdout = build.stdout
 
-      output.update!
+      output.update
       if build.success?
         status.success!
       else
