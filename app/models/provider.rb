@@ -7,7 +7,7 @@ module Provider
   def self.provider_class_for(payload)
     case provider_name_for(payload)
     when "heroku"
-      Provider::Heroku
+      Provider::HerokuHeavenProvider
     else
       Provider::Dpl
     end

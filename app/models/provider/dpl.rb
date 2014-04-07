@@ -75,7 +75,9 @@ module Provider
     end
 
     def notify 
-      output.update(File.read(stdout_file), File.read(stderr_file))
+      output.stderr = File.read(stderr_file)
+      output.stdout = File.read(stdout_file)
+      output.update
       if last_child.success?
         status.success!
       else

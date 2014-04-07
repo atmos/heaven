@@ -18,16 +18,20 @@ describe Deployment::Output do
     expect { output.create }.to_not raise_error
 
     params = {
-      :public => false,
       :files  => {
-        :stdout => {:content => "push to limit" },
-        :stderr => {:content => "chasing dreams" }
-      }
+        :stderr => {:content => "chasing dreams" },
+        :stdout => {:content => "push to limit" }
+      },
+      :public => false
     }
 
     stub_request(:patch, "https://api.github.com/gists/#{gist.id}").
       with(:body => params.to_json).
       to_return(:status => 200, :body => "", :headers => {})
-    expect { output.update("push to limit", "chasing dreams") }.to_not raise_error
+
+    output.stderr = "chasing dreams"
+    output.stdout = "push to limit"
+
+    expect { output.update }.to_not raise_error
   end
 end
