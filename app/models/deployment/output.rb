@@ -40,7 +40,6 @@ class Deployment
           :public => false
         }
 
-
         unless stderr.empty?
           params[:files].merge!(:stderr => { :content => stderr })
         end
