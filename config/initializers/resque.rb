@@ -3,14 +3,13 @@ module Heaven
 
   def self.redis
     @redis ||= if ENV["OPENREDIS_URL"]
-                 uri = URI.parse(ENV["OPENREDIS_URL"])
-                 Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+                 Redis.new(:url => ENV['OPENREDIS_URL'])
                elsif ENV["BOXEN_REDIS_URL"]
-                 uri = URI.parse(ENV["BOXEN_REDIS_URL"])
-                 Redis.new(:host => uri.host, :port => uri.port)
+                 Redis.new(:url => ENV['BOXEN_REDIS_URL'])
                else
                  Redis.new
                end
+
     Resque.redis = Redis::Namespace.new("#{REDIS_PREFIX}:resque", :redis => @redis)
     @redis
   end
