@@ -111,11 +111,17 @@ module Provider
                         :sha             => sha)
     end
 
+    def timeout
+      ENV['DEPLOYMENT_TIMEOUT'] || '300'
+    end
+
     def run!
-      setup
-      execute
-      notify
-      record
+      Timeout.timeout(timeout) do
+        setup
+        execute
+        notify
+        record
+      end
     rescue StandardError => e
       Rails.logger.info e.message
     ensure
