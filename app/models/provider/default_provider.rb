@@ -124,6 +124,7 @@ module Provider
       end
     rescue StandardError => e
       Rails.logger.info e.message
+      Rails.logger.info caller
     ensure
       status.failure! unless completed?
     end
