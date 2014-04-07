@@ -14,7 +14,7 @@ module Provider
     def http
       @http ||= Faraday.new(http_options) do |faraday|
         faraday.request  :url_encoded
-        faraday.response :logger
+        faraday.response :logger unless %w(staging production).include?(Rails.env)
         faraday.adapter  Faraday.default_adapter
       end
     end
