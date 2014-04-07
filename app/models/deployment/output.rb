@@ -11,8 +11,12 @@ class Deployment
       @stderr = ""
     end
 
-    def create
+    def gist
       @gist ||= api.create_gist(create_params)
+    end
+
+    def create
+      gist
     end
 
     def update
