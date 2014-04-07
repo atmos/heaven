@@ -112,7 +112,7 @@ module Provider
     end
 
     def timeout
-      ENV['DEPLOYMENT_TIMEOUT'] || '300'
+      Integer(ENV['DEPLOYMENT_TIMEOUT'] || '300')
     end
 
     def run!
