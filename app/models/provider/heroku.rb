@@ -78,7 +78,7 @@ module Provider
     end
   end
 
-  class Heroku < DefaultProvider
+  class HerokuHeavenProvider < DefaultProvider
     include HerokuApiClient
 
     attr_accessor :build
