@@ -18,7 +18,11 @@ class Deployment
     end
 
     def payload
-      {:target_url => output, :description => description}
+      {:target_url => output, :description => description, :accept => accept}
+    end
+
+    def accept
+      "application/vnd.github.cannonball-preview+json"
     end
 
     def pending!
