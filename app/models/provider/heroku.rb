@@ -111,8 +111,12 @@ module Provider
     def execute_commands(commands)
       commands.each do |cmd|
         cmd_tweaked = heroku_command_tweak(cmd)
-        Rails.logger.info "  run `#{cmd_tweaked}`"
-        IO.popen(cmd_tweaked){ |out| Rails.logger.info out.read }
+        r, io = IO.pipe
+        fork do
+          system(cmd_tweaked, out: io, err: :out)
+        end
+        r.each_line{ |l| Rails.logger.info l }
+        # TODO save the output in a gist
       end
     end
 
