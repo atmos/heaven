@@ -112,7 +112,7 @@ module Provider
       commands.each do |cmd|
         cmd_tweaked = heroku_command_tweak(cmd)
         Rails.logger.info "  run `#{cmd_tweaked}`"
-        system cmd_tweaked
+        IO.popen(cmd_tweaked){ |f| Rails.logger.info f.gets }
       end
     end
 
