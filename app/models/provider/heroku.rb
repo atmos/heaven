@@ -103,6 +103,19 @@ module Provider
       @archive_link ||= api.archive_link(name_with_owner, :ref => sha)
     end
 
+    def heroku_command_tweak(cmd)
+      return cmd unless cmd.start_with?("heroku")
+      "#{cmd} --app #{app_name}"
+    end
+
+    def execute_commands(commands)
+      commands.each do |cmd|
+        cmd_tweaked = heroku_command_tweak(cmd)
+        Rails.logger.info "  run `#{cmd_tweaked}`"
+        system cmd_tweaked
+      end
+    end
+
     def execute
       response = build_request
       if response.success?
