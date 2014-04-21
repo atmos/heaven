@@ -79,11 +79,11 @@ module Provider
     end
 
     def custom_payload_before_deploy
-      custom_payload && custom_payload['before_deploy']
+      custom_payload_config && custom_payload_config['before_deploy']
     end
 
     def custom_payload_after_deploy
-      custom_payload && custom_payload['after_deploy']
+      custom_payload_config && custom_payload_config['after_deploy']
     end
 
     def setup
@@ -98,15 +98,18 @@ module Provider
 
     def execute_commands(commands)
       commands.each do |cmd|
+        Rails.logger.info "  run `#{cmd}`"
         system cmd
       end
     end
 
     def before_deploy
+      Rails.logger.info "Execute before deploy scripts #{custom_payload_before_deploy}"
       execute_commands(custom_payload_before_deploy || [])
     end
 
     def after_deploy
+      Rails.logger.info "Execute after deploy scripts #{custom_payload_after_deploy}"
       execute_commands(custom_payload_after_deploy || [])
     end
 
