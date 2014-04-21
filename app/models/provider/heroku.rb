@@ -89,9 +89,14 @@ module Provider
 
     def app_name
       return nil unless custom_payload_config
-      environment == "staging" ?
-        custom_payload_config['heroku_staging_name'] :
-        custom_payload_config['heroku_name']
+
+      app_key = "heroku_#{environment}_name"
+      if custom_payload_config.has_key?(app_key)
+        custom_payload_config[app_key]
+      else
+        puts "Specify a There is no heroku specific app #{app_key} for the environment #{environment}"
+        custom_payload_config["heroku_name"]  # default app name
+      end
     end
 
     def archive_link
