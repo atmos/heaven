@@ -70,10 +70,6 @@ module Provider
       @custom_payload ||= data['payload']
     end
 
-    def custom_payload_ref
-      custom_payload && custom_payload['ref']
-    end
-
     def custom_payload_name
       custom_payload && custom_payload['name']
     end
