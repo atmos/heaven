@@ -1,11 +1,11 @@
 {
   "id": 721,
+  "ref": "feature-1",
   "sha": "9be5c2b9c34c1f8beb0cec30bb0c875d098f45ef",
   "name": "atmos/my-robot",
+  "environment": "staging",
   "payload": {
     "task": "deploy",
-    "branch": "feature-1",
-    "environment": "staging",
     "config": {
       "provider": "heroku",
       "repository": "hubot/hubot",

@@ -44,11 +44,11 @@ module Provider
     end
 
     def ref
-      custom_payload_ref || default_branch
+      data['ref']
     end
 
     def environment
-      custom_payload && custom_payload.fetch("environment", "production")
+      data['environment']
     end
 
     def repository_url
