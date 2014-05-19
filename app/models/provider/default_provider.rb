@@ -108,10 +108,16 @@ module Provider
       status.completed?
     end
 
+    def execute_and_log(cmd)
+      child = POSIX::Spawn::Child.new(cmd)
+      log_stdout(child.out)
+      log_stderr(child.err)
+      child
+    end
+
     def execute_commands(commands)
       commands.each do |cmd|
-        Rails.logger.info "  run `#{cmd}`"
-        system cmd
+        execute_and_log cmd
       end
     end
 
