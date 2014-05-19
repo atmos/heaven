@@ -82,6 +82,18 @@ module Provider
       custom_payload_config && custom_payload_config['before_deploy']
     end
 
+    def custom_payload_pre_deploy
+      custom_payload_config && custom_payload_config['pre_deploy']
+    end
+
+    def custom_payload_post_deploy
+      custom_payload_config && custom_payload_config['post_deploy']
+    end
+
+    def custom_payload_before_deploy
+      custom_payload_config && custom_payload_config['before_deploy']
+    end
+
     def custom_payload_after_deploy
       custom_payload_config && custom_payload_config['after_deploy']
     end
@@ -106,6 +118,16 @@ module Provider
     def before_deploy
       Rails.logger.info "Execute before deploy scripts #{custom_payload_before_deploy}"
       execute_commands(custom_payload_before_deploy || [])
+    end
+
+    def pre_deploy
+      Rails.logger.info "Execute pre-deploy scripts #{custom_payload_pre_deploy}"
+      execute_commands(custom_payload_pre_deploy || [])
+    end
+
+    def post_deploy
+      Rails.logger.info "Execute post-deploy scripts #{custom_payload_post_deploy}"
+      execute_commands(custom_payload_post_deploy || [])
     end
 
     def after_deploy
@@ -140,7 +162,9 @@ module Provider
       before_deploy
       Timeout.timeout(timeout) do
         setup
+        pre_deploy
         execute
+        post_deploy
         notify
         record
       end
