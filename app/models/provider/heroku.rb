@@ -34,6 +34,7 @@ module Provider
       response = http.get do |req|
         req.url "/apps/#{name}/builds/#{id}"
       end
+      Rails.logger.info "#{response.status} -> #{response.body}"
       @info = JSON.parse(response.body)
     end
 
@@ -41,6 +42,7 @@ module Provider
       response = http.get do |req|
         req.url "/apps/#{name}/builds/#{id}/result"
       end
+      Rails.logger.info "#{response.status} -> #{response.body}"
       @output = JSON.parse(response.body)
     end
 
@@ -118,11 +120,15 @@ module Provider
     end
 
     def notify
-      output.stderr = build.stderr
-      output.stdout = build.stdout
+      if build
+        output.stderr = build.stderr
+        output.stdout = build.stdout
+      else
+        output.stderr = "Unable to create a build"
+      end
 
       output.update
-      if build.success?
+      if build && build.success?
         status.success!
       else
         status.failure!
