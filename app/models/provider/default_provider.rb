@@ -78,26 +78,6 @@ module Provider
       custom_payload && custom_payload['config']
     end
 
-    def custom_payload_before_deploy
-      custom_payload_config && custom_payload_config['before_deploy']
-    end
-
-    def custom_payload_pre_deploy
-      custom_payload_config && custom_payload_config['pre_deploy']
-    end
-
-    def custom_payload_post_deploy
-      custom_payload_config && custom_payload_config['post_deploy']
-    end
-
-    def custom_payload_before_deploy
-      custom_payload_config && custom_payload_config['before_deploy']
-    end
-
-    def custom_payload_after_deploy
-      custom_payload_config && custom_payload_config['after_deploy']
-    end
-
     def setup
       output.create
       status.output = output.url
@@ -123,23 +103,27 @@ module Provider
     end
 
     def before_deploy
-      Rails.logger.info "Execute before deploy scripts #{custom_payload_before_deploy}"
-      execute_commands(custom_payload_before_deploy || [])
+      cmds = custom_payload_config.to_h.fetch("before_deploy", [])
+      Rails.logger.info "Execute before deploy scripts #{cmds}"
+      execute_commands(cmds)
     end
 
     def pre_deploy
-      Rails.logger.info "Execute pre-deploy scripts #{custom_payload_pre_deploy}"
-      execute_commands(custom_payload_pre_deploy || [])
+      cmds = custom_payload_config.to_h.fetch("pre_deploy", [])
+      Rails.logger.info "Execute pre-deploy scripts #{cmds}"
+      execute_commands(cmds)
     end
 
     def post_deploy
-      Rails.logger.info "Execute post-deploy scripts #{custom_payload_post_deploy}"
-      execute_commands(custom_payload_post_deploy || [])
+      cmds = custom_payload_config.to_h.fetch("post_deploy", [])
+      Rails.logger.info "Execute post-deploy scripts #{cmds}"
+      execute_commands(cmds)
     end
 
     def after_deploy
-      Rails.logger.info "Execute after deploy scripts #{custom_payload_after_deploy}"
-      execute_commands(custom_payload_after_deploy || [])
+      cmds = custom_payload_config.to_h.fetch("after_deploy", [])
+      Rails.logger.info "Execute after deploy scripts #{cmds}"
+      execute_commands(cmds)
     end
 
     def execute
