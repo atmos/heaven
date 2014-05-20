@@ -29,8 +29,8 @@ describe Deployment::Output do
       with(:body => params.to_json).
       to_return(:status => 200, :body => "", :headers => {})
 
-    output.stderr = "chasing dreams"
-    output.stdout = "push to limit"
+    output.outs[:stderr] = "chasing dreams"
+    output.outs[:stdout] = "push to limit"
 
     expect { output.update }.to_not raise_error
   end
