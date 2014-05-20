@@ -16,3 +16,4 @@
 /tmp
 vendor/gems
 public/assets
+release.sh
