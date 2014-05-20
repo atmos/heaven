@@ -88,6 +88,44 @@ module Provider
       status.completed?
     end
 
+    def execute_and_log(cmd)
+      child = POSIX::Spawn::Child.new(cmd)
+      output.outs["stdout #{cmd}"] = child.out
+      output.outs["stderr #{cmd}"] = child.err
+      output.update
+      child
+    end
+
+    def execute_commands(commands)
+      commands.each do |cmd|
+        execute_and_log cmd
+      end
+    end
+
+    def before_deploy
+      cmds = custom_payload_config.to_h.fetch("before_deploy", [])
+      Rails.logger.info "Execute before deploy scripts #{cmds}"
+      execute_commands(cmds)
+    end
+
+    def pre_deploy
+      cmds = custom_payload_config.to_h.fetch("pre_deploy", [])
+      Rails.logger.info "Execute pre-deploy scripts #{cmds}"
+      execute_commands(cmds)
+    end
+
+    def post_deploy
+      cmds = custom_payload_config.to_h.fetch("post_deploy", [])
+      Rails.logger.info "Execute post-deploy scripts #{cmds}"
+      execute_commands(cmds)
+    end
+
+    def after_deploy
+      cmds = custom_payload_config.to_h.fetch("after_deploy", [])
+      Rails.logger.info "Execute after deploy scripts #{cmds}"
+      execute_commands(cmds)
+    end
+
     def execute
       warn "Heaven Provider(#{name}) didn't implement execute"
     end
@@ -112,12 +150,16 @@ module Provider
     end
 
     def run!
+      before_deploy
       Timeout.timeout(timeout) do
         setup
+        pre_deploy
         execute
+        post_deploy
         notify
         record
       end
+      after_deploy
     rescue StandardError => e
       Rails.logger.info e.message
       Rails.logger.info caller

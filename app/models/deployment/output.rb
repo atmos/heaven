@@ -1,14 +1,16 @@
 class Deployment
   class Output
     include ApiClient
-    attr_accessor :gist, :guid, :name, :number, :stderr, :stdout
+    attr_accessor :gist, :guid, :name, :number, :outs
 
     def initialize(name, number, guid)
       @guid   = guid
       @name   = name
       @number = number
-      @stdout = ""
-      @stderr = ""
+      @outs = {
+        :stderr => "",
+        :stdout => "",
+      }
     end
 
     def gist
@@ -44,13 +46,12 @@ class Deployment
           :public => false
         }
 
-        unless stderr.empty?
-          params[:files].merge!(:stderr => { :content => stderr })
+        outs.each do |channel, out|
+          unless out.empty?
+            params[:files].merge!(channel => { :content => out })
+          end
         end
 
-        unless stdout.empty?
-          params[:files].merge!(:stdout => { :content => stdout })
-        end
         params
       end
   end
