@@ -49,7 +49,7 @@ module Provider
       end
     end
 
-    def notify 
+    def notify
       output.stderr = File.read(stderr_file)
       output.stdout = File.read(stdout_file)
       output.update
