@@ -2,15 +2,15 @@ module ApiClient
   extend ActiveSupport::Concern
 
   def github_token
-    @github_token ||= ENV['GITHUB_OCTOKIT_CLIENT_TOKEN'] || '<unknown>'
+    ENV['GITHUB_TOKEN'] || '<unknown>'
   end
 
   def github_client_id
-    @github_client_id ||= ENV['GITHUB_CLIENT_ID'] || '<unknown-client-id>'
+    ENV['GITHUB_CLIENT_ID'] || '<unknown-client-id>'
   end
 
   def github_client_secret
-    @github_client_id ||= ENV['GITHUB_CLIENT_SECRET'] || '<unknown-client-secret>'
+    ENV['GITHUB_CLIENT_SECRET'] || '<unknown-client-secret>'
   end
 
   def api
