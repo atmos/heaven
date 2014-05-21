@@ -13,6 +13,10 @@ class Deployment
       setup_netrc
     end
 
+    def netrc_config
+      "#{root}/.netrc"
+    end
+
     def ssh_directory
       "#{root}/.ssh"
     end
@@ -46,7 +50,7 @@ Host all
     end
 
     def setup_netrc
-      File.open("#{root}/.netrc", "w", 0600) do |fp|
+      File.open(netrc_config, "w", 0600) do |fp|
         fp.puts <<-EOF
 machine github.com
 username #{github_token}

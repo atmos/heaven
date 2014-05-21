@@ -1,15 +1,16 @@
 require "spec_helper"
 
-describe Deployment::SshConfig do
+describe Deployment::Credentials do
   it "knows the path" do
     root = "#{Dir.pwd}/tmp"
-    config = Deployment::SshConfig.new(File.expand_path("../../../../tmp", __FILE__))
-    expect(config.root).to eql(root)
-    expect(config.path).to eql("#{root}/.ssh")
-    expect(config.config_path).to eql("#{root}/.ssh/config")
-    expect(config.private_key_path).to eql("#{root}/.ssh/id_rsa")
-    expect(config.git_ssh_path).to eql("#{root}/git-ssh")
+    tmpdir = File.expand_path("../../../../tmp", __FILE__)
 
-    expect{ config.configure! }.to_not raise_error
+    credentials = Deployment::Credentials.new(tmpdir)
+    expect(credentials.root).to eql(root)
+    expect(credentials.ssh_key).to eql("#{root}/.ssh/id_rsa")
+    expect(credentials.ssh_config).to eql("#{root}/.ssh/config")
+    expect(credentials.netrc_config).to eql("#{root}/.netrc")
+
+    expect{ credentials.setup! }.to_not raise_error
   end
 end
