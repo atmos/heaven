@@ -114,7 +114,7 @@ module Provider
     def run!
       Timeout.timeout(timeout) do
         setup
-        execute
+        execute unless Rails.env.test?
         notify
         record
       end
