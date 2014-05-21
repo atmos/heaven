@@ -36,6 +36,12 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     callsite (0.0.11)
+    capistrano (2.9.0)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     coderay (1.1.0)
     columnize (0.3.6)
     crack (0.4.2)
@@ -60,6 +66,7 @@ GEM
     heroku-api (0.3.17)
       excon (~> 0.27)
       multi_json (~> 1.8.2)
+    highline (1.6.21)
     hike (1.2.3)
     i18n (0.6.9)
     json (1.8.1)
@@ -77,6 +84,13 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.8.4)
     multipart-post (2.0.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.1)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     octokit (3.1.0)
       sawyer (~> 0.5.3)
     pg (0.17.1)
@@ -194,6 +208,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  capistrano (= 2.9.0)
   debugger
   dpl (= 1.5.7)
   foreman
