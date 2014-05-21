@@ -27,7 +27,7 @@ class Deployment
       FileUtils.chmod_R 0700, path
 
       File.open(private_key_path, "w", 0600) do |fp|
-        fp.puts(ENV["HEROKU_DEPLOY_PRIVATE_KEY"].split('\n'))
+        fp.puts(ENV["DEPLOYMENT_PRIVATE_KEY"].split('\n'))
       end
 
       File.open(config_path, "w", 0600) do |fp|
