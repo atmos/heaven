@@ -56,7 +56,7 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 ## Extra Environmental Variables
 
 * `GITHUB_TEAM_ID`: The GitHub team id to restrict resque access to.
-* `GITHUB_DEPLOY_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for API interaction.
+* `GITHUB_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for API interaction.
 * `DEPLOYMENT_TIMEOUT`: A timeout in seconds that the deployment should take. Deployments are aborted if they exceed this value. Defaults to 300 seconds.
 
 # See Also
