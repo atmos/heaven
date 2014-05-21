@@ -20,6 +20,9 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before do
+    ENV['GITHUB_CLIENT_ID']     = '<unknown-client-id>'
+    ENV['GITHUB_CLIENT_SECRET'] = '<unknown-client-secret>'
+
     stub_meta
     Resque.inline = true
   end
