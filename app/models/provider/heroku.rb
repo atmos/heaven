@@ -34,7 +34,7 @@ module Provider
       response = http.get do |req|
         req.url "/apps/#{name}/builds/#{id}"
       end
-      Rails.logger.info "#{response.status} -> #{response.body}"
+      Rails.logger.info "#{response.status} response for Heroku build info for #{id}"
       @info = JSON.parse(response.body)
     end
 
@@ -42,7 +42,7 @@ module Provider
       response = http.get do |req|
         req.url "/apps/#{name}/builds/#{id}/result"
       end
-      Rails.logger.info "#{response.status} -> #{response.body}"
+      Rails.logger.info "#{response.status} response for Heroku build output for #{id}"
       @output = JSON.parse(response.body)
     end
 
