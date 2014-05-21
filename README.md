@@ -60,6 +60,7 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 
 * `GITHUB_TEAM_ID`: The GitHub team id to restrict resque access to.
 * `GITHUB_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for API interaction. The token owner needs administrative rights to the repository.
+* `DEPLOYMENT_PRIVATE_KEY`: Only for capistrano deployments sshing into remote systems. This is an ssh private key used to login to your remote servers via SSH.
 * `DEPLOYMENT_TIMEOUT`: A timeout in seconds that the deployment should take. Deployments are aborted if they exceed this value. Defaults to 300 seconds.
 
 # See Also
