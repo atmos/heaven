@@ -44,6 +44,9 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 
     $ heroku addons:add openredis:micro
     $ heroku ps:scale worker=1
+    $ heroku config:add GITHUB_TOKEN=<key>
+    Setting config vars and restarting heaven... done, v7
+    GITHUB_TOKEN: <key>
     $ heroku config:add GITHUB_CLIENT_ID=<key>
     Setting config vars and restarting heaven... done, v8
     GITHUB_CLIENT_ID: <key>
@@ -56,7 +59,7 @@ You need redis for resque and as many workers as you think you'll need. I'd keep
 ## Extra Environmental Variables
 
 * `GITHUB_TEAM_ID`: The GitHub team id to restrict resque access to.
-* `GITHUB_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for API interaction.
+* `GITHUB_TOKEN`: A personal access token from your [account settings](https://github.com/settings/applications), for API interaction. The token owner needs administrative rights to the repository.
 * `DEPLOYMENT_TIMEOUT`: A timeout in seconds that the deployment should take. Deployments are aborted if they exceed this value. Defaults to 300 seconds.
 
 # See Also
