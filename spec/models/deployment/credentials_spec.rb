@@ -1,16 +1,13 @@
 require "spec_helper"
 
 describe Deployment::Credentials do
-  it "knows the path" do
+  it "correctly sets up the environment" do
     root = "#{Dir.pwd}/tmp"
-    tmpdir = File.expand_path("../../../../tmp", __FILE__)
-
-    credentials = Deployment::Credentials.new(tmpdir)
-    expect(credentials.root).to eql(root)
-    expect(credentials.ssh_key).to eql("#{root}/.ssh/id_rsa")
-    expect(credentials.ssh_config).to eql("#{root}/.ssh/config")
-    expect(credentials.netrc_config).to eql("#{root}/.netrc")
+    credentials = Deployment::Credentials.new(root)
 
     expect{ credentials.setup! }.to_not raise_error
+    expect(File.exists?("#{root}/.netrc")).to be true
+    expect(File.exists?("#{root}/.ssh/config")).to be true
+    expect(File.exists?("#{root}/.ssh/id_rsa")).to be true
   end
 end
