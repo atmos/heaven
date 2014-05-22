@@ -61,13 +61,6 @@ module Provider
       end
     end
 
-    def setup
-      super
-      unless File.exists?(working_directory)
-        FileUtils.mkdir_p working_directory
-      end
-    end
-
     def notify
       output.stderr = File.read(stderr_file)
       output.stdout = File.read(stdout_file)

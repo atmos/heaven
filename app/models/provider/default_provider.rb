@@ -94,6 +94,7 @@ module Provider
 
     def setup
       credentials.setup!
+
       output.create
       status.output = output.url
       status.pending!

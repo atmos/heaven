@@ -39,8 +39,7 @@ module Provider
         execute_and_log(["git", "fetch"])
         execute_and_log(["git", "reset", "--hard", sha])
         deploy_string = [ cap_path, environment, "-s", "branch=#{ref}", task ]
-        log File.read("#{working_directory}/.ssh/config")
-        log "Executing capistrano: #{deploy_string.join(',')}"
+        log "Executing capistrano: #{deploy_string.join(' ')}"
         execute_and_log(deploy_string)
       end
     end
