@@ -24,6 +24,7 @@ group :development, :test do
   gem "sqlite3"
   gem "webmock"
   gem "debugger"
+  gem "simplecov"
   gem "rspec-rails"
 end
 
