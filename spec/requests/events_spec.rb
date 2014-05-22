@@ -26,4 +26,11 @@ describe "receiving GitHub hooks" do
     expect(response).to be_success
     expect(response.status).to eql(201)
   end
+
+  it "handles deployment status events from valid hosts" do
+    post "/events", fixture_data("deployment-success"), default_headers("deployment_status")
+
+    expect(response).to be_success
+    expect(response.status).to eql(201)
+  end
 end

@@ -17,6 +17,9 @@ class Receiver
     if event == "deployment"
       provider = Provider.from(guid, payload)
       provider.run!
+    elsif event == "deployment_status"
+      notifier = Heaven::Notifier.for(payload)
+      notifier.post! if notifier
     elsif event == "status"
       CommitStatus.new(guid, payload).run!
     else

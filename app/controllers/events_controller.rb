@@ -8,7 +8,7 @@ class EventsController < ApplicationController
     event    = request.headers['HTTP_X_GITHUB_EVENT']
     delivery = request.headers['HTTP_X_GITHUB_DELIVERY']
 
-    if %w(deployment status ping).include?(event)
+    if valid_events.include?(event)
       request.body.rewind
       data = request.body.read
 
@@ -17,5 +17,9 @@ class EventsController < ApplicationController
     else
       render :status => 404, :json => "{}"
     end
+  end
+
+  def valid_events
+    %w(deployment deployment_status status ping)
   end
 end
