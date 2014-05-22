@@ -3,12 +3,13 @@ module Provider
     include ApiClient
     include LocalLogFile
 
-    attr_accessor :guid, :name, :payload
+    attr_accessor :credentials, :guid, :name, :payload
 
     def initialize(guid, payload)
-      @guid    = guid
-      @name    = "unknown"
-      @payload = payload
+      @guid        = guid
+      @name        = "unknown"
+      @payload     = payload
+      @credentials = ::Deployment::Credentials.new(working_directory)
     end
 
     def data
@@ -16,7 +17,7 @@ module Provider
     end
 
     def output
-      @output ||= Deployment::Output.new(app_name, number, guid)
+      @output ||= Deployment::Output.new(name, number, guid)
     end
 
     def status
@@ -25,6 +26,19 @@ module Provider
 
     def redis
       Heaven.redis
+    end
+
+    def log(line)
+      Rails.logger.info "#{name}-#{guid}: #{line}"
+    end
+
+    def gem_executable_path(name)
+      executable_path = "/app/vendor/bundle/bin/#{name}"
+      if File.exists?(executable_path)
+        executable_path
+      else
+        "bin/#{name}"
+      end
     end
 
     def number
@@ -79,6 +93,8 @@ module Provider
     end
 
     def setup
+      credentials.setup!
+
       output.create
       status.output = output.url
       status.pending!

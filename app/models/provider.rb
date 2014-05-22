@@ -8,6 +8,8 @@ module Provider
     case provider_name_for(payload)
     when "heroku"
       Provider::HerokuHeavenProvider
+    when "capistrano"
+      Provider::Capistrano
     else
       Provider::Dpl
     end

@@ -1,3 +1,3 @@
 module Heaven
-  VERSION = "0.5.5"
+  VERSION = "0.5.9"
 end

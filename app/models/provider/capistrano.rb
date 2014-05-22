@@ -1,40 +1,29 @@
 module Provider
-  class Dpl < DefaultProvider
+  class Capistrano < DefaultProvider
     attr_accessor :last_child
 
     def initialize(guid, payload)
       super
-      @name = "dpl"
+      @name = "capistrano"
     end
 
-    def app_name
-      return nil unless custom_payload_config
-      environment == "staging" ?
-        custom_payload_config['heroku_staging_name'] :
-        custom_payload_config['heroku_name']
+    def cap_path
+      gem_executable_path("cap")
+    end
+
+    def task
+      name = custom_payload && custom_payload['task'] || 'deploy'
+      unless name =~ /deploy(?:\:[\w+:]+)?/
+        raise StandardError "Invalid capistrano taskname: #{name.inspect}"
+      end
+      name
     end
 
     def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new(*cmds)
+      @last_child = POSIX::Spawn::Child.new({"HOME"=>working_directory},*cmds)
       log_stdout(last_child.out)
       log_stderr(last_child.err)
       last_child
-    end
-
-    def heroku_username
-      ENV['HEROKU_USERNAME']
-    end
-
-    def heroku_password
-      ENV['HEROKU_PASSWORD']
-    end
-
-    def heroku_api_key
-      ENV['HEROKU_API_KEY']
-    end
-
-    def dpl_path
-      gem_executable_path("dpl")
     end
 
     def execute
@@ -49,14 +38,8 @@ module Provider
         log "Fetching the latest code"
         execute_and_log(["git", "fetch"])
         execute_and_log(["git", "reset", "--hard", sha])
-        log "Pushing to heroku"
-        deploy_string = [ "#{dpl_path}",
-                          "--provider=heroku",
-                          "--strategy=git",
-                          "--api-key=#{heroku_api_key}",
-                          "--username=#{heroku_username}",
-                          "--password=#{heroku_password}",
-                          "--app=#{app_name}"]
+        deploy_string = [ cap_path, environment, "-s", "branch=#{ref}", task ]
+        log "Executing capistrano: #{deploy_string.join(' ')}"
         execute_and_log(deploy_string)
       end
     end
