@@ -4,7 +4,7 @@ module Heaven
       attr_accessor :payload
 
       def initialize(payload)
-        @payload = payload
+        @payload = JSON.parse(payload)
       end
 
       def deliver(message)
