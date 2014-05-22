@@ -38,12 +38,16 @@ class Deployment
         "#{ssh_directory}/id_rsa"
       end
 
+      def ssh_private_key
+        ENV["DEPLOYMENT_PRIVATE_KEY"] || ""
+      end
+
       def setup_ssh
         FileUtils.mkdir_p ssh_directory
         FileUtils.chmod_R 0700, ssh_directory
 
         File.open(ssh_key, "w", 0600) do |fp|
-          fp.puts(ENV["DEPLOYMENT_PRIVATE_KEY"].split('\n'))
+          fp.puts(ssh_private_key.split('\n'))
         end
 
         File.open(ssh_config, "w", 0600) do |fp|
