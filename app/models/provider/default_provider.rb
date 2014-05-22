@@ -28,6 +28,19 @@ module Provider
       Heaven.redis
     end
 
+    def log(line)
+      Rails.logger.info "#{name}-#{guid}: #{line}"
+    end
+
+    def gem_executable_path(name)
+      executable_path = "/app/vendor/bundle/bin/#{name}"
+      if File.exists?(executable_path)
+        executable_path
+      else
+        "bin/#{name}"
+      end
+    end
+
     def number
       data['id']
     end

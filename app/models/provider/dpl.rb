@@ -21,10 +21,6 @@ module Provider
       last_child
     end
 
-    def log(line)
-      Rails.logger.info "#{app_name}-#{guid}: #{line}"
-    end
-
     def heroku_username
       ENV['HEROKU_USERNAME']
     end
@@ -38,12 +34,7 @@ module Provider
     end
 
     def dpl_path
-      heroku_dpl = "/app/vendor/bundle/bin/dpl"
-      if File.exists?(heroku_dpl)
-        heroku_dpl
-      else
-        "bin/dpl"
-      end
+      gem_executable_path("dpl")
     end
 
     def execute
@@ -59,9 +50,12 @@ module Provider
         execute_and_log(["git", "fetch"])
         execute_and_log(["git", "reset", "--hard", sha])
         log "Pushing to heroku"
-        deploy_string = [ "#{dpl_path}", "--provider=heroku", "--strategy=git",
+        deploy_string = [ "#{dpl_path}",
+                          "--provider=heroku",
+                          "--strategy=git",
                           "--api-key=#{heroku_api_key}",
-                          "--username=#{heroku_username}", "--password=#{heroku_password}",
+                          "--username=#{heroku_username}",
+                          "--password=#{heroku_password}",
                           "--app=#{app_name}"]
         execute_and_log(deploy_string)
       end
@@ -74,7 +68,7 @@ module Provider
       end
     end
 
-    def notify 
+    def notify
       output.stderr = File.read(stderr_file)
       output.stdout = File.read(stdout_file)
       output.update

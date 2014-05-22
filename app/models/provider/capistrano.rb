@@ -8,12 +8,7 @@ module Provider
     end
 
     def cap_path
-      cap = "/app/vendor/bundle/bin/cap"
-      if File.exists?(cap)
-        cap
-      else
-        "bin/cap"
-      end
+      gem_executable_path("cap")
     end
 
     def task
@@ -29,10 +24,6 @@ module Provider
       log_stdout(last_child.out)
       log_stderr(last_child.err)
       last_child
-    end
-
-    def log(line)
-      Rails.logger.info "#{name}-#{guid}: #{line}"
     end
 
     def execute
