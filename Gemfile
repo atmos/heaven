@@ -1,21 +1,22 @@
 ruby '2.0.0'
 source 'https://rubygems.org'
 
-gem "dpl",      "1.5.7"
 gem "rails",    "~>4.1.0"
 gem "resque"
+gem "octokit"
 gem "unicorn"
 gem "yajl-ruby"
-gem "capistrano", "2.9.0"
 gem "posix-spawn"
 gem "warden-github-rails"
 
-gem "octokit"
+# Providers
+gem "dpl",        "1.5.7"
+gem "capistrano", "2.9.0"
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
+# Notifiers
+gem "hipchat"
+gem "campfiyah"
+gem "slack-notifier"
 
 group :development, :test do
   gem "pry"
