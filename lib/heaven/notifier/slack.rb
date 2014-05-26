@@ -7,9 +7,10 @@ module Heaven
 
         Rails.logger.info "slack: #{filtered_message}"
 
+        output_message << " - ##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
           :channel     => "##{chat_room}",
-          :username    => "Deployment ##{deployment_number} - #{repo_name} / #{ref} / #{environment}",
+          :username    => "hubot",
           :icon_url    => "https://octodex.github.com/images/labtocat.png",
           :attachments => [{
             :text    => filtered_message,
