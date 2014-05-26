@@ -2,13 +2,9 @@
 
 A provider is an interface to taking code on GitHub at a specific sha and doing something with it. Heaven comes with two example providers that show off how to interact with HTTP APIs(heroku) as well as shelling out(capistrano). It should be easy to adapt to things like [fabric][10], [chef][11], and [puppet][12] as well.
 
-### Configuration
-
-| Environmental Variables |                                                 |
-|-------------------------|-------------------------------------------------|
-| GITHUB_TOKEN            | A personal access token from your [account settings][16], for API interaction.    |
-
 All providers run inside of [resque][3] jobs and have a configurable timeout.
+
+### Example Provider
 
 ```ruby
 module Provider
@@ -30,13 +26,13 @@ Jobs will timeout if they don't complete in 300 seconds. If you really need more
 
 The heroku provider uses the [build and release API][13]. It requests an [archive link][14] from GitHub and passes that on to heroku. It polls the API every few seconds until the heroku build api completes.
 
-### Configuration
+### Required Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
 
-The interaction is really simple. Once heroku finishes the build it creates a [heroku release][19].
+### Flow
 
 ```
 +--------+            +----------+         +-------------+
@@ -86,7 +82,7 @@ Capistrano gives you a distrubted task management system over ssh. The heaven pr
 * branch
 * task
 
-### Configuration
+### Required Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
@@ -145,7 +141,7 @@ end
 
 ```
 
-Here's a diagram of how it all works.
+### Flow
 
 ```
 +--------+            +----------+         +-------------+
