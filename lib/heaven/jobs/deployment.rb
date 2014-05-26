@@ -1,7 +1,20 @@
 module Heaven
   module Jobs
     class Deployment
+      extend Resque::Plugins::Lock
+
       @queue = :deployments
+
+      # Only allow one deployment per-environment at a time
+      def self.lock(guid, payload)
+        data = JSON.parse(payload)
+        if payload = data['payload']
+          if name = payload['name']
+            return "#{name}-#{data['environment']}"
+          end
+        end
+        guid
+      end
 
       attr_accessor :guid, :payload
 
