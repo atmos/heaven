@@ -9,19 +9,17 @@ class Receiver
     @payload   = payload
   end
 
-  def self.perform(event, guid, data)
-    new(event, guid, data).run!
+  def self.perform(event, guid, payload)
+    new(event, guid, payload).run!
   end
 
   def run!
     if event == "deployment"
-      provider = Provider.from(guid, payload)
-      provider.run!
+      Resque.enqueue(Heaven::Jobs::Deployment, guid, payload)
     elsif event == "deployment_status"
-      notifier = Heaven::Notifier.for(payload)
-      notifier.post! if notifier
+      Resque.enqueue(Heaven::Jobs::DeploymentStatus, guid, payload)
     elsif event == "status"
-      CommitStatus.new(guid, payload).run!
+      Resque.enqueue(Heaven::Jobs::Status, guid, payload)
     else
       Rails.logger.info "Unhandled event type, #{event}."
     end
