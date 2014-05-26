@@ -29,7 +29,14 @@ Heaven is a rails app that receives [Deployment][1] events from GitHub and deplo
      |                      |                       |                     |
 ```
 
-Heaven is just an example of what a [webhook listener][2] on a repo can do. You can set up as many systems as you need to handle your web, mobile, native, compiled, and docker images while keeping the tooling the same. You can also start evaluating new systems on a per-repo basis without introducing widespread breakage across a deployment systems userbase.
+Heaven aims to give you [GitHub Flow](https://guides.github.com/introduction/flow/index.html). It allows you to deploy branches easily and always roll back to master.
+
+The goal of heaven is to be one of many deployment systems that you can use with the Deployments API. It's a small app that receives [webhooks][2] for specific repositories. You can set up as many systems as you need to handle your web, mobile, native, compiled, and docker images while keeping the tooling the same through GitHub. You can also start evaluating new systems on a per-repo basis without introducing widespread breakage across a deployment systems userbase.
+
+If you deploy from chat then this all starts to feel pretty natural.
+
+![](https://f.cloud.github.com/assets/38/2330090/208fce50-a42a-11e3-94e6-46beaac78bfb.jpg)
+
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up

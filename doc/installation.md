@@ -1,8 +1,6 @@
 # Installation
 
-Heaven was written as proof of concept for [GitHub's Deployment API][1]. 
-
-Heaven was designed to be hosted on heroku. You can run multiple installs of it if you need one to be run internally  and be customizable It's designed to be hosted on 
+Heaven is a rails app that was designed to be hosted on heroku.
 
 ## Hosting on heroku
 
