@@ -140,7 +140,13 @@ module Provider
       def build_request
         response = http.post do |req|
           req.url "/apps/#{app_name}/builds"
-          req.body = JSON.dump(:source_blob => {:url => archive_link})
+          body = {
+            :source_blob => {
+              :url     => archive_link,
+              :version => sha
+            }
+          }
+          req.body = JSON.dump(body)
         end
       end
   end
