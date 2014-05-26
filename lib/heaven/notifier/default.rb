@@ -97,6 +97,8 @@ module Heaven
           message << "'s #{environment} deployment of #{repository_link} is done! "
         when 'failure'
           message << "'s #{environment} deployment of #{repository_link} failed. "
+        when 'error'
+          message << "'s #{environment} deployment of #{repository_link} has errors. "
         when 'pending'
           message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
         else

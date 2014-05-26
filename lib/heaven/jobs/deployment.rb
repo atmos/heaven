@@ -1,12 +1,13 @@
 module Heaven
   module Jobs
     class Deployment
-      extend Resque::Plugins::Lock
+      extend Resque::Plugins::LockTimeout
 
       @queue = :deployments
+      @lock_timeout = Integer(ENV['DEPLOYMENT_TIMEOUT'] || '300')
 
       # Only allow one deployment per-environment at a time
-      def self.lock(guid, payload)
+      def self.redis_lock_key(guid, payload)
         data = JSON.parse(payload)
         if payload = data['payload']
           if name = payload['name']
@@ -14,6 +15,10 @@ module Heaven
           end
         end
         guid
+      end
+
+      def self.identifier(guid, payload)
+        redis_lock_key(guid, payload)
       end
 
       attr_accessor :guid, :payload

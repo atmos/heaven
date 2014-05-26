@@ -35,6 +35,11 @@ class Deployment
       @completed = true
     end
 
+    def error!
+      api.create_deployment_status(url, "error", payload)
+      @completed = true
+    end
+
     def completed?
       @completed
     end

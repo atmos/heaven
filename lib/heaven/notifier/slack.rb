@@ -9,7 +9,7 @@ module Heaven
 
         slack_account.ping "",
           :channel     => "##{chat_room}",
-          :username    => "Shipping #{repo_name}",
+          :username    => "Deployment ##{deployment_number} - #{repo_name} / #{ref} / #{environment}",
           :icon_url    => "https://octodex.github.com/images/labtocat.png",
           :attachments => [{
             :text    => filtered_message,
