@@ -6,10 +6,14 @@ Heaven was designed to be hosted on heroku. You can run multiple installs of it 
 
 ## Hosting on heroku
 
+### Process Management
+
 You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
 
     $ heroku addons:add openredis:micro
     $ heroku ps:scale worker=1
+
+### Configuration
 
 Set the follow environmental variables are present `heroku config:add` like this.
 
@@ -28,7 +32,7 @@ GITHUB_TOKEN: <key>
 | GITHUB_TEAM_ID          | A GitHub team id to restrict resque access to.  |
 | RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 
-### Extra Configuration
+### Optional Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
