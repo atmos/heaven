@@ -51,9 +51,6 @@ GITHUB_TOKEN: <key>
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
 |-------------------------|-------------------------------------------------|
 
-
-All providers run inside of [resque][3] jobs and have a configurable timeout.
-
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
