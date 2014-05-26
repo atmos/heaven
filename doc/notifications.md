@@ -4,6 +4,8 @@ Heaven looks for information in the environments and tries to give feedback to c
 
 All notifications run inside of [resque][3] jobs and need to define a deliver method.
 
+### Example Provider
+
 ```ruby
 module Heaven
   module Notifier
@@ -15,23 +17,27 @@ module Heaven
 end
 ```
 
-## Configuration
+## SlackHQ
 
-### SlackHQ
+### Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | SLACK_TOKEN             | A campfire API token from the 'my info' section of [campfire][7].|
 | SLACK_SUBDOMAIN         | This subdomain for the slack chat. For example https://atmos.slack.com would be 'atmos'|
 
-### Campfire
+## Campfire
+
+### Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | CAMPFIRE_TOKEN          | A campfire API token from the 'my info' section of [campfire][7].                               |
 | CAMPFIRE_SUBDOMAIN      | This subdomain for the campfire. For example https://atmos.campfirenow.com would be 'atmos'  |
 
-### HipChat
+## HipChat
+
+### Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
