@@ -22,34 +22,19 @@ GITHUB_TOKEN: <key>
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | DATABASE_URL            | A uri for to connect to a postgresql database.  |
-|-------------------------|-------------------------------------------------|
-| GITHUB_TOKEN            | A personal access token from your               |
-|                         | [account settings][16], for API interaction.    |
-|-------------------------|-------------------------------------------------|
+| GITHUB_TOKEN            | A personal access token from your [account settings][16], for API interaction.    |
 | GITHUB_CLIENT_ID        | The client id of the OAuth application.         |
-|-------------------------|-------------------------------------------------|
 | GITHUB_CLIENT_SECRET    | The client secret of the OAuth application.     |
-|-------------------------|-------------------------------------------------|
 | GITHUB_TEAM_ID          | A GitHub team id to restrict resque access to.  |
-|-------------------------|-------------------------------------------------|
-| RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies.     |
-|                         | This should be unique per domain.               |
-|-------------------------|-------------------------------------------------|
+| RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 
 ### Extra Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote |
-|                         | servers via SSH. Put it all on one line with    |
-|                         | `\n` in it.                                     |
-|-------------------------|-------------------------------------------------|
-| DEPLOYMENT_TIMEOUT      | A timeout in seconds that the deployment should |
-|                         | take. Deployments are aborted if they exceed    |
-|                         | this value. Defaults to 300 seconds             |
-|-------------------------|-------------------------------------------------|
+| DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote servers via SSH. Put it all on one line with    `\n` in it.|
+| DEPLOYMENT_TIMEOUT      | A timeout in seconds that the deployment should take. Deployments are aborted if they exceed   this value. Defaults to 300 seconds |
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
-|-------------------------|-------------------------------------------------|
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up

@@ -1,6 +1,6 @@
 # Overview
 
-Heaven is a rails app that receives [Deployment][1] events from GitHub and deploys your code. It works best with a [hubot](https://hubot.github.com), and give you a [chat-ops][20] style workflow.
+Heaven is a rails app that receives [Deployment][1] events from GitHub and deploys your code. It works best with a [hubot](https://hubot.github.com), and give you a [chat-ops][20] style workflow. It receives [GitHub webhooks][2] and runs deployment jobs as background tasks with [resque][3].  Heaven captures the standard input and output streams and posts the results to a [gist][4].
 
 ```
 +---------+             +--------+            +----------+         +-------------+
@@ -30,10 +30,6 @@ Heaven is a rails app that receives [Deployment][1] events from GitHub and deplo
 ```
 
 Heaven is just an example of what a [webhook listener][2] on a repo can do. You can set up as many systems as you need to handle your web, mobile, native, compiled, and docker images while keeping the tooling the same. You can also start evaluating new systems on a per-repo basis without introducing widespread breakage across a deployment systems userbase.
-
-Configure it from a [GitHub Webhook][2] and it processes incoming payloads with [resque][3]. 
-
-Heaven stores the shell output to a [gist][4].
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
