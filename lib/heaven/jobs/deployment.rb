@@ -9,7 +9,10 @@ module Heaven
       def self.lock(guid, payload)
         data = JSON.parse(payload)
         if payload = data['payload']
+          Rails.logger.info "Payload: #{payload.inspect}"
+          Rails.logger.info "Name: #{payload['name']}"
           if name = payload['name']
+            Rails.logger.info "Key: #{name}-#{data['environment']}"
             return "#{name}-#{data['environment']}"
           end
         end
