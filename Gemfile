@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 gem "rails",    "~>4.1.0"
 gem "resque"
-gem "resque-lock"
+gem "resque-lock-timeout"
 gem "octokit"
 gem "unicorn"
 gem "yajl-ruby"
