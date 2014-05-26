@@ -1,7 +1,7 @@
 module Heaven
   module Jobs
     class Status
-      @queue = :deployment_statuses
+      @queue = :statuses
 
       attr_accessor :guid, :payload
 
