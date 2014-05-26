@@ -21,33 +21,22 @@ end
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| SLACK_TOKEN             | A campfire API token from the 'my info' section |
-|                         | of [campfire][7].                               |
-|-------------------------|-------------------------------------------------|
-| SLACK_SUBDOMAIN         | This subdomain for the slack chat. For example  |
-|                         | https://atmos.slack.com would be 'atmos'        |
-|-------------------------|-------------------------------------------------|
+| SLACK_TOKEN             | A campfire API token from the 'my info' section of [campfire][7].|
+| SLACK_SUBDOMAIN         | This subdomain for the slack chat. For example https://atmos.slack.com would be 'atmos'|
 
 ### Campfire
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| CAMPFIRE_TOKEN          | A campfire API token from the 'my info' section |
-|                         | of [campfire][7].                               |
-|-------------------------|-------------------------------------------------|
-| CAMPFIRE_SUBDOMAIN      | This subdomain for the campfire. For example    |
-|                         | https://atmos.campfirenow.com would be 'atmos'  |
-|-------------------------|-------------------------------------------------|
+| CAMPFIRE_TOKEN          | A campfire API token from the 'my info' section of [campfire][7].                               |
+| CAMPFIRE_SUBDOMAIN      | This subdomain for the campfire. For example https://atmos.campfirenow.com would be 'atmos'  |
 
 ### HipChat
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| HIPCHAT_TOKEN           | The notification token to send messages to      |
-|                         | hipchat.                                        |
-|-------------------------|-------------------------------------------------|
+| HIPCHAT_TOKEN           | The notification token to send messages to hipchat. |
 | HIPCHAT_ROOM            | The room to post deployment messages to.        |
-|-------------------------|-------------------------------------------------|
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up

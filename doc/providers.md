@@ -6,9 +6,7 @@ A provider is an interface to taking code on GitHub at a specific sha and doing 
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| GITHUB_TOKEN            | A personal access token from your               |
-|                         | [account settings][16], for API interaction.    |
-|-------------------------|-------------------------------------------------|
+| GITHUB_TOKEN            | A personal access token from your [account settings][16], for API interaction.    |
 
 All providers run inside of [resque][3] jobs and have a configurable timeout.
 
@@ -37,7 +35,6 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
-|-------------------------|-------------------------------------------------|
 
 The interaction is really simple. Once heroku finishes the build it creates a [heroku release][19].
 
@@ -93,10 +90,7 @@ Capistrano gives you a distrubted task management system over ssh. The heaven pr
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote |
-|                         | servers via SSH. Put it all on one line with    |
-|                         | `\n` in it.                                     |
-|-------------------------|-------------------------------------------------|
+| DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote servers via SSH. Put it all on one line with    `\n` in it.|
 
 You need to configure your `:repository` option in your Capfile to use an https remote. The git interactions will always be over https and the ssh interactions will only involve accessing your servers.
 
