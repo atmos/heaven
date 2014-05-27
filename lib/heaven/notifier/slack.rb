@@ -2,12 +2,12 @@ module Heaven
   module Notifier
     class Slack < Notifier::Default
       def deliver(message)
-        output_message   = ::Slack::Notifier::LinkFormatter.format(output_link('Logs'))
-        filtered_message = ::Slack::Notifier::LinkFormatter.format(message + " #{ascii_face}")
+        output_message   = ""
+        filtered_message = ::Slack::Notifier::LinkFormatter.format(message)
 
         Rails.logger.info "slack: #{filtered_message}"
 
-        output_message << " - ##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
+        output_message << "##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
           :channel     => "##{chat_room}",
           :username    => "hubot",
@@ -17,6 +17,24 @@ module Heaven
             :color   => green? ? "good" : "danger",
             :pretext => pending? ? output_message : " "
           }]
+      end
+
+      def default_message
+        message = ::Slack::Notifier::LinkFormatter.format(output_link("##{deployment_number}"))
+        message << " : #{user_link}"
+        case state
+        when 'success'
+          message << "'s #{environment} deployment of #{repository_link} is done! "
+        when 'failure'
+          message << "'s #{environment} deployment of #{repository_link} failed. "
+        when 'error'
+          message << "'s #{environment} deployment of #{repository_link} has errors. #{ascii_face} "
+          message << description unless description =~ /Deploying from Heaven/
+        when 'pending'
+          message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
+        else
+          puts "Unhandled deployment state, #{state}"
+        end
       end
 
       def slack_token

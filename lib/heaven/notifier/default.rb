@@ -46,6 +46,10 @@ module Heaven
         payload['target_url']
       end
 
+      def description
+        payload['description']
+      end
+
       def deployment
         payload['deployment']
       end

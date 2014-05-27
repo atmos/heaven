@@ -2,19 +2,16 @@ class Deployment
   class Status
     include ApiClient
 
-    attr_accessor :number, :nwo, :output
+    attr_accessor :description, :number, :nwo, :output
     def initialize(nwo, number)
-      @nwo       = nwo
-      @number    = number
-      @completed = false
+      @nwo         = nwo
+      @number      = number
+      @completed   = false
+      @description = "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
     def url
       "https://api.github.com/repos/#{nwo}/deployments/#{number}"
-    end
-
-    def description
-      "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
     def payload

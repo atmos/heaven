@@ -12,6 +12,7 @@ module Heaven
 
       def self.perform(guid, payload)
         provider = ::Provider::DefaultProvider.new(guid, payload)
+        provider.status.description = "Already deploying."
         provider.status.error!
 
         Rails.logger.info "Deployment errored out, run was locked."
