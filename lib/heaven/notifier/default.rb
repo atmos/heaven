@@ -119,7 +119,11 @@ module Heaven
       end
 
       def output_link(link_title = "deployment")
-        "[#{link_title}](#{target_url})"
+        if target_url
+          "[#{link_title}](#{target_url})"
+        else
+          link_title
+        end
       end
     end
   end

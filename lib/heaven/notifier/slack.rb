@@ -6,6 +6,7 @@ module Heaven
         filtered_message = ::Slack::Notifier::LinkFormatter.format(message)
 
         Rails.logger.info "slack: #{filtered_message}"
+        Rails.logger.info "message: #{message}"
 
         output_message << "##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
@@ -20,7 +21,7 @@ module Heaven
       end
 
       def default_message
-        message = ::Slack::Notifier::LinkFormatter.format(output_link("##{deployment_number}"))
+        message = output_link("##{deployment_number}")
         message << " : #{user_link}"
         case state
         when 'success'
