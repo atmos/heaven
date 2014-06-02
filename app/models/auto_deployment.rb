@@ -32,7 +32,7 @@ class AutoDeployment
   end
 
   def create_deployment
-    description = :description => "Heaven auto deploy triggered by a commit status change"
+    description = "Heaven auto deploy triggered by a commit status change"
     api.create_deployment(name_with_owner, sha, :payload => updated_payload, :description => description )
   end
 
