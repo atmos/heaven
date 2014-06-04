@@ -19,5 +19,6 @@ public/assets
 release.sh
 coverage
 
-# Ignore chef cookbooks
+# Ignore vagrant & cookbooks
+.vagrant/
 /cookbooks/*
