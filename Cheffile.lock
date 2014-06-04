@@ -1,0 +1,24 @@
+SITE
+  remote: http://community.opscode.com/api/v1
+  specs:
+    apt (2.3.8)
+
+GIT
+  remote: https://github.com/fnichol/chef-rvm
+  ref: v0.9.0
+  sha: 4a408e5d6c5a52c37388a799c516430263339849
+  specs:
+    rvm (0.9.0)
+
+GIT
+  remote: https://github.com/phlipper/chef-postgresql
+  ref: master
+  sha: 89670ad805393f6b4bb495c32a03115a66f6fe61
+  specs:
+    postgresql (0.13.1)
+      apt (>= 1.9.0)
+
+DEPENDENCIES
+  postgresql (>= 0)
+  rvm (>= 0)
+
