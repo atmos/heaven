@@ -28,6 +28,7 @@ GITHUB_TOKEN: <key>
 | GITHUB_CLIENT_ID        | The client id of the OAuth application.         |
 | GITHUB_CLIENT_SECRET    | The client secret of the OAuth application.     |
 | GITHUB_TEAM_ID          | A GitHub team id to restrict resque access to.  |
+| BUILDPACK_URL           | Heroku support for multiple runtimes. [Link][20] |
 | RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 
 ### Optional Configuration
@@ -57,3 +58,4 @@ GITHUB_TOKEN: <key>
 [17]: https://devcenter.heroku.com/articles/oauth#direct-authorization
 [18]: https://www.phusionpassenger.com/
 [19]: https://devcenter.heroku.com/articles/releases
+[20]: https://github.com/ddollar/heroku-buildpack-multi
