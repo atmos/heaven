@@ -68,8 +68,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.vm.provision :shell, :path => "server/setup.sh"
-  config.vm.provision :shell, :path => "server/install-nodejs.sh"
+  config.vm.provision :shell, :path => "vagrant/setup.sh"
+  config.vm.provision :shell, :path => "vagrant/install-nodejs.sh"
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
