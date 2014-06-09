@@ -23,7 +23,7 @@ end
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| SLACK_TOKEN             | A campfire API token from the 'my info' section of [campfire][7].|
+| SLACK_TOKEN             | A Slack API token from [incoming-webhook][21] section of Slack|
 | SLACK_SUBDOMAIN         | This subdomain for the slack chat. For example https://atmos.slack.com would be 'atmos'|
 
 ## Campfire
@@ -64,3 +64,4 @@ end
 [18]: https://www.phusionpassenger.com/
 [19]: https://devcenter.heroku.com/articles/releases
 [20]: https://github.com/atmos/hubot-deploy
+[21]: https://my.slack.com/services/new/incoming-webhook
