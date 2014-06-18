@@ -11,8 +11,8 @@ module Heaven
         output_message << "##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
           :channel     => "##{chat_room}",
-          :username    => "hubot",
-          :icon_url    => "https://octodex.github.com/images/labtocat.png",
+          :username    => "Capybot",
+          :icon_url    => "https://s3-us-west-2.amazonaws.com/slack-files2/bot_icons/2014-06-17/2399828904_48.png",
           :attachments => [{
             :text    => filtered_message,
             :color   => green? ? "good" : "danger",
