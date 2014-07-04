@@ -177,6 +177,29 @@ end
     |                       |                     |
 ```
 
+## Fabric
+
+Fabric enables distrubted task management system over ssh. The heaven provider gives you support for three options.
+
+### Options
+
+* environment
+* branch
+* task
+
+### Required Configuration
+
+| Environmental Variables |                                                 |
+|-------------------------|-------------------------------------------------|
+| DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote servers via SSH. Put it all on one line with    `\n` in it.|
+
+### Optional Configuration
+
+| Environmental Variables |                                                 |
+|-------------------------|-------------------------------------------------|
+| DEPLOY_COMMAND_FORMAT   | Allows you to define the specific task calling format for your fabric file. Defaults to: `fab -R %{environment} %{task}:branch_name=%{ref}` |
+
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
