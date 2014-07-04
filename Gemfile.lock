@@ -66,6 +66,9 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
+    flowdock (0.4.0)
+      httparty (~> 0.7)
+      multi_json
     foreman (0.63.0)
       dotenv (>= 0.7)
       thor (>= 0.13.6)
@@ -223,6 +226,7 @@ DEPENDENCIES
   capistrano (= 2.9.0)
   debugger
   dpl (= 1.5.7)
+  flowdock
   foreman
   hipchat
   meta_request
