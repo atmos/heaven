@@ -139,8 +139,7 @@ module Provider
         record
       end
     rescue StandardError => e
-      Rails.logger.info e.message
-      Rails.logger.info e.backtrace
+      Rails.logger.error "#{e.backtrace.first}: #{e.message} (#{e.class})", e.backtrace.drop(1).map{|s| "\t#{s}" }
     ensure
       status.failure! unless completed?
     end
