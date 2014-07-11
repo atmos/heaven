@@ -38,6 +38,7 @@ GITHUB_TOKEN: <key>
 | DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote servers via SSH. Put it all on one line with    `\n` in it.|
 | DEPLOYMENT_TIMEOUT      | A timeout in seconds that the deployment should take. Deployments are aborted if they exceed   this value. Defaults to 300 seconds |
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
+| REDIS_PROVIDER          | If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL (e.g. `REDISTOGO_URL`) |
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up

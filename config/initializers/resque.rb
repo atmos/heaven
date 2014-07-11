@@ -2,7 +2,9 @@ module Heaven
   REDIS_PREFIX = "heaven:#{Rails.env}"
 
   def self.redis
-    @redis ||= if ENV["OPENREDIS_URL"]
+    @redis ||= if ENV['REDIS_PROVIDER']
+                 Redis.new(:url => ENV[ENV['REDIS_PROVIDER']])
+               elsif ENV["OPENREDIS_URL"]
                  Redis.new(:url => ENV['OPENREDIS_URL'])
                elsif ENV["BOXEN_REDIS_URL"]
                  Redis.new(:url => ENV['BOXEN_REDIS_URL'])
