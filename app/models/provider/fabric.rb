@@ -11,6 +11,10 @@ module Provider
       custom_payload && custom_payload['task'] || 'deploy'
     end
 
+    def deploy_command_format
+      ENV['DEPLOY_COMMAND_FORMAT'] || "fab -R %{environment} %{task}:branch_name=%{ref}"
+    end
+
     def execute_and_log(cmds)
       @last_child = POSIX::Spawn::Child.new({"HOME"=>working_directory},*cmds)
       log_stdout(last_child.out)
@@ -30,7 +34,6 @@ module Provider
         log "Fetching the latest code"
         execute_and_log(["git", "fetch"])
         execute_and_log(["git", "reset", "--hard", sha])
-        deploy_command_format = ENV['DEPLOY_COMMAND_FORMAT'] || "fab -R %{environment} %{task}:branch_name=%{ref}"
         deploy_command = deploy_command_format % {
           :environment => environment,
           :task => task,
