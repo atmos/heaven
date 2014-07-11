@@ -18,6 +18,7 @@ gem "capistrano", "2.9.0"
 gem "hipchat"
 gem "campfiyah"
 gem "slack-notifier"
+gem "flowdock"
 
 group :development, :test do
   gem "pry"
