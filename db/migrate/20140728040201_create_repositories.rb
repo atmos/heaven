@@ -11,8 +11,8 @@ class CreateRepositories < ActiveRecord::Migration
     add_column :deployments, :repository_id, :integer
 
     Deployment.all.each do |deployment|
-      name, owner = deployment.name_with_owner.split('/')
-      repository = Repository.find_or_create_by(name: name, owner: owner)
+      owner, name = deployment.name_with_owner.split('/')
+      repository = Repository.find_or_create_by(owner: owner, name: name)
       deployment.repository = repository
       deployment.save
     end
