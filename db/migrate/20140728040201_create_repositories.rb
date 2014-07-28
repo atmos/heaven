@@ -7,5 +7,14 @@ class CreateRepositories < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_column :deployments, :repository_id, :integer
+
+    Deployment.all.each do |deployment|
+      name, owner = deployment.name_with_owner.split('/')
+      repository = Repository.find_or_create_by(name: name, owner: owner)
+      deployment.repository = repository
+      deployment.save
+    end
   end
 end

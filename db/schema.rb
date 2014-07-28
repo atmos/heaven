@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140728040201) do
     t.string   "sha"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "repository_id"
   end
 
   create_table "repositories", force: true do |t|
