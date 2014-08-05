@@ -1,9 +1,20 @@
 {
   "name": "Heaven",
   "description": "A deployment system for capistrano, fabric, and heroku.",
+
+  "keywords": [
+    "deployment",
+    "capistrano,
+    "fabric",
+    "continuous",
+    "hubot",
+    "github"
+  ],
+
   "website": "http://github.com/atmos/heaven",
+  "repository": "https://github.com/atmos/heaven",
   "success_url": "/resque",
-  "addons": ["heroku-postgresql:hobby-dev", "openredis:micro"],
+  "addons": ["heroku-postgresql:hobby-dev", "rediscloud"],
   "env": {
     "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
     "RAILS_ENV": "production",
@@ -12,8 +23,8 @@
       "generator": "secret"
     },
     "SETUP_BY": {
-      "description": "Who initiated this setup",
-      "value": ""
+      "description": "GitHub.com the Website",
+      "value": "https://github.com/atmos/heaven"
     }
   },
   "scripts": {
