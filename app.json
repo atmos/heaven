@@ -5,6 +5,7 @@
   "success_url": "/resque",
   "addons": ["heroku-postgresql:hobby-dev", "openredis:micro"],
   "env": {
+    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
     "RAILS_ENV": "production",
     "COOKIE_SECRET": {
       "description": "This gets generated",
