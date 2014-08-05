@@ -1,0 +1,21 @@
+{
+  "name": "Heaven",
+  "description": "A deployment system for capistrano, fabric, and heroku.",
+  "website": "http://github.com/atmos/heaven",
+  "success_url": "/resque",
+  "addons": ["heroku-postgresql:hobby-dev", "openredis:micro"],
+  "env": {
+    "RAILS_ENV": "production",
+    "COOKIE_SECRET": {
+      "description": "This gets generated",
+      "generator": "secret"
+    },
+    "SETUP_BY": {
+      "description": "Who initiated this setup",
+      "value": ""
+    }
+  },
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  }
+}
