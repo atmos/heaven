@@ -1,5 +1,6 @@
 {
   "name": "Heaven",
+  "logo": "https://cloud.githubusercontent.com/assets/704696/3822434/60e8b060-1d25-11e4-9baf-7fdb7f467e2b.gif",
   "description": "A deployment system for capistrano, fabric, and heroku.",
 
   "keywords": [
