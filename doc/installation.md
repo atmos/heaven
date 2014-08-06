@@ -6,9 +6,8 @@ Heaven is a rails app that was designed to be hosted on heroku.
 
 ## Process Management
 
-You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
+You need redis for resque and as many workers as you think you'll need. I'd keep it at two until you start to notice queuing.
 
-    $ heroku addons:add openredis:micro
     $ heroku ps:scale worker=2
 
 ## Configuration
