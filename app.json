@@ -37,7 +37,7 @@
       "description": "A direct authorization token from heroku."
     },
     "DEPLOYMENT_TIMEOUT": {
-      "description": "The maximum amount of time a deployment can take.",
+      "description": "The maximum amount of time a deployment can take in seconds.",
       "value": "300"
     },
     "RAILS_SECRET_KEY_BASE": {
