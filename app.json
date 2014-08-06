@@ -17,8 +17,6 @@
   "success_url": "/resque",
   "addons": ["heroku-postgresql:hobby-dev", "rediscloud"],
   "env": {
-    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
-    "RAILS_ENV": "production",
     "GITHUB_TOKEN": {
       "description": "A personal OAuth token from GitHub with repo scope.",
       "required": true
@@ -34,16 +32,21 @@
     "GITHUB_TEAM_ID": {
       "description": "A GitHub team id number to restrict resque access to."
     },
-    "HEROKU_API_KEY": {
-      "description": "A direct authorization token from heroku."
-    },
     "DEPLOYMENT_TIMEOUT": {
       "description": "The maximum amount of time a deployment can take in seconds.",
       "value": "300"
     },
+    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
+    "RAILS_ENV": {
+      "description": "This is what the RAILS_ENV unix environmental variable is set to.",
+      "value": "production"
+    },
     "RAILS_SECRET_KEY_BASE": {
       "description": "Unique token for signing cookies. This is generated.",
       "generator": "secret"
+    },
+    "HEROKU_API_KEY": {
+      "description": "A direct authorization token from heroku.(Optional)"
     }
   },
   "formation": [
