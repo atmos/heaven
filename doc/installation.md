@@ -4,22 +4,18 @@ Heaven is a rails app that was designed to be hosted on heroku.
 
 ## Hosting on heroku
 
+[![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://www.heroku.com/deploy/?template=https://github.com/atmos/heaven)
+
 ### Process Management
 
 You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
 
     $ heroku addons:add openredis:micro
-    $ heroku ps:scale worker=1
+    $ heroku ps:scale worker=2
 
 ### Configuration
 
-Set the follow environmental variables are present `heroku config:add` like this.
-
-```shell
-$ heroku config:add GITHUB_TOKEN=<key>
-Setting config vars and restarting heaven... done, v7
-GITHUB_TOKEN: <key>
-```
+Everything should have been configured via the heroku template.
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
