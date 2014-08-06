@@ -46,7 +46,7 @@
       "generator": "secret"
     },
     "HEROKU_API_KEY": {
-      "description": "A direct authorization token from heroku.(Optional)"
+      "description": "A direct authorization token from heroku. Optional."
     }
   },
   "formation": [
