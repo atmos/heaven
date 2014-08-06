@@ -1,4 +1,4 @@
-# Heaven [![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://www.heroku.com/deploy/?template=https://github.com/atmos/heaven) [![Build Status](https://travis-ci.org/atmos/heaven.png?branch=master)](https://travis-ci.org/atmos/heaven)
+# Heaven [![Build Status](https://travis-ci.org/atmos/heaven.png?branch=master)](https://travis-ci.org/atmos/heaven)
 
 Heaven is an API that integrates with GitHub's [Deployment API][1]. It receives [deployment events][5] from GitHub and pushes code to your servers.
 
@@ -10,6 +10,10 @@ Heaven currently supports [capistrano][15], [fabric][10], and [heroku][22] deplo
 * [Installation](/doc/installation.md)
 * [Deployment Providers](/doc/providers.md)
 * [Deployment Notifications](/doc/notifications.md)
+
+# Get Running
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://www.heroku.com/deploy/?template=https://github.com/heroku/node-js-sample)
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
