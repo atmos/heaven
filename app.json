@@ -4,7 +4,7 @@
 
   "keywords": [
     "deployment",
-    "capistrano,
+    "capistrano",
     "fabric",
     "continuous",
     "hubot",
@@ -18,13 +18,31 @@
   "env": {
     "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
     "RAILS_ENV": "production",
-    "COOKIE_SECRET": {
-      "description": "This gets generated",
-      "generator": "secret"
+    "GITHUB_TOKEN": {
+      "description": "A personal OAuth token from GitHub with repo scope.",
+      "required": true
     },
-    "SETUP_BY": {
-      "description": "GitHub.com the Website",
-      "value": "https://github.com/atmos/heaven"
+    "GITHUB_CLIENT_ID": {
+      "description": "A client id from a GitHub OAuth app you created.",
+      "required": true
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "description": "A client secret from a GitHub OAuth app you created.",
+      "required": true
+    },
+    "GITHUB_TEAM_ID": {
+      "description": "A GitHub team id number to restrict resque access to."
+    },
+    "HEROKU_API_KEY": {
+      "description": "A direct authorization token from heroku."
+    },
+    "DEPLOYMENT_TIMEOUT": {
+      "description": "The maximum amount of time a deployment can take.",
+      "value": "300"
+    },
+    "RAILS_SECRET_KEY_BASE": {
+      "description": "Unique token for signing cookies. This is generated.",
+      "generator": "secret"
     }
   },
   "scripts": {
