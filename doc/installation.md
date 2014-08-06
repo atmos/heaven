@@ -1,19 +1,15 @@
-# Installation
+# Installation [![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://dashboard-next.heroku.com/new?template=https://github.com/atmos/heaven)
 
 Heaven is a rails app that was designed to be hosted on heroku.
 
-## Hosting on heroku
-
-[![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://dashboard-next.heroku.com/new?template=https://github.com/atmos/heaven)
-
-### Process Management
+## Process Management
 
 You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
 
     $ heroku addons:add openredis:micro
     $ heroku ps:scale worker=2
 
-### Configuration
+## Configuration
 
 Everything should have been configured via the heroku template.
 
@@ -27,7 +23,7 @@ Everything should have been configured via the heroku template.
 | BUILDPACK_URL           | Heroku support for multiple runtimes. [Link][20] |
 | RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 
-### Optional Configuration
+## Optional Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
