@@ -2,7 +2,7 @@
 
 Heaven is a rails app that was designed to be hosted on heroku.
 
-[![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://dashboard-next.heroku.com/new?template=https://github.com/atmos/heaven)
+[![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/atmos/heaven)
 
 ## Process Management
 
