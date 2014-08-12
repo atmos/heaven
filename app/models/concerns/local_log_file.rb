@@ -17,10 +17,10 @@ module LocalLogFile
   end
 
   def log_stdout(out)
-    File.open(stdout_file, 'a') { |f| f.write(out) }
+    File.open(stdout_file, 'ab') { |f| f.write(out) }
   end
 
   def log_stderr(err)
-    File.open(stderr_file, 'a') { |f| f.write(err) }
+    File.open(stderr_file, 'ab') { |f| f.write(err) }
   end
 end
