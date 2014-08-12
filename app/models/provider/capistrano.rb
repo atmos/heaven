@@ -38,7 +38,8 @@ module Provider
         log "Fetching the latest code"
         execute_and_log(["git", "fetch"])
         execute_and_log(["git", "reset", "--hard", sha])
-        deploy_string = [ cap_path, environment, "-s", "branch=#{ref}", task ]
+        
+        deploy_string = [ cap_path, environment, task, "-s", "branch=#{ref}" ]
         log "Executing capistrano: #{deploy_string.join(' ')}"
         execute_and_log(deploy_string)
       end
