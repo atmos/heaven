@@ -11,6 +11,10 @@ Heaven currently supports [capistrano][15], [fabric][10], and [heroku][22] deplo
 * [Deployment Providers](/doc/providers.md)
 * [Deployment Notifications](/doc/notifications.md)
 
+# Launch on Heroku
+
+[![Launch on Heroku](https://www.herokucdn.com/deploy/button.png)](https://dashboard-next.heroku.com/new?template=https://github.com/atmos/heaven)
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
