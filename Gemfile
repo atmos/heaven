@@ -12,7 +12,7 @@ gem "warden-github-rails"
 
 # Providers
 gem "dpl",        "1.5.7"
-gem "capistrano", "2.9.0"
+gem "capistrano", "~> 3.2.0"
 
 # Notifiers
 gem "hipchat"
