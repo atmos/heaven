@@ -2,24 +2,15 @@
 
 Heaven is a rails app that was designed to be hosted on heroku.
 
-## Hosting on heroku
+## Process Management
 
-### Process Management
+You need redis for resque and as many workers as you think you'll need. I'd keep it at two until you start to notice queuing.
 
-You need redis for resque and as many workers as you think you'll need. I'd keep it at one until you start to notice queuing.
+    $ heroku ps:scale worker=2
 
-    $ heroku addons:add openredis:micro
-    $ heroku ps:scale worker=1
+## Configuration
 
-### Configuration
-
-Set the follow environmental variables are present `heroku config:add` like this.
-
-```shell
-$ heroku config:add GITHUB_TOKEN=<key>
-Setting config vars and restarting heaven... done, v7
-GITHUB_TOKEN: <key>
-```
+Everything should have been configured via the heroku template.
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
@@ -31,13 +22,14 @@ GITHUB_TOKEN: <key>
 | BUILDPACK_URL           | Heroku support for multiple runtimes. [Link][20] |
 | RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 
-### Optional Configuration
+## Optional Configuration
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | DEPLOYMENT_PRIVATE_KEY  | An ssh private key used to login to your remote servers via SSH. Put it all on one line with    `\n` in it.|
 | DEPLOYMENT_TIMEOUT      | A timeout in seconds that the deployment should take. Deployments are aborted if they exceed   this value. Defaults to 300 seconds |
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
+| REDIS_PROVIDER          | If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL (e.g. `REDISTOGO_URL`) |
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up

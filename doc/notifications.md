@@ -44,6 +44,15 @@ end
 | HIPCHAT_TOKEN           | The notification token to send messages to hipchat. |
 | HIPCHAT_ROOM            | The room to post deployment messages to.        |
 
+## Flowdock
+
+### Configuration
+
+| Environmental Variables |                                                 |
+|-------------------------|-------------------------------------------------|
+| FLOWDOCK_FLOW_API_TOKEN | The flow api token to for the flow to send messages to. |
+| FLOWDOCK_EXTERNAL_USER_NAME | Name that appears as the message sender.    |
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque

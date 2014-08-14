@@ -1,0 +1,64 @@
+{
+  "name": "Heaven",
+  "logo": "https://cloud.githubusercontent.com/assets/704696/3822434/60e8b060-1d25-11e4-9baf-7fdb7f467e2b.gif",
+  "description": "GitHub flow with capistrano, fabric, and heroku.",
+
+  "keywords": [
+    "deployment",
+    "capistrano",
+    "fabric",
+    "continuous",
+    "hubot",
+    "github"
+  ],
+
+  "website": "http://github.com/atmos/heaven",
+  "repository": "https://github.com/atmos/heaven",
+  "success_url": "/resque",
+  "addons": ["heroku-postgresql:hobby-dev", "rediscloud"],
+  "env": {
+    "GITHUB_TOKEN": {
+      "description": "A personal OAuth token from GitHub with repo scope.",
+      "required": true
+    },
+    "GITHUB_CLIENT_ID": {
+      "description": "A client id from a GitHub OAuth app you created.",
+      "required": true
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "description": "A client secret from a GitHub OAuth app you created.",
+      "required": true
+    },
+    "GITHUB_TEAM_ID": {
+      "description": "A GitHub team id number to restrict resque access to."
+    },
+    "DEPLOYMENT_TIMEOUT": {
+      "description": "The maximum amount of time a deployment can take in seconds.",
+      "value": "300"
+    },
+    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
+    "RAILS_ENV": {
+      "description": "This is what the RAILS_ENV unix environmental variable is set to.",
+      "value": "production"
+    },
+    "RAILS_SECRET_KEY_BASE": {
+      "description": "Unique token for signing cookies. This is generated.",
+      "generator": "secret"
+    },
+    "HEROKU_API_KEY": {
+      "description": "A direct authorization token from heroku. Optional.",
+      "required": false
+    },
+    "REDIS_PROVIDER": {
+      "description": "If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL. (e.g. REDISTOGO_URL)",
+      "value": "REDISCLOUD_URL"
+    }
+  },
+  "formation": [
+    { "process": "web",    "quantity": 1, "size": "1X" },
+    { "process": "worker", "quantity": 2, "size": "1X" }
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  }
+}

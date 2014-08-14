@@ -10,6 +10,8 @@ module Provider
       Provider::HerokuHeavenProvider
     when "capistrano"
       Provider::Capistrano
+    when "fabric"
+      Provider::Fabric
     else
       Provider::Dpl
     end
