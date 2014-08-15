@@ -36,7 +36,7 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 
 ```
 +--------+            +----------+         +-------------+
-| GitHub |            |  Heaven  |         |    Herkou   |
+| GitHub |            |  Heaven  |         |    Heroku   |
 +--------+            +----------+         +-------------+
     |                       |                     |
     |   Deployment Event    |                     |
@@ -179,7 +179,7 @@ end
 
 ## Fabric
 
-Fabric enables distrubted task management system over ssh. The heaven provider gives you support for three options.
+Fabric enables distributed task management system over ssh. The heaven provider gives you support for three options.
 
 ### Options
 
