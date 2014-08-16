@@ -46,10 +46,6 @@
     "HEROKU_API_KEY": {
       "description": "A direct authorization token from heroku. Optional.",
       "required": false
-    },
-    "REDIS_PROVIDER": {
-      "description": "If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL. (e.g. REDISTOGO_URL)",
-      "value": "REDISCLOUD_URL"
     }
   },
   "formation": [
