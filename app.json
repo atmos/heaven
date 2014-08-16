@@ -27,7 +27,7 @@
       "description": "A client secret from a GitHub OAuth app you created."
     },
     "GITHUB_TEAM_ID": {
-      "description": "A GitHub team id number to restrict resque access to.",
+      "description": "A GitHub team id number to restrict resque access to. Optional.",
       "required": false
     },
     "DEPLOYMENT_TIMEOUT": {
