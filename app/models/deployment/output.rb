@@ -23,6 +23,8 @@ class Deployment
       api.edit_gist(gist.id, update_params)
     rescue Octokit::UnprocessableEntity
       Rails.logger.info "Unable to update #{gist.id}, shit's fucked up."
+    rescue StandardError => e
+      Rails.logger.info "Unable to update #{gist.id}, #{e.message}."
     end
 
     def url
@@ -51,6 +53,7 @@ class Deployment
         unless stdout.empty?
           params[:files].merge!(:stdout => { :content => stdout })
         end
+
         params
       end
   end

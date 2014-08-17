@@ -140,7 +140,7 @@ module Provider
       end
     rescue StandardError => e
       Rails.logger.info e.message
-      Rails.logger.info caller
+      Rails.logger.info e.backtrace
     ensure
       status.failure! unless completed?
     end

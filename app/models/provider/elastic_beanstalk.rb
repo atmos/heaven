@@ -1,5 +1,7 @@
 module Provider
   class ElasticBeanstalk < DefaultProvider
+    attr_accessor :last_child
+
     def initialize(guid, payload)
       super
       @name = "elastic_beanstalk"
@@ -13,29 +15,42 @@ module Provider
       "#{name}-#{sha}.zip"
     end
 
+    def archive_link
+      @archive_link ||= api.archive_link(name_with_owner, :ref => sha)
+    end
+
+    def archive_zip
+      archive_link.gsub(/legacy\.tar\.gz/, 'deploy.zip')
+    end
+
+    def archive_path
+      @archive_path ||= "#{working_directory}/#{archive_name}"
+    end
+
     def fetch_source_code
+      execute_and_log(["curl", archive_zip, "-o", archive_path])
     end
 
     def execute
       return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
       configure_s3_bucket
-      log "Beanstalk: Fetching source code:"
-      filename = fetch_source_code
-      log "Beanstalk: Uploading source code:"
-      upload = upload_source_code(archive_name, filename)
-      log "Beanstalk: Creating application:"
+      log_stdout "Beanstalk: Fetching source code from GitHub:\n"
+      fetch_source_code
+      log_stdout "Beanstalk: Uploading source code: #{archive_path}\n"
+      upload = upload_source_code(archive_name, archive_path)
+      log_stdout "Beanstalk: Creating application: #{app_name}\n"
       app_version = create_app_version(upload.key)
-      log "Beanstalk: Updating application:"
+      log_stdout "Beanstalk: Updating application: #{app_name}-#{environment}.\n"
       update_app(app_version)
-
-      log "Done executing elastic beanstalk:"
     end
 
     def notify
-      output.stderr = File.read(stderr_file)
-      output.stdout = File.read(stdout_file)
+      output.stderr = File.read(stderr_file).force_encoding('utf-8')
+      output.stdout = File.read(stdout_file).force_encoding('utf-8')
+
       output.update
+
       if last_child.success?
         status.success!
       else
@@ -50,11 +65,21 @@ module Provider
     end
 
     def bucket_name
-      ENV["HEAVEN_S3_BEANSTALK_BUCKET"] || 
-        "heaven-elasticbeanstalk-builds-#{region}"
+      ENV["BEANSTALK_S3_BUCKET"] ||
+        "heaven-elasticbeanstalk-builds-#{custom_aws_region}"
     end
 
     private
+      def app_name
+        custom_payload_config && custom_payload_config["app_name"]
+      end
+
+      def execute_and_log(cmds)
+        @last_child = POSIX::Spawn::Child.new({"HOME"=>working_directory},*cmds)
+        log_stdout(last_child.out)
+        log_stderr(last_child.err)
+        last_child
+      end
 
       def configure_s3_bucket
         unless s3.buckets.map(&:name).include?(bucket_name)
@@ -76,19 +101,28 @@ module Provider
         eb.create_application_version(options)
       end
 
+      def update_app(version)
+        options = {
+          :environment_name  => environment,
+          :version_label     => version[:application_version][:version_label]
+        }
+        eb.update_environment(options)
+      end
+
       def version_label
         "heaven-#{sha}-#{Time.now.to_i}"
       end
 
       def custom_aws_region
-        custom_payload &&
+        (custom_payload &&
          custom_payload['aws'] &&
-          custom_payload['aws']['region']
+          custom_payload['aws']['region']) || 'us-east-1'
       end
 
       def aws_config
         {
-          region:            custom_aws_region || 'us-east-1',
+          region:            custom_aws_region,
+          logger:            Logger.new(stdout_file),
           access_key_id:     ENV['BEANSTALK_ACCESS_KEY_ID'],
           secret_access_key: ENV['BEANSTALK_SECRET_ACCESS_KEY']
         }
@@ -99,7 +133,7 @@ module Provider
       end
 
       def eb
-        @eb ||= AWS::ElasticBeanstalk.new.client(aws_config)
+        @eb ||= AWS::ElasticBeanstalk::Client.new(aws_config)
       end
   end
 end
