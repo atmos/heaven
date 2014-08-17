@@ -65,6 +65,10 @@ module Provider
       data['environment']
     end
 
+    def description
+      data['description'] || "Deploying from #{Heaven.version}"
+    end
+
     def repository_url
       data['repository']['clone_url']
     end
