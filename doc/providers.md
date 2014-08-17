@@ -216,7 +216,7 @@ applications.
 |--------------------------------|-------------------------------------------------|
 | BEANSTALK_S3_BUCKET            | The bucket to store s3 archives in.             |
 | BEANSTALK_ACCESS_KEY_ID        | The AWS access key id for API interaction with Amazon. |
-| BEANSTALK_ACCESS_SECRET_KEY_ID | The AWS secret access key id for API interaction with Amazon. |
+| BEANSTALK_SECRET_ACCESS_KEY    | The AWS secret access key for API interaction with Amazon. |
 
 ### Optional Configuration
 

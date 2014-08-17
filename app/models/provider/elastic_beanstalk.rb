@@ -90,7 +90,7 @@ module Provider
         {
           region:            custom_aws_region || 'us-east-1',
           access_key_id:     ENV['BEANSTALK_ACCESS_KEY_ID'],
-          secret_access_key: ENV['BEANSTALK_ACCESS_SECRET_KEY_ID']
+          secret_access_key: ENV['BEANSTALK_SECRET_ACCESS_KEY']
         }
       end
 
