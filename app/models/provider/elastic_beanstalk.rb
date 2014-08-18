@@ -39,8 +39,7 @@ module Provider
       app_version = create_app_version(upload.key)
       log_stdout "Beanstalk: Updating application: #{app_name}-#{environment}.\n"
       app_update  = update_app(app_version)
-      log app_update.inspect
-      status.output = "#{base_url}?region=#{custom_aws_region}#/environment/dashboard?applicationName=#{app_name}"
+      status.output = "#{base_url}?region=#{custom_aws_region}#/environment/dashboard?applicationName=#{app_name}&environmentId=#{app_update[:environment_id]}"
     end
 
     def base_url
