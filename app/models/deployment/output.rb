@@ -20,8 +20,7 @@ class Deployment
     end
 
     def update
-      content_type_headers = { :headers => {"Content-Type" => "application/json"}}
-      api.edit_gist(gist.id, update_params.merge(content_type_headers))
+      api.edit_gist(gist.id, update_params)
     rescue Octokit::UnprocessableEntity
       Rails.logger.info "Unable to update #{gist.id}, shit's fucked up."
     rescue StandardError => e
