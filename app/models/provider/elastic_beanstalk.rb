@@ -42,7 +42,7 @@ module Provider
     end
 
     def notify
-      output.stderr = File.read(stderr_file).force_encoding('utf-8')
+      output.stderr = ""
       output.stdout = File.read(stdout_file).force_encoding('utf-8')
 
       output.update
