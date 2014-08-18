@@ -7,10 +7,6 @@ module Provider
       @name = "elastic_beanstalk"
     end
 
-    def task
-      custom_payload && custom_payload['task'] || 'deploy'
-    end
-
     def archive_name
       "#{name}-#{sha}.zip"
     end
