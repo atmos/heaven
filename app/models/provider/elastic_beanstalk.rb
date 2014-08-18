@@ -24,7 +24,7 @@ module Provider
     end
 
     def fetch_source_code
-      execute_and_log(["curl", archive_zip, "-o", archive_path, "2>/dev/null"])
+      execute_and_log(["curl", archive_zip, "-o", archive_path])
     end
 
     def execute
@@ -47,7 +47,7 @@ module Provider
     end
 
     def notify
-      output.stderr = ""
+      output.stderr = File.read(stderr_file).force_encoding('utf-8')
       output.stdout = File.read(stdout_file).force_encoding('utf-8')
       output.update
       status.success!
