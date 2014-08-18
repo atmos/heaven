@@ -24,7 +24,7 @@ module Provider
     end
 
     def fetch_source_code
-      execute_and_log(["curl", archive_zip, "-o", archive_path, "2>/dev/null"])
+      execute_and_log(["curl", archive_zip, "-o", archive_path])
     end
 
     def execute
