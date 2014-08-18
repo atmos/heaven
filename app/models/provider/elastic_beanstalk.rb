@@ -38,7 +38,12 @@ module Provider
       log_stdout "Beanstalk: Creating application: #{app_name}\n"
       app_version = create_app_version(upload.key)
       log_stdout "Beanstalk: Updating application: #{app_name}-#{environment}.\n"
-      update_app(app_version)
+      app_update  = update_app(app_version)
+      status.output = "#{base_url}?region=#{custom_aws_region}#/environment/dashboard?applicationName=#{app_name}&environmentId=#{app_update[:environment_id]}"
+    end
+
+    def base_url
+      "https://console.aws.amazon.com/elasticbeanstalk/home"
     end
 
     def notify
