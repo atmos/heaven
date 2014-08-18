@@ -24,7 +24,7 @@ class Deployment
     rescue Octokit::UnprocessableEntity
       Rails.logger.info "Unable to update #{gist.id}, shit's fucked up."
     rescue StandardError => e
-      Rails.logger.info "Unable to update #{gist.id}, #{e.message}."
+      Rails.logger.info "Unable to update #{gist.id}, #{e.class.name} - #{e.message}."
     end
 
     def url
