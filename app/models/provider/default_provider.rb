@@ -66,7 +66,7 @@ module Provider
     end
 
     def description
-      data['description'] || "Deploying from #{Heaven.version}"
+      data['description'] || "Deploying from #{Heaven::VERSION}"
     end
 
     def repository_url
