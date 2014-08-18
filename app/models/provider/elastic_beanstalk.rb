@@ -44,14 +44,8 @@ module Provider
     def notify
       output.stderr = ""
       output.stdout = File.read(stdout_file).force_encoding('utf-8')
-
       output.update
-
-      if last_child.success?
-        status.success!
-      else
-        status.failure!
-      end
+      status.success!
     end
 
     def upload_source_code(key, file)
