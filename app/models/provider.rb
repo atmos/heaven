@@ -15,7 +15,7 @@ module Provider
     when "elastic_beanstalk"
       Provider::ElasticBeanstalk
     else
-      Provider::Dpl
+      Rails.logger.info "No deployment system for #{provider_name_for(payload)}"
     end
   end
 
