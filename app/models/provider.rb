@@ -12,6 +12,8 @@ module Provider
       Provider::Capistrano
     when "fabric"
       Provider::Fabric
+    when "elastic_beanstalk"
+      Provider::ElasticBeanstalk
     else
       Provider::Dpl
     end

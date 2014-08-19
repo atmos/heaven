@@ -36,7 +36,7 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 
 ```
 +--------+            +----------+         +-------------+
-| GitHub |            |  Heaven  |         |    Herkou   |
+| GitHub |            |  Heaven  |         |    Heroku   |
 +--------+            +----------+         +-------------+
     |                       |                     |
     |   Deployment Event    |                     |
@@ -74,7 +74,7 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 
 ## Capistrano
 
-Capistrano gives you a distrubted task management system over ssh. The heaven provider gives you support for three options in capistrano. 
+Capistrano gives you a distrubted task management system over ssh. The heaven provider gives you support for three options in capistrano.
 
 ### Options
 
@@ -179,7 +179,7 @@ end
 
 ## Fabric
 
-Fabric enables distrubted task management system over ssh. The heaven provider gives you support for three options.
+Fabric enables distributed task management system over ssh. The heaven provider gives you support for three options.
 
 ### Options
 
@@ -199,6 +199,30 @@ Fabric enables distrubted task management system over ssh. The heaven provider g
 |-------------------------|-------------------------------------------------|
 | DEPLOY_COMMAND_FORMAT   | Allows you to define the specific task calling format for your fabric file. Defaults to: `fab -R %{environment} %{task}:branch_name=%{ref}` |
 
+## Elastic Beanstalk
+
+With [Elastic beanstalk][21] you can quickly deploy and manage applications in
+the AWS cloud without worrying about the infrastructure that runs those
+applications.
+
+### Options
+
+* environment
+* branch
+
+### Required Configuration
+
+| Environmental Variables        |                                                 |
+|--------------------------------|-------------------------------------------------|
+| BEANSTALK_S3_BUCKET            | The bucket to store s3 archives in.             |
+| BEANSTALK_ACCESS_KEY_ID        | The AWS access key id for API interaction with Amazon. |
+| BEANSTALK_SECRET_ACCESS_KEY    | The AWS secret access key for API interaction with Amazon. |
+
+### Optional Configuration
+
+| Environmental Variables |                                                 |
+|-------------------------|-------------------------------------------------|
+| | |
 
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
@@ -220,3 +244,4 @@ Fabric enables distrubted task management system over ssh. The heaven provider g
 [18]: https://www.phusionpassenger.com/
 [19]: https://devcenter.heroku.com/articles/releases
 [20]: https://github.com/atmos/hubot-deploy
+[21]: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html

@@ -18,19 +18,17 @@
   "addons": ["heroku-postgresql:hobby-dev", "rediscloud"],
   "env": {
     "GITHUB_TOKEN": {
-      "description": "A personal OAuth token from GitHub with repo scope.",
-      "required": true
+      "description": "A personal OAuth token from GitHub with repo scope."
     },
     "GITHUB_CLIENT_ID": {
-      "description": "A client id from a GitHub OAuth app you created.",
-      "required": true
+      "description": "A client id from a GitHub OAuth app you created."
     },
     "GITHUB_CLIENT_SECRET": {
-      "description": "A client secret from a GitHub OAuth app you created.",
-      "required": true
+      "description": "A client secret from a GitHub OAuth app you created."
     },
     "GITHUB_TEAM_ID": {
-      "description": "A GitHub team id number to restrict resque access to."
+      "description": "A GitHub team id number to restrict resque access to. Optional.",
+      "required": false
     },
     "DEPLOYMENT_TIMEOUT": {
       "description": "The maximum amount of time a deployment can take in seconds.",
@@ -48,10 +46,6 @@
     "HEROKU_API_KEY": {
       "description": "A direct authorization token from heroku. Optional.",
       "required": false
-    },
-    "REDIS_PROVIDER": {
-      "description": "If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL. (e.g. REDISTOGO_URL)",
-      "value": "REDISCLOUD_URL"
     }
   },
   "formation": [
