@@ -1,7 +1,7 @@
 module Provider
   def self.from(guid, payload)
     klass = provider_class_for(payload)
-    klass.new(guid, payload)
+    klass.new(guid, payload) if klass
   end
 
   def self.provider_class_for(payload)
