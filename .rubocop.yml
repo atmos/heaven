@@ -20,6 +20,8 @@ StringLiterals:
 HashSyntax:
   EnforcedStyle: hash_rockets
   Severity: error
+  Exclude:
+    - !ruby/regexp /db\/schema.rb/
 
 AlignHash:
   SupportedLastArgumentHashStyles: always_ignore
@@ -79,3 +81,21 @@ RedundantSelf:
 
 IfUnlessModifier:
   Enabled: false
+
+AllCops:
+  # Include gemspec and Rakefile
+  Include:
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - '**/Capfile'
+    - '**/Guardfile'
+    - '**/Podfile'
+    - '**/Vagrantfile'
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+  # By default, the rails cops are not run. Override in project or home
+  # directory .rubocop.yml files, or by giving the -R/--rails option.
+  RunRailsCops: false
