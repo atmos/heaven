@@ -1,0 +1,81 @@
+# Ruby linting configuration.
+# We only worry about two kinds of issues: 'error' and anything less than that.
+# Error is not about severity, but about taste. Simple style choices that
+# never have a great excuse to be broken, such as 1.9 JSON-like hash syntax,
+# are errors. Choices that tend to have good exceptions in practice, such as
+# line length, are warnings.
+
+# If you'd like to make changes, a full list of available issues is at
+#   https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+# A list of configurable issues is at:
+#   https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+#
+# If you disable a check, document why.
+
+
+StringLiterals:
+  EnforcedStyle: double_quotes
+  Severity: error
+
+HashSyntax:
+  EnforcedStyle: hash_rockets
+  Severity: error
+
+AlignHash:
+  SupportedLastArgumentHashStyles: always_ignore
+
+AlignParameters:
+  Enabled: false # This is usually true, but we often want to roll back to
+                 # the start of a line.
+
+Attr:
+  Enabled: false # We have no styleguide guidance here, and it seems to be
+                 # in frequent use.
+
+ClassAndModuleChildren:
+  Enabled: false # module X<\n>module Y is just as good as module X::Y.
+
+Documentation:
+  Exclude:
+    - !ruby/regexp /test\/*.rb/
+
+ClassLength:
+  Exclude:
+    - !ruby/regexp /test\/*.rb/
+
+PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': '{}'
+
+LineLength:
+  Max: 79
+  Severity: warning
+
+MultilineTernaryOperator:
+  Severity: error
+
+UnreachableCode:
+  Severity: error
+
+AndOr:
+  Severity: error
+
+EndAlignment:
+  Severity: error
+
+IndentationWidth:
+  Severity: error
+
+MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 20
+  Severity: error
+
+Alias:
+  Enabled: false # We have no guidance on alias vs alias_method
+
+RedundantSelf:
+  Enabled: false # Sometimes a self.field is a bit more clear
+
+IfUnlessModifier:
+  Enabled: false

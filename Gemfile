@@ -26,6 +26,7 @@ group :development, :test do
   gem "sqlite3"
   gem "webmock"
   gem "simplecov", "0.7.1"
+  gem "rubocop"
   gem "rspec-rails"
 end
 
