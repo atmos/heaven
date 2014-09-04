@@ -29,7 +29,7 @@ module Provider
     def execute
       return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
-      unless File.exists?(checkout_directory)
+      unless File.exist?(checkout_directory)
         log "Cloning #{repository_url} into #{checkout_directory}"
         execute_and_log(["git", "clone", clone_url, checkout_directory])
       end
