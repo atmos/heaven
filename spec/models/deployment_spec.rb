@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Deployment do
-  let(:payload) { fixture_data('deployment') }
-  let!(:data) { JSON.parse(payload)['payload'] }
+  let(:payload) { fixture_data("deployment") }
+  let!(:data) { JSON.parse(payload)["payload"] }
 
   let!(:create_data) {
     {

@@ -1,14 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 ENV["RAILS_SECRET_KEY_BASE"] ||= SecureRandom.hex
 
 require File.expand_path("../../config/environment", __FILE__)
-require 'simplecov'
-SimpleCov.start 'rails'
+require "simplecov"
+SimpleCov.start "rails"
 
-require 'rspec/rails'
-require 'rspec/autorun'
-require 'webmock/rspec'
+require "rspec/rails"
+require "rspec/autorun"
+require "webmock/rspec"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -23,8 +23,8 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.before do
-    ENV['GITHUB_CLIENT_ID']     = '<unknown-client-id>'
-    ENV['GITHUB_CLIENT_SECRET'] = '<unknown-client-secret>'
+    ENV["GITHUB_CLIENT_ID"]     = "<unknown-client-id>"
+    ENV["GITHUB_CLIENT_SECRET"] = "<unknown-client-secret>"
 
     stub_meta
     Resque.inline = true
@@ -36,14 +36,14 @@ RSpec.configure do |config|
 
   def default_headers(event, remote_ip = "192.30.252.41")
     {
-      'ACCEPT'                 => 'application/json' ,
-      'CONTENT_TYPE'           => 'application/json',
+      "ACCEPT"                 => "application/json",
+      "CONTENT_TYPE"           => "application/json",
 
-      'REMOTE_ADDR'            => remote_ip,
-      'HTTP_X_FORWARDED_FOR'   => remote_ip,
+      "REMOTE_ADDR"            => remote_ip,
+      "HTTP_X_FORWARDED_FOR"   => remote_ip,
 
-      'HTTP_X_GITHUB_EVENT'    => event,
-      'HTTP_X_GITHUB_DELIVERY' => SecureRandom.uuid
+      "HTTP_X_GITHUB_EVENT"    => event,
+      "HTTP_X_GITHUB_DELIVERY" => SecureRandom.uuid
     }
   end
 end

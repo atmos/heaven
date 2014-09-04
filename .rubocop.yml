@@ -37,18 +37,18 @@ ClassAndModuleChildren:
 
 Documentation:
   Exclude:
-    - !ruby/regexp /spec\/*.rb/
+    - !ruby/regexp /spec\/*\/*/
 
 ClassLength:
   Exclude:
-    - !ruby/regexp /spec\/*.rb/
+    - !ruby/regexp /spec\/*\/*/
 
 PercentLiteralDelimiters:
   PreferredDelimiters:
     '%w': '{}'
 
 LineLength:
-  Max: 79
+  Max: 158
   Severity: warning
 
 MultilineTernaryOperator:
