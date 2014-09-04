@@ -5,8 +5,8 @@ describe Deployment::Output do
 
   it "creates a gist for storing output" do
     params = {
-      :files => {:stdout => {:content => "Deployment 42 pending" } },
-      :public => false,
+      :files       => { :stdout => { :content => "Deployment 42 pending" } },
+      :public      => false,
       :description => "Heaven number 42 for heaven"
     }
 

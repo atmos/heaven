@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Heaven::Notifier::Hipchat" do
   it "handles pending notifications" do

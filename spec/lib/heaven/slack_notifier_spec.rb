@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Heaven::Notifier::Slack" do
   it "handles pending notifications" do
