@@ -10,8 +10,8 @@ module Provider
     def app_name
       return nil unless custom_payload_config
       environment == "staging" ?
-        custom_payload_config['heroku_staging_name'] :
-        custom_payload_config['heroku_name']
+        custom_payload_config["heroku_staging_name"] :
+        custom_payload_config["heroku_name"]
     end
 
     def execute_and_log(cmds)
@@ -22,15 +22,15 @@ module Provider
     end
 
     def heroku_username
-      ENV['HEROKU_USERNAME']
+      ENV["HEROKU_USERNAME"]
     end
 
     def heroku_password
-      ENV['HEROKU_PASSWORD']
+      ENV["HEROKU_PASSWORD"]
     end
 
     def heroku_api_key
-      ENV['HEROKU_API_KEY']
+      ENV["HEROKU_API_KEY"]
     end
 
     def dpl_path

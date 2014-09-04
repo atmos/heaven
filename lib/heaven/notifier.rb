@@ -1,8 +1,8 @@
-require 'heaven/notifier/default'
-require 'heaven/notifier/campfire'
-require 'heaven/notifier/hipchat'
-require 'heaven/notifier/flowdock'
-require 'heaven/notifier/slack'
+require "heaven/notifier/default"
+require "heaven/notifier/campfire"
+require "heaven/notifier/hipchat"
+require "heaven/notifier/flowdock"
+require "heaven/notifier/slack"
 
 module Heaven
   module Notifier
@@ -21,15 +21,15 @@ module Heaven
     end
 
     def self.slack?
-      !!ENV['SLACK_TOKEN']
+      !!ENV["SLACK_TOKEN"]
     end
 
     def self.hipchat?
-      !!ENV['HIPCHAT_TOKEN']
+      !!ENV["HIPCHAT_TOKEN"]
     end
 
     def self.flowdock?
-      !!ENV['FLOWDOCK_FLOW_API_TOKEN']
+      !!ENV["FLOWDOCK_FLOW_API_TOKEN"]
     end
   end
 end

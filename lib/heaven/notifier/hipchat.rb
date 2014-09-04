@@ -12,11 +12,11 @@ module Heaven
       end
 
       def hipchat_token
-        ENV['HIPCHAT_TOKEN']
+        ENV["HIPCHAT_TOKEN"]
       end
 
       def hipchat_room
-        ENV['HIPCHAT_ROOM'] || "Developers"
+        ENV["HIPCHAT_ROOM"] || "Developers"
       end
 
       def hipchat_client

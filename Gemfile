@@ -1,5 +1,5 @@
-ruby '2.1.2'
-source 'https://rubygems.org'
+ruby "2.1.2"
+source "https://rubygems.org"
 
 gem "rails",    "~>4.1.0"
 gem "resque"

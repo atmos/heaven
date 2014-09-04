@@ -32,29 +32,30 @@ class Deployment
     end
 
     private
-      def create_params
-        {
-          :files       => { :stdout => {:content => "Deployment #{number} pending" } },
-          :public      => false,
-          :description => "Heaven number #{number} for #{name}"
-        }
+
+    def create_params
+      {
+        :files       => { :stdout => { :content => "Deployment #{number} pending" } },
+        :public      => false,
+        :description => "Heaven number #{number} for #{name}"
+      }
+    end
+
+    def update_params
+      params = {
+        :files  => {},
+        :public => false
+      }
+
+      unless stderr.empty?
+        params[:files].merge!(:stderr => { :content => stderr })
       end
 
-      def update_params
-        params = {
-          :files  => { },
-          :public => false
-        }
-
-        unless stderr.empty?
-          params[:files].merge!(:stderr => { :content => stderr })
-        end
-
-        unless stdout.empty?
-          params[:files].merge!(:stdout => { :content => stdout })
-        end
-
-        params
+      unless stdout.empty?
+        params[:files].merge!(:stdout => { :content => stdout })
       end
+
+      params
+    end
   end
 end

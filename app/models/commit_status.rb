@@ -52,7 +52,7 @@ class CommitStatus
           AutoDeployment.new(deployment, self).execute
         end
       else
-        branch = branches && branches.any? && branches.first['name']
+        branch = branches && branches.any? && branches.first["name"]
         Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha}"
       end
     end

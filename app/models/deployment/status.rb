@@ -15,11 +15,11 @@ class Deployment
     end
 
     def payload
-      { 'target_url'  => output, 'description' => description }
+      { "target_url"  => output, "description" => description }
     end
 
     def pending!
-      api.create_deployment_status(url, 'pending', payload)
+      api.create_deployment_status(url, "pending", payload)
     end
 
     def success!

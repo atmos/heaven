@@ -2,18 +2,18 @@ module Heaven
   module Notifier
     class Campfire < Default
       def deliver(message)
-        message << " #{output_link('Output')}"
+        message << " #{output_link("Output")}"
         Rails.logger.info "campfire: #{message}"
         room = campfire_account.room_by_id(chat_room)
         room.message(message)
       end
 
       def campfire_token
-        ENV['CAMPFIRE_TOKEN'] || '0xdeadbeef'
+        ENV["CAMPFIRE_TOKEN"] || "0xdeadbeef"
       end
 
       def campfire_subdomain
-        ENV['CAMPFIRE_SUBDOMAIN'] || 'unknown'
+        ENV["CAMPFIRE_SUBDOMAIN"] || "unknown"
       end
 
       def campfire_account

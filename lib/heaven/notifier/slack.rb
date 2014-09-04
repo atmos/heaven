@@ -24,14 +24,14 @@ module Heaven
         message = output_link("##{deployment_number}")
         message << " : #{user_link}"
         case state
-        when 'success'
+        when "success"
           message << "'s #{environment} deployment of #{repository_link} is done! "
-        when 'failure'
+        when "failure"
           message << "'s #{environment} deployment of #{repository_link} failed. "
-        when 'error'
+        when "error"
           message << "'s #{environment} deployment of #{repository_link} has errors. #{ascii_face} "
           message << description unless description =~ /Deploying from Heaven/
-        when 'pending'
+        when "pending"
           message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
         else
           puts "Unhandled deployment state, #{state}"
@@ -39,11 +39,11 @@ module Heaven
       end
 
       def slack_token
-        ENV['SLACK_TOKEN']
+        ENV["SLACK_TOKEN"]
       end
 
       def slack_subdomain
-        ENV['SLACK_SUBDOMAIN'] || 'unknown'
+        ENV["SLACK_SUBDOMAIN"] || "unknown"
       end
 
       def slack_account

@@ -17,10 +17,10 @@ module LocalLogFile
   end
 
   def log_stdout(out)
-    File.open(stdout_file, 'a') { |f| f.write(out.force_encoding('utf-8')) }
+    File.open(stdout_file, "a") { |f| f.write(out.force_encoding("utf-8")) }
   end
 
   def log_stderr(err)
-    File.open(stderr_file, 'a') { |f| f.write(err.force_encoding('utf-8')) }
+    File.open(stderr_file, "a") { |f| f.write(err.force_encoding("utf-8")) }
   end
 end

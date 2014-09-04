@@ -9,11 +9,11 @@ module Heaven
       end
 
       def flowdock_flow_api_token
-        ENV['FLOWDOCK_FLOW_API_TOKEN']
+        ENV["FLOWDOCK_FLOW_API_TOKEN"]
       end
 
       def flowdock_external_user_name
-        ENV['FLOWDOCK_EXTERNAL_USER_NAME']
+        ENV["FLOWDOCK_EXTERNAL_USER_NAME"]
       end
 
       def flow
