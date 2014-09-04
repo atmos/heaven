@@ -37,11 +37,11 @@ ClassAndModuleChildren:
 
 Documentation:
   Exclude:
-    - !ruby/regexp /test\/*.rb/
+    - !ruby/regexp /spec\/*.rb/
 
 ClassLength:
   Exclude:
-    - !ruby/regexp /test\/*.rb/
+    - !ruby/regexp /spec\/*.rb/
 
 PercentLiteralDelimiters:
   PreferredDelimiters:

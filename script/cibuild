@@ -17,3 +17,4 @@ script/bootstrap
 bundle exec rake db:migrate
 bundle exec rake assets:precompile
 bundle exec rspec spec
+bundle exec rubocop
