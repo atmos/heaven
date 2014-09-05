@@ -23,8 +23,8 @@ module Provider
   def self.provider_name_for(payload)
     data = JSON.parse(payload)
     if data && data["payload"]
-      if custom_payload = data["payload"]["config"]
-        return custom_payload["provider"]
+      if data["payload"]["config"]
+        return data["payload"]["config"]["provider"]
       end
     end
   end
