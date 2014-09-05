@@ -5,7 +5,7 @@ module Provider
     include ApiClient
     include LocalLogFile
 
-    attr_accessor :credentials, :guid, :name, :payload
+    attr_accessor :credentials, :guid, :last_child, :name, :payload
 
     def initialize(guid, payload)
       @guid        = guid

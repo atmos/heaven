@@ -2,8 +2,6 @@
 module Provider
   # The dpl provider.
   class Dpl < DefaultProvider
-    attr_accessor :last_child
-
     def initialize(guid, payload)
       super
       @name = "dpl"
@@ -16,13 +14,6 @@ module Provider
       else
         custom_payload_config["heroku_name"]
       end
-    end
-
-    def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new(*cmds)
-      log_stdout(last_child.out)
-      log_stderr(last_child.err)
-      last_child
     end
 
     def heroku_username

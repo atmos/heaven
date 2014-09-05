@@ -2,8 +2,6 @@
 module Provider
   # The fabric provider.
   class Fabric < DefaultProvider
-    attr_accessor :last_child
-
     def initialize(guid, payload)
       super
       @name = "fabric"
@@ -15,13 +13,6 @@ module Provider
 
     def deploy_command_format
       ENV["DEPLOY_COMMAND_FORMAT"] || "fab -R %{environment} %{task}:branch_name=%{ref}"
-    end
-
-    def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
-      log_stdout(last_child.out)
-      log_stderr(last_child.err)
-      last_child
     end
 
     def execute

@@ -2,8 +2,6 @@
 module Provider
   # The capistrano provider.
   class Capistrano < DefaultProvider
-    attr_accessor :last_child
-
     def initialize(guid, payload)
       super
       @name = "capistrano"
@@ -19,13 +17,6 @@ module Provider
         fail "Invalid capistrano taskname: #{name.inspect}"
       end
       name
-    end
-
-    def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
-      log_stdout(last_child.out)
-      log_stderr(last_child.err)
-      last_child
     end
 
     def execute

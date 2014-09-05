@@ -24,4 +24,11 @@ module LocalLogFile
   def log_stderr(err)
     File.open(stderr_file, "a") { |f| f.write(err.force_encoding("utf-8")) }
   end
+
+  def execute_and_log(cmds)
+    @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
+    log_stdout(last_child.out)
+    log_stderr(last_child.err)
+    last_child
+  end
 end

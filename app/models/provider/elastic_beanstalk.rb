@@ -2,8 +2,6 @@
 module Provider
   # The Amazon elastic beanstalk provider.
   class ElasticBeanstalk < DefaultProvider
-    attr_accessor :last_child
-
     def initialize(guid, payload)
       super
       @name = "elastic_beanstalk"
@@ -72,13 +70,6 @@ module Provider
 
     def app_name
       custom_payload_config && custom_payload_config["app_name"]
-    end
-
-    def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
-      log_stdout(last_child.out)
-      log_stderr(last_child.err)
-      last_child
     end
 
     def configure_s3_bucket
