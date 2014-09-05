@@ -12,10 +12,10 @@ class Receiver
 
   def self.perform(event, guid, payload)
     receiver = new(event, guid, payload)
-    unless receiver.active_repository?
-      Rails.logger.info "Repository is not configured to deploy: #{receiver.full_name}"
-    else
+    if receiver.active_repository?
       receiver.run!
+    else
+      Rails.logger.info "Repository is not configured to deploy: #{receiver.full_name}"
     end
   end
 

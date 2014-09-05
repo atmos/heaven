@@ -5,8 +5,8 @@ class EventsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
   def create
-    event    = request.headers['HTTP_X_GITHUB_EVENT']
-    delivery = request.headers['HTTP_X_GITHUB_DELIVERY']
+    event    = request.headers["HTTP_X_GITHUB_EVENT"]
+    delivery = request.headers["HTTP_X_GITHUB_DELIVERY"]
 
     if valid_events.include?(event)
       request.body.rewind
