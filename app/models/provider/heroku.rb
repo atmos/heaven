@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # A heroku API client.
   module HerokuApiClient
     def http_options
       {
@@ -13,13 +15,14 @@ module Provider
 
     def http
       @http ||= Faraday.new(http_options) do |faraday|
-        faraday.request  :url_encoded
-        faraday.response :logger unless %w(staging production).include?(Rails.env)
-        faraday.adapter  Faraday.default_adapter
+        faraday.request :url_encoded
+        faraday.adapter Faraday.default_adapter
+        faraday.response :logger unless %w{staging production}.include?(Rails.env)
       end
     end
   end
 
+  # A heroku build object.
   class HerokuBuild
     include HerokuApiClient
 
@@ -80,6 +83,7 @@ module Provider
     end
   end
 
+  # The heroku provider.
   class HerokuHeavenProvider < DefaultProvider
     include HerokuApiClient
 
@@ -107,15 +111,13 @@ module Provider
 
     def execute
       response = build_request
-      if response.success?
-        body   = JSON.parse(response.body)
-        @build = HerokuBuild.new(app_name, body["id"])
+      return unless response.success?
+      body   = JSON.parse(response.body)
+      @build = HerokuBuild.new(app_name, body["id"])
 
-        until build.completed?
-          sleep 10
-          build.refresh!
-        end
-      else
+      until build.completed?
+        sleep 10
+        build.refresh!
       end
     end
 
@@ -138,7 +140,7 @@ module Provider
     private
 
     def build_request
-      response = http.post do |req|
+      http.post do |req|
         req.url "/apps/#{app_name}/builds"
         body = {
           :source_blob => {

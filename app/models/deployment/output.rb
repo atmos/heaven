@@ -1,4 +1,6 @@
+# Top-level class for Deployments.
 class Deployment
+  # All of the process output from a deployment
   class Output
     include ApiClient
     attr_accessor :gist, :guid, :name, :number, :stderr, :stdout

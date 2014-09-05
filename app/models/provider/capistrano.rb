@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The capistrano provider.
   class Capistrano < DefaultProvider
     attr_accessor :last_child
 
@@ -14,7 +16,7 @@ module Provider
     def task
       name = custom_payload && custom_payload["task"] || "deploy"
       unless name =~ /deploy(?:\:[\w+:]+)?/
-        raise StandardError "Invalid capistrano taskname: #{name.inspect}"
+        fail "Invalid capistrano taskname: #{name.inspect}"
       end
       name
     end
@@ -36,9 +38,9 @@ module Provider
 
       Dir.chdir(checkout_directory) do
         log "Fetching the latest code"
-        execute_and_log(["git", "fetch"])
+        execute_and_log(%w{git fetch})
         execute_and_log(["git", "reset", "--hard", sha])
-        deploy_string = [ cap_path, environment, "-s", "branch=#{ref}", task ]
+        deploy_string = [cap_path, environment, "-s", "branch=#{ref}", task]
         log "Executing capistrano: #{deploy_string.join(" ")}"
         execute_and_log(deploy_string)
       end
