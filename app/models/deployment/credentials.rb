@@ -49,7 +49,7 @@ class Deployment
       FileUtils.chmod_R 0700, ssh_directory
 
       File.open(ssh_key, "w", 0600) do |fp|
-        fp.puts(ssh_private_key.split("\n"))
+        fp.puts(ssh_private_key.split('\n'))
       end
 
       File.open(ssh_config, "w", 0600) do |fp|
