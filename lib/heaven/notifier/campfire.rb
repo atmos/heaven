@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # A notifier for campfire
     class Campfire < Default
       def deliver(message)
         message << " #{output_link("Output")}"

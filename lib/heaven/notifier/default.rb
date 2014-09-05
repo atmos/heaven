@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # The class that all notifiers inherit from
     class Default
       attr_accessor :payload
 
@@ -8,7 +9,7 @@ module Heaven
       end
 
       def deliver(message)
-        fail "Unable to deliver, write your own #deliver(message) method."
+        fail "Unable to deliver, write your own #deliver(#{message}) method."
       end
 
       def ascii_face
@@ -31,7 +32,7 @@ module Heaven
       end
 
       def green?
-        %w(pending success).include?(state)
+        %w{pending success}.include?(state)
       end
 
       def state

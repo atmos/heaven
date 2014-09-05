@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # A notifier for flowdock
     class Flowdock < Notifier::Default
       def deliver(message)
         filtered_message = message + " #{ascii_face}"
@@ -28,7 +29,7 @@ module Heaven
         "@#{chat_user}"
       end
 
-      def output_link(link_title = "deployment")
+      def output_link
         target_url
       end
     end

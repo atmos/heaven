@@ -4,9 +4,9 @@ class Deployment < ActiveRecord::Base
   belongs_to :repository
 
   def self.latest_for_name_with_owner(name_with_owner)
-    sets = self.select(:name,:environment).
-      where(:name_with_owner => name_with_owner).
-      group("name,environment")
+    sets = self.select(:name,:environment)
+      .where(:name_with_owner => name_with_owner)
+      .group("name,environment")
 
     sets.map do |deployment|
       params = {

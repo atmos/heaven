@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # An error that's raised when two deployments trigger simultaneously
     class LockedError
       @queue = :deployment_statuses
 

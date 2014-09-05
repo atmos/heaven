@@ -1,3 +1,4 @@
+# A class to handle incoming webhooks
 class Receiver
   @queue = :events
 
@@ -30,7 +31,7 @@ class Receiver
     if data["repository"]
       name  = data["repository"]["name"]
       owner = data["repository"]["owner"]["login"]
-      repository = Repository.find_or_create_by(name: name, owner: owner)
+      repository = Repository.find_or_create_by(:name => name, :owner => owner)
       repository.active?
     else
       false
@@ -46,7 +47,7 @@ class Receiver
         Resque.enqueue(Heaven::Jobs::Deployment, guid, payload)
       end
     elsif event == "deployment_status"
-      Resque.enqueue(Heaven::Jobs::DeploymentStatus, guid, payload)
+      Resque.enqueue(Heaven::Jobs::DeploymentStatus, payload)
     elsif event == "status"
       Resque.enqueue(Heaven::Jobs::Status, guid, payload)
     else

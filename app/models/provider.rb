@@ -1,3 +1,4 @@
+# A dispatcher for provider identification
 module Provider
   def self.from(guid, payload)
     klass = provider_class_for(payload)

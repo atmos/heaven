@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # A notifier for Slack
     class Slack < Notifier::Default
       def deliver(message)
         output_message   = ""

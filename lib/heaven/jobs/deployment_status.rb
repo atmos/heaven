@@ -1,16 +1,10 @@
 module Heaven
   module Jobs
+    # A deployment status handler
     class DeploymentStatus
       @queue = :deployment_statuses
 
-      attr_accessor :guid, :payload
-
-      def initialize(guid, payload)
-        @guid      = guid
-        @payload   = payload
-      end
-
-      def self.perform(guid, payload)
+      def self.perform(payload)
         notifier = Heaven::Notifier.for(payload)
         notifier.post! if notifier
       end
