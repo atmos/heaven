@@ -12,7 +12,7 @@ module Heaven
       end
 
       def self.perform(guid, payload)
-        provider = ::Provider::DefaultProvider.new(guid, payload)
+        provider = Heaven::Provider::DefaultProvider.new(guid, payload)
         provider.status.description = "Already deploying."
         provider.status.error!
 
