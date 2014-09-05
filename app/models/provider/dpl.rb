@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The dpl provider.
   class Dpl < DefaultProvider
     attr_accessor :last_child
 
@@ -9,9 +11,11 @@ module Provider
 
     def app_name
       return nil unless custom_payload_config
-      environment == "staging" ?
-        custom_payload_config["heroku_staging_name"] :
+      if environment == "staging"
+        custom_payload_config["heroku_staging_name"]
+      else
         custom_payload_config["heroku_name"]
+      end
     end
 
     def execute_and_log(cmds)
@@ -47,16 +51,16 @@ module Provider
 
       Dir.chdir(checkout_directory) do
         log "Fetching the latest code"
-        execute_and_log(["git", "fetch"])
+        execute_and_log(%w{git fetch})
         execute_and_log(["git", "reset", "--hard", sha])
         log "Pushing to heroku"
-        deploy_string = [ "#{dpl_path}",
-                          "--provider=heroku",
-                          "--strategy=git",
-                          "--api-key=#{heroku_api_key}",
-                          "--username=#{heroku_username}",
-                          "--password=#{heroku_password}",
-                          "--app=#{app_name}"]
+        deploy_string = ["#{dpl_path}",
+                         "--provider=heroku",
+                         "--strategy=git",
+                         "--api-key=#{heroku_api_key}",
+                         "--username=#{heroku_username}",
+                         "--password=#{heroku_password}",
+                         "--app=#{app_name}"]
         execute_and_log(deploy_string)
       end
     end

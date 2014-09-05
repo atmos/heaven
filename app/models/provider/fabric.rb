@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The fabric provider.
   class Fabric < DefaultProvider
     attr_accessor :last_child
 
@@ -32,7 +34,7 @@ module Provider
 
       Dir.chdir(checkout_directory) do
         log "Fetching the latest code"
-        execute_and_log(["git", "fetch"])
+        execute_and_log(%w{git fetch})
         execute_and_log(["git", "reset", "--hard", sha])
         deploy_command = deploy_command_format % {
           :environment => environment,
