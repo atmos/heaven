@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The fabric provider.
   class Fabric < DefaultProvider
     attr_accessor :last_child
 
@@ -8,15 +10,15 @@ module Provider
     end
 
     def task
-      custom_payload && custom_payload['task'] || 'deploy'
+      custom_payload && custom_payload["task"] || "deploy"
     end
 
     def deploy_command_format
-      ENV['DEPLOY_COMMAND_FORMAT'] || "fab -R %{environment} %{task}:branch_name=%{ref}"
+      ENV["DEPLOY_COMMAND_FORMAT"] || "fab -R %{environment} %{task}:branch_name=%{ref}"
     end
 
     def execute_and_log(cmds)
-      @last_child = POSIX::Spawn::Child.new({"HOME"=>working_directory},*cmds)
+      @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
       log_stdout(last_child.out)
       log_stderr(last_child.err)
       last_child
@@ -25,14 +27,14 @@ module Provider
     def execute
       return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
-      unless File.exists?(checkout_directory)
+      unless File.exist?(checkout_directory)
         log "Cloning #{repository_url} into #{checkout_directory}"
         execute_and_log(["git", "clone", clone_url, checkout_directory])
       end
 
       Dir.chdir(checkout_directory) do
         log "Fetching the latest code"
-        execute_and_log(["git", "fetch"])
+        execute_and_log(%w{git fetch})
         execute_and_log(["git", "reset", "--hard", sha])
         deploy_command = deploy_command_format % {
           :environment => environment,

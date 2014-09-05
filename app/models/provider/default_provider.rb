@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The super class provider, all providers inherit from this.
   class DefaultProvider
     include ApiClient
     include LocalLogFile
@@ -34,7 +36,7 @@ module Provider
 
     def gem_executable_path(name)
       executable_path = "/app/vendor/bundle/bin/#{name}"
-      if File.exists?(executable_path)
+      if File.exist?(executable_path)
         executable_path
       else
         "bin/#{name}"
@@ -42,7 +44,7 @@ module Provider
     end
 
     def number
-      data['id']
+      data["id"]
     end
 
     def name
@@ -50,31 +52,31 @@ module Provider
     end
 
     def name_with_owner
-      data['repository']['full_name']
+      data["repository"]["full_name"]
     end
 
     def sha
-      data['sha'][0..7]
+      data["sha"][0..7]
     end
 
     def ref
-      data['ref']
+      data["ref"]
     end
 
     def environment
-      data['environment']
+      data["environment"]
     end
 
     def description
-      data['description'] || "Deploying from #{Heaven::VERSION}"
+      data["description"] || "Deploying from #{Heaven::VERSION}"
     end
 
     def repository_url
-      data['repository']['clone_url']
+      data["repository"]["clone_url"]
     end
 
     def default_branch
-      data['repository']['default_branch']
+      data["repository"]["default_branch"]
     end
 
     def clone_url
@@ -85,15 +87,15 @@ module Provider
     end
 
     def custom_payload
-      @custom_payload ||= data['payload']
+      @custom_payload ||= data["payload"]
     end
 
     def custom_payload_name
-      custom_payload && custom_payload['name']
+      custom_payload && custom_payload["name"]
     end
 
     def custom_payload_config
-      custom_payload && custom_payload['config']
+      custom_payload && custom_payload["config"]
     end
 
     def setup
@@ -128,7 +130,7 @@ module Provider
     end
 
     def timeout
-      Integer(ENV['DEPLOYMENT_TIMEOUT'] || '300')
+      Integer(ENV["DEPLOYMENT_TIMEOUT"] || "300")
     end
 
     def run!

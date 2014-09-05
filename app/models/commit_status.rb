@@ -1,3 +1,4 @@
+# An object representing a commit status event from GitHub
 class CommitStatus
   include ApiClient
 
@@ -45,16 +46,15 @@ class CommitStatus
   end
 
   def run!
-    if successful?
-      if default_branch?
-        Deployment.latest_for_name_with_owner(name_with_owner).each do |deployment|
-          Rails.logger.info "tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
-          AutoDeployment.new(deployment, self).execute
-        end
-      else
-        branch = branches && branches.any? && branches.first['name']
-        Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha}"
+    return unless successful?
+    if default_branch?
+      Deployment.latest_for_name_with_owner(name_with_owner).each do |deployment|
+        Rails.logger.info "tryna deploy #{name_with_owner}@#{sha} to #{deployment.environment}"
+        AutoDeployment.new(deployment, self).execute
       end
+    else
+      branch = branches && branches.any? && branches.first["name"]
+      Rails.logger.info "Ignoring commit status(#{state}) for #{name_with_owner}+#{branch}@#{sha}"
     end
   end
 end

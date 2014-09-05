@@ -1,6 +1,7 @@
-require 'heaven/version'
-require 'heaven/notifier'
-require 'heaven/jobs/deployment'
-require 'heaven/jobs/deployment_status'
-require 'heaven/jobs/status'
-require 'heaven/jobs/locked_error'
+# The top-level Heaven module
+module Heaven
+end
+
+require "heaven/version"
+require "heaven/notifier"
+require "heaven/jobs"

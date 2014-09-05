@@ -1,4 +1,6 @@
+# Top-level module for Providers.
 module Provider
+  # The Amazon elastic beanstalk provider.
   class ElasticBeanstalk < DefaultProvider
     attr_accessor :last_child
 
@@ -16,7 +18,7 @@ module Provider
     end
 
     def archive_zip
-      archive_link.gsub(/legacy\.tar\.gz/, 'deploy.zip')
+      archive_link.gsub(/legacy\.tar\.gz/, "deploy.zip")
     end
 
     def archive_path
@@ -39,7 +41,9 @@ module Provider
       app_version = create_app_version(upload.key)
       log_stdout "Beanstalk: Updating application: #{app_name}-#{environment}.\n"
       app_update  = update_app(app_version)
-      status.output = "#{base_url}?region=#{custom_aws_region}#/environment/dashboard?applicationName=#{app_name}&environmentId=#{app_update[:environment_id]}"
+      status.output =  "#{base_url}?region=#{custom_aws_region}#/environment"
+      status.output << "/dashboard?applicationName=#{app_name}&environmentId"
+      status.output << "=#{app_update[:environment_id]}"
     end
 
     def base_url
@@ -47,8 +51,8 @@ module Provider
     end
 
     def notify
-      output.stderr = File.read(stderr_file).force_encoding('utf-8')
-      output.stdout = File.read(stdout_file).force_encoding('utf-8')
+      output.stderr = File.read(stderr_file).force_encoding("utf-8")
+      output.stdout = File.read(stdout_file).force_encoding("utf-8")
       output.update
       status.success!
     end
@@ -65,70 +69,70 @@ module Provider
     end
 
     private
-      def app_name
-        custom_payload_config && custom_payload_config["app_name"]
-      end
 
-      def execute_and_log(cmds)
-        @last_child = POSIX::Spawn::Child.new({"HOME"=>working_directory},*cmds)
-        log_stdout(last_child.out)
-        log_stderr(last_child.err)
-        last_child
-      end
+    def app_name
+      custom_payload_config && custom_payload_config["app_name"]
+    end
 
-      def configure_s3_bucket
-        unless s3.buckets.map(&:name).include?(bucket_name)
-          s3.buckets.create(bucket_name)
-        end
-      end
+    def execute_and_log(cmds)
+      @last_child = POSIX::Spawn::Child.new({ "HOME" => working_directory }, *cmds)
+      log_stdout(last_child.out)
+      log_stderr(last_child.err)
+      last_child
+    end
 
-      def create_app_version(s3_key)
-        options = {
-          :application_name  => app_name,
-          :version_label     => version_label,
-          :description       => description,
-          :source_bundle     => {
-            :s3_key          => s3_key,
-            :s3_bucket       => bucket_name
-          },
-          :auto_create_application => false
-        }
-        eb.create_application_version(options)
-      end
+    def configure_s3_bucket
+      return unless s3.buckets.map(&:name).include?(bucket_name)
+      s3.buckets.create(bucket_name)
+    end
 
-      def update_app(version)
-        options = {
-          :environment_name  => environment,
-          :version_label     => version[:application_version][:version_label]
-        }
-        eb.update_environment(options)
-      end
+    def create_app_version(s3_key)
+      options = {
+        :application_name  => app_name,
+        :version_label     => version_label,
+        :description       => description,
+        :source_bundle     => {
+          :s3_key          => s3_key,
+          :s3_bucket       => bucket_name
+        },
+        :auto_create_application => false
+      }
+      eb.create_application_version(options)
+    end
 
-      def version_label
-        "heaven-#{sha}-#{Time.now.to_i}"
-      end
+    def update_app(version)
+      options = {
+        :environment_name  => environment,
+        :version_label     => version[:application_version][:version_label]
+      }
+      eb.update_environment(options)
+    end
 
-      def custom_aws_region
-        (custom_payload &&
-         custom_payload['aws'] &&
-          custom_payload['aws']['region']) || 'us-east-1'
-      end
+    def version_label
+      "heaven-#{sha}-#{Time.now.to_i}"
+    end
 
-      def aws_config
-        {
-          region:            custom_aws_region,
-          logger:            Logger.new(stdout_file),
-          access_key_id:     ENV['BEANSTALK_ACCESS_KEY_ID'],
-          secret_access_key: ENV['BEANSTALK_SECRET_ACCESS_KEY']
-        }
-      end
+    def custom_aws_region
+      (custom_payload &&
+       custom_payload["aws"] &&
+        custom_payload["aws"]["region"]) || "us-east-1"
+    end
 
-      def s3
-        @s3 ||= AWS::S3.new(aws_config)
-      end
+    def aws_config
+      {
+        "region"            => custom_aws_region,
+        "logger"            => Logger.new(stdout_file),
+        "access_key_id"     => ENV["BEANSTALK_ACCESS_KEY_ID"],
+        "secret_access_key" => ENV["BEANSTALK_SECRET_ACCESS_KEY"]
+      }
+    end
 
-      def eb
-        @eb ||= AWS::ElasticBeanstalk::Client.new(aws_config)
-      end
+    def s3
+      @s3 ||= AWS::S3.new(aws_config)
+    end
+
+    def eb
+      @eb ||= AWS::ElasticBeanstalk::Client.new(aws_config)
+    end
   end
 end

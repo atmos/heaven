@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # A heroku API client.
   module HerokuApiClient
     def http_options
       {
@@ -6,20 +8,21 @@ module Provider
         :headers => {
           "Accept"        => "application/vnd.heroku+json; version=3",
           "Content-Type"  => "application/json",
-          "Authorization" => Base64.encode64(":#{ENV['HEROKU_API_KEY']}")
+          "Authorization" => Base64.encode64(":#{ENV["HEROKU_API_KEY"]}")
         }
       }
     end
 
     def http
       @http ||= Faraday.new(http_options) do |faraday|
-        faraday.request  :url_encoded
-        faraday.response :logger unless %w(staging production).include?(Rails.env)
-        faraday.adapter  Faraday.default_adapter
+        faraday.request :url_encoded
+        faraday.adapter Faraday.default_adapter
+        faraday.response :logger unless %w{staging production}.include?(Rails.env)
       end
     end
   end
 
+  # A heroku build object.
   class HerokuBuild
     include HerokuApiClient
 
@@ -47,18 +50,18 @@ module Provider
     end
 
     def lines
-      @lines ||= output['lines']
+      @lines ||= output["lines"]
     end
 
     def stdout
       lines.map do |line|
-        line['line'] if line['stream'] == "STDOUT"
+        line["line"] if line["stream"] == "STDOUT"
       end.join
     end
 
     def stderr
       lines.map do |line|
-        line['line'] if line['stream'] == "STDERR"
+        line["line"] if line["stream"] == "STDERR"
       end.join
     end
 
@@ -72,14 +75,15 @@ module Provider
     end
 
     def success?
-      info['status'] == "succeeded"
+      info["status"] == "succeeded"
     end
 
     def failed?
-      info['status'] == "failed"
+      info["status"] == "failed"
     end
   end
 
+  # The heroku provider.
   class HerokuHeavenProvider < DefaultProvider
     include HerokuApiClient
 
@@ -93,7 +97,7 @@ module Provider
       return nil unless custom_payload_config
 
       app_key = "heroku_#{environment}_name"
-      if custom_payload_config.has_key?(app_key)
+      if custom_payload_config.key?(app_key)
         custom_payload_config[app_key]
       else
         puts "Specify a There is no heroku specific app #{app_key} for the environment #{environment}"
@@ -107,15 +111,13 @@ module Provider
 
     def execute
       response = build_request
-      if response.success?
-        body   = JSON.parse(response.body)
-        @build = HerokuBuild.new(app_name, body['id'])
+      return unless response.success?
+      body   = JSON.parse(response.body)
+      @build = HerokuBuild.new(app_name, body["id"])
 
-        until build.completed?
-          sleep 10
-          build.refresh!
-        end
-      else
+      until build.completed?
+        sleep 10
+        build.refresh!
       end
     end
 
@@ -137,17 +139,17 @@ module Provider
 
     private
 
-      def build_request
-        response = http.post do |req|
-          req.url "/apps/#{app_name}/builds"
-          body = {
-            :source_blob => {
-              :url     => archive_link,
-              :version => sha
-            }
+    def build_request
+      http.post do |req|
+        req.url "/apps/#{app_name}/builds"
+        body = {
+          :source_blob => {
+            :url     => archive_link,
+            :version => sha
           }
-          req.body = JSON.dump(body)
-        end
+        }
+        req.body = JSON.dump(body)
       end
+    end
   end
 end

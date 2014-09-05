@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # A job to handle commit statuses
     class Status
       @queue = :statuses
 

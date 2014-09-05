@@ -1,3 +1,4 @@
+# A dispatcher for provider identification
 module Provider
   def self.from(guid, payload)
     klass = provider_class_for(payload)
@@ -21,10 +22,10 @@ module Provider
 
   def self.provider_name_for(payload)
     data = JSON.parse(payload)
-    if data && data['payload']
-     if custom_payload = data['payload']['config']
-       return custom_payload['provider']
-     end
+    if data && data["payload"]
+      if data["payload"]["config"]
+        return data["payload"]["config"]["provider"]
+      end
     end
   end
 end

@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # A notifier for flowdock
     class Flowdock < Notifier::Default
       def deliver(message)
         filtered_message = message + " #{ascii_face}"
@@ -9,11 +10,11 @@ module Heaven
       end
 
       def flowdock_flow_api_token
-        ENV['FLOWDOCK_FLOW_API_TOKEN']
+        ENV["FLOWDOCK_FLOW_API_TOKEN"]
       end
 
       def flowdock_external_user_name
-        ENV['FLOWDOCK_EXTERNAL_USER_NAME']
+        ENV["FLOWDOCK_EXTERNAL_USER_NAME"]
       end
 
       def flow
@@ -28,7 +29,7 @@ module Heaven
         "@#{chat_user}"
       end
 
-      def output_link(link_title = "deployment")
+      def output_link
         target_url
       end
     end
