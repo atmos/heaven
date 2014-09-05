@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # A class for kicking off deployment processes
     class Deployment
       extend Resque::Plugins::LockTimeout
 

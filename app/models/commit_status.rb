@@ -1,3 +1,4 @@
+# An object representing a commit status event from GitHub
 class CommitStatus
   include ApiClient
 

@@ -1,3 +1,4 @@
+# A module to include for easy access to the GitHub API
 module ApiClient
   extend ActiveSupport::Concern
 

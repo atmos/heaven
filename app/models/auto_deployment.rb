@@ -1,3 +1,4 @@
+# An object representing when auto-deployment should occur
 class AutoDeployment
   include ApiClient
 
@@ -37,13 +38,12 @@ class AutoDeployment
   end
 
   def execute
-    if combined_status_green?
-      if ahead?
-        Rails.logger.info "Trying to deploy #{sha}"
-        create_deployment
-      else
-        Rails.logger.info "#{sha} isn't ahead of #{deployment.sha} and in the #{default_branch}"
-      end
+    return unless combined_status_green?
+    if ahead?
+      Rails.logger.info "Trying to deploy #{sha}"
+      create_deployment
+    else
+      Rails.logger.info "#{sha} isn't ahead of #{deployment.sha} and in the #{default_branch}"
     end
   end
 end

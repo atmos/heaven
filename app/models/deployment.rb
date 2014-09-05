@@ -1,3 +1,4 @@
+# A record of a deployment processes
 class Deployment < ActiveRecord::Base
   validates_presence_of :name, :name_with_owner
 

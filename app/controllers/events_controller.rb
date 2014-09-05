@@ -1,3 +1,4 @@
+# A controller to handle incoming webhook events
 class EventsController < ApplicationController
   include WebhookValidations
 

@@ -1,3 +1,4 @@
+# A module to include for easy access to writing to a transient filesystem
 module LocalLogFile
   def working_directory
     @working_directory ||= "/tmp/" + \
