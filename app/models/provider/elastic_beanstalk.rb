@@ -1,4 +1,6 @@
+# Top-level module for Providers.
 module Provider
+  # The Amazon elastic beanstalk provider.
   class ElasticBeanstalk < DefaultProvider
     attr_accessor :last_child
 
@@ -39,7 +41,9 @@ module Provider
       app_version = create_app_version(upload.key)
       log_stdout "Beanstalk: Updating application: #{app_name}-#{environment}.\n"
       app_update  = update_app(app_version)
-      status.output = "#{base_url}?region=#{custom_aws_region}#/environment/dashboard?applicationName=#{app_name}&environmentId=#{app_update[:environment_id]}"
+      status.output =  "#{base_url}?region=#{custom_aws_region}#/environment"
+      status.output << "/dashboard?applicationName=#{app_name}&environmentId"
+      status.output << "=#{app_update[:environment_id]}"
     end
 
     def base_url
@@ -78,9 +82,8 @@ module Provider
     end
 
     def configure_s3_bucket
-      unless s3.buckets.map(&:name).include?(bucket_name)
-        s3.buckets.create(bucket_name)
-      end
+      return unless s3.buckets.map(&:name).include?(bucket_name)
+      s3.buckets.create(bucket_name)
     end
 
     def create_app_version(s3_key)

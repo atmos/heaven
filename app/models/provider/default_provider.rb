@@ -1,4 +1,6 @@
+# Top-level module for providers.
 module Provider
+  # The super class provider, all providers inherit from this.
   class DefaultProvider
     include ApiClient
     include LocalLogFile

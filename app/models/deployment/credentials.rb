@@ -1,3 +1,4 @@
+# Top-level class for Deployments.
 class Deployment
   # Private: Setup ssh and netrc in a deployment specific directory
   #

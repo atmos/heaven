@@ -42,6 +42,7 @@ Documentation:
     - !ruby/regexp /spec\/*\/*/
 
 ClassLength:
+  Max: 120
   Exclude:
     - !ruby/regexp /spec\/*\/*/
 
