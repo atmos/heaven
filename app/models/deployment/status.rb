@@ -4,9 +4,9 @@ class Deployment
   class Status
     include ApiClient
 
-    attr_reader :completed
+    attr_accessor :description, :number, :nwo, :output, :completed
+    alias_method :completed?, :completed
 
-    attr_accessor :description, :number, :nwo, :output
     def initialize(nwo, number)
       @nwo         = nwo
       @number      = number
