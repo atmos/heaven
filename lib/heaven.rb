@@ -3,5 +3,6 @@ module Heaven
 end
 
 require "heaven/version"
-require "heaven/notifier"
 require "heaven/jobs"
+require "heaven/provider"
+require "heaven/notifier"

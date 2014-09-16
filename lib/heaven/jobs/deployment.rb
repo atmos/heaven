@@ -29,7 +29,7 @@ module Heaven
       end
 
       def self.perform(guid, payload)
-        provider = ::Provider.from(guid, payload)
+        provider = Heaven::Provider.from(guid, payload)
         provider.run! if provider
       end
     end
