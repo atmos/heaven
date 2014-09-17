@@ -6,7 +6,7 @@ module Heaven
         filtered_message = message + " #{ascii_face}"
         Rails.logger.info "flowdock: #{filtered_message}"
 
-        flow.push_to_chat(:content => filtered_message, :tags => ["Deploy"])
+        flow.push_to_chat(:content => filtered_message, :tags => ["Deploy"], :message_id => message_thread)
       end
 
       def flowdock_flow_api_token
@@ -19,6 +19,10 @@ module Heaven
 
       def flow
         @flow ||= ::Flowdock::Flow.new(:api_token => flowdock_flow_api_token, :external_user_name => flowdock_external_user_name)
+      end
+
+      def message_thread
+        deployment_payload["notify"]["message_thread"]
       end
 
       def repository_link(path = "")
