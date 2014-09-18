@@ -52,7 +52,7 @@ module Heaven
       end
 
       def deployment
-        payload["deployment_status"]["deployment"]
+        payload["deployment"]
       end
 
       def environment
