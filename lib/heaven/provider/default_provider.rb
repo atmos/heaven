@@ -57,19 +57,19 @@ module Heaven
       end
 
       def sha
-        data["sha"][0..7]
+        data["deployment"]["sha"][0..7]
       end
 
       def ref
-        data["ref"]
+        data["deployment"]["ref"]
       end
 
       def environment
-        data["environment"]
+        data["deployment"]["environment"]
       end
 
       def description
-        data["description"] || "Deploying from #{Heaven::VERSION}"
+        data["deployment"]["description"] || "Deploying from #{Heaven::VERSION}"
       end
 
       def repository_url
@@ -88,7 +88,7 @@ module Heaven
       end
 
       def custom_payload
-        @custom_payload ||= data["payload"]
+        @custom_payload ||= data["deployment"]["payload"]
       end
 
       def custom_payload_name
