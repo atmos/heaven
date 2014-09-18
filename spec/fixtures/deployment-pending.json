@@ -51,6 +51,12 @@
   },
   "target_url": "https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c",
   "description": "Deploying from Heaven v0.5.5",
+  "deployment_status": {
+    "id": 12344,
+    "state": "pending",
+    "target_url": "https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c",
+    "description": "Deploying from Heaven v0.5.5"
+  },
   "repository": {
     "id": 1749093424,
     "name": "my-robot",

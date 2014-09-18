@@ -36,19 +36,19 @@ module Heaven
       end
 
       def state
-        payload["state"]
+        payload["deployment_status"]["state"]
       end
 
       def number
-        payload["id"]
+        payload["deployment_status"]["id"]
       end
 
       def target_url
-        payload["target_url"]
+        payload["deployment_status"]["target_url"]
       end
 
       def description
-        payload["description"]
+        payload["deployment_status"]["description"]
       end
 
       def deployment

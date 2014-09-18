@@ -10,6 +10,19 @@
     }
   },
   "description": null,
+  "deployment": {
+    "id": 721,
+    "ref": "master",
+    "sha": "9be5c2b9c34c1f8beb0cec30bb0c875d098f45ef",
+    "name": "atmos/my-robot",
+    "environment": "production",
+    "payload": {
+      "config": {
+        "heroku_name":"zero-fucks-hubot"
+      }
+    },
+    "description": null
+  },
   "repository": {
     "id": 16650088,
     "name": "my-robot",
