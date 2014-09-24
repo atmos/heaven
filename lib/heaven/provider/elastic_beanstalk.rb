@@ -74,7 +74,7 @@ module Heaven
       end
 
       def configure_s3_bucket
-        return unless s3.buckets.map(&:name).include?(bucket_name)
+        return if s3.buckets.map(&:name).include?(bucket_name)
         s3.buckets.create(bucket_name)
       end
 
