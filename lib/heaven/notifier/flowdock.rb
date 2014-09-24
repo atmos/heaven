@@ -93,7 +93,7 @@ module Heaven
       end
 
       def flowdock_user_api_token
-        ENV["FLOWDOCK_FLOW_API_TOKEN"]
+        ENV["FLOWDOCK_USER_API_TOKEN"]
       end
 
       def repo_default_branch
