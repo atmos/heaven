@@ -10,10 +10,6 @@ module Heaven
         @name = "bundler_capistrano"
       end
 
-      def bundle_path
-        gem_executable_path("bundle")
-      end
-
       def execute
         return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
@@ -27,7 +23,7 @@ module Heaven
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
           Bundler.with_clean_env do
-            bundler_string = ["bundle", "install"]
+            bundler_string = ["bundle", "install", "--without", ignored_groups.join(" ")]
             log "Executing bundler: #{bundler_string.join(" ")}"
             execute_and_log(bundler_string)
             deploy_string = ["bundle", "exec", "cap", environment, "-s", "branch=#{ref}", task]
@@ -35,6 +31,18 @@ module Heaven
             execute_and_log(deploy_string)
           end
         end
+      end
+
+      private
+
+      def ignored_groups
+        bundle_definition.groups - [:heaven, :deployment]
+      end
+
+      def bundle_definition
+        gemfile_path = File.expand_path("Gemfile", checkout_directory)
+        lockfile_path = File.expand_path("Gemfile.lock", checkout_directory)
+        Bundler::Definition.build(gemfile_path, lockfile_path, nil)
       end
     end
   end
