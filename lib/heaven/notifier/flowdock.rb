@@ -52,7 +52,7 @@ module Heaven
       end
 
       def tags
-        ['deploy', environment, flowdock_project_name, state].comapct
+        ['deploy', environment, flowdock_project_name, state].compact
       end
 
       def flowdock_project_name
