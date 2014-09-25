@@ -56,7 +56,7 @@ module Heaven
       end
 
       def flowdock_project_name
-        deployment_payload['flowdock_project_name']
+        deployment_payload["config"]["flowdock_project_name"]
       end
 
       def maybe_ref
