@@ -64,7 +64,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
-    flowdock (0.4.0)
+    flowdock (0.5.0)
       httparty (~> 0.7)
       multi_json
     foreman (0.63.0)
