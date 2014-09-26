@@ -4,6 +4,7 @@ require "heaven/provider/heroku"
 require "heaven/provider/fabric"
 require "heaven/provider/elastic_beanstalk"
 require "heaven/provider/dpl"
+require "heaven/provider/bundler_capistrano"
 
 # The top-level Heaven module
 module Heaven
@@ -24,6 +25,8 @@ module Heaven
         Provider::Fabric
       when "elastic_beanstalk"
         Provider::ElasticBeanstalk
+      when "bundler_capistrano"
+        Provider::BundlerCapistrano
       else
         Rails.logger.info "No deployment system for #{provider_name_for(payload)}"
       end
