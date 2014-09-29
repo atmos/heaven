@@ -59,7 +59,7 @@ module Heaven
       end
 
       def maybe_ref
-        if ref == repo_default_branch then '' else "##{ref}" end
+        if ref == repo_default_branch then '' else "/#{ref}" end
       end
 
       def default_message

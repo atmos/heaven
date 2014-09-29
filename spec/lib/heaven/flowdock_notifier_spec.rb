@@ -4,7 +4,7 @@ describe "Heaven::Notifier::Flowdock" do
   it "handles pending notifications" do
     n = Heaven::Notifier::Flowdock.new(fixture_data("deployment-pending"))
     expect(n.default_message).to \
-      eql "Deployment of my-robot#break-up-notifiers (https://github.com/atmos/my-robot/tree/break-up-notifiers) to production started."
+      eql "Deployment of my-robot/break-up-notifiers (https://github.com/atmos/my-robot/tree/break-up-notifiers) to production started."
   end
 
   it "handles successful deployment statuses" do
