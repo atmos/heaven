@@ -3,11 +3,10 @@ module Heaven
     # A notifier for flowdock
     class Flowdock < Notifier::Default
       def deliver(message)
-        filtered_message = message + " \n Output: #{output_link}"
-        Rails.logger.info "flowdock: #{filtered_message}"
+        Rails.logger.info "flowdock: #{message}"
 
         params = {
-          content: filtered_message,
+          content: message,
           tags: tags
         }
         if !thread_id.blank?
@@ -66,13 +65,13 @@ module Heaven
       def default_message
         case state
         when "success"
-          "Deployment of #{repository_link} to #{environment} is done! "
+          "Deployment done! Output: #{output_link}"
         when "failure"
-          "Deployment of #{repository_link} to #{environment} failed. "
+          "Deployment failed. Output: #{output_link}"
         when "error"
-          "Deployment of #{repository_link} to #{environment} has errors. "
+          "Deployment has errors. Output: #{output_link}"
         when "pending"
-          "Deploying #{repository_link("/tree/#{ref}")} to #{environment}. "
+          "Deployment of #{repository_link("/tree/#{ref}")} to #{environment} started."
         else
           puts "Unhandled deployment state, #{state}"
         end
