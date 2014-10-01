@@ -1,4 +1,4 @@
-require 'heaven/provider/capistrano'
+require "heaven/provider/capistrano"
 
 module Heaven
   # Top-level module for providers.
