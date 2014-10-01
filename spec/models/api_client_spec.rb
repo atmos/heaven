@@ -8,7 +8,7 @@ describe ApiClient do
   def octokit_request_headers
     {
       "Accept"          => "application/vnd.github.v3+json",
-      "User-Agent"      => "Octokit Ruby Gem 3.3.1",
+      "User-Agent"      => "Octokit Ruby Gem #{Octokit::VERSION}",
       "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3"
     }
   end
