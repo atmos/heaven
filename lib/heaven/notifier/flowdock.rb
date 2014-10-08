@@ -4,7 +4,18 @@ module Heaven
     class Flowdock < Notifier::Default
       def deliver(message)
         Rails.logger.info "flowdock: #{message}"
+        if autodeploy?
+          if %w(success failure error).include?(state)
+            deliver_to_inbox(message)
+          else
+            Rails.logger.info "Skipping autodeploymessage for state #{state}"
+          end
+        else
+          deliver_to_chat(message)
+        end
+      end
 
+      def deliver_to_chat(message)
         params = {
           content: message,
           tags: tags
@@ -19,6 +30,28 @@ module Heaven
         else
           params[:flow] = chat_room
           client.chat_message(params)
+        end
+      end
+
+      def deliver_to_inbox(message)
+        if use_push_api?
+          # TODO
+        else
+          api_token = client.get('/flows/find', id: chat_room).try(:[], "api_token")
+          if api_token.blank?
+            Rails.logger.error 'Could not fetch flow api token'
+          else
+            ::Flowdock::Flow.new(
+              api_token: api_token,
+              source: 'Heaven deployment',
+              from: {name: 'Heaven', address: push_api_email}
+            ).push_to_team_inbox(
+              subject: push_api_subject,
+              content: push_api_content,
+              tags: tags,
+              link: output_link
+            )
+          end
         end
       end
 
@@ -55,7 +88,7 @@ module Heaven
       end
 
       def flowdock_project_name
-        deployment_payload["config"]["flowdock_project_name"]
+        deployment_payload["config"]["flowdock_project_name"] || repo_name
       end
 
       def maybe_ref
@@ -74,6 +107,31 @@ module Heaven
           "Deployment of #{repository_link("/tree/#{ref}")} to #{environment} started."
         else
           puts "Unhandled deployment state, #{state}"
+        end
+      end
+
+      def push_api_subject
+        case state
+        when "success"
+          "#{flowdock_project_name} deployed with ref #{ref} on #{environment}"
+        when "error"
+          "Error deploying #{flowdock_project_name} to #{environment}"
+        when "failure"
+          "Failed deploying #{flowdock_project_name} to #{environment}"
+        else
+          puts "Unhandled deployment state, #{state}"
+        end
+      end
+
+      def push_api_content
+        "<p>#{deployment['description']}</p>"
+      end
+
+      def push_api_email
+        if %(success pending).include?(state)
+          'build+ok@flowdock.com'
+        else
+          'build+fail@flowdock.com'
         end
       end
 
@@ -98,6 +156,11 @@ module Heaven
       def repo_default_branch
         payload["repository"]["default_branch"]
       end
+
+      def autodeploy?
+        deployment["description"].start_with?("Auto-Deployed")
+      end
+
     end
   end
 end
