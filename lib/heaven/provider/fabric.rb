@@ -9,7 +9,7 @@ module Heaven
       end
 
       def task
-        custom_payload && custom_payload["task"] || "deploy"
+        data["task"] || "deploy"
       end
 
       def deploy_command_format

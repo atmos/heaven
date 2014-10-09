@@ -13,7 +13,7 @@ module Heaven
       end
 
       def task
-        name = custom_payload && custom_payload["task"] || "deploy"
+        name = data["task"] || "deploy"
         unless name =~ /deploy(?:\:[\w+:]+)?/
           fail "Invalid capistrano taskname: #{name.inspect}"
         end
