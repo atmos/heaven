@@ -3,6 +3,11 @@ module Heaven
   module Provider
     # The capistrano provider.
     class Capistrano < DefaultProvider
+
+      # See http://stackoverflow.com/questions/12093748/how-do-i-check-for-valid-git-branch-names
+      # and http://linux.die.net/man/1/git-check-ref-format
+      VALID_GIT_REF = /\A(?!\/)(?!.*(?:\/\.|\/\/|@\{|\\|\.\.))[\040-\176&&[^ ~\^:?*\[]]+(?<!\.lock|\/|\.)\z/
+
       def initialize(guid, payload)
         super
         @name = "capistrano"
@@ -47,6 +52,14 @@ module Heaven
         else
           status.failure!
         end
+      end
+
+      def ref
+        deploy_ref = data["deployment"]["ref"]
+        unless deploy_ref =~ VALID_GIT_REF
+          fail "Invalid git reference #{deploy_ref.inspect}"
+        end
+        deploy_ref
       end
     end
   end
