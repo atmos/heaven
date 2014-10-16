@@ -26,9 +26,9 @@ module Heaven
             bundler_string = ["bundle", "install", "--without", ignored_groups.join(" ")]
             log "Executing bundler: #{bundler_string.join(" ")}"
             execute_and_log(bundler_string)
-            deploy_string = ["bundle", "exec", "cap", environment, "-s", "branch=#{ref}", task, "BRANCH=#{ref}"]
+            deploy_string = ["bundle", "exec", "cap", environment, "-s", "branch=#{ref}", task]
             log "Executing capistrano: #{deploy_string.join(" ")}"
-            execute_and_log(deploy_string)
+            execute_and_log(deploy_string, "BRANCH" => ref)
           end
         end
       end
