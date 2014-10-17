@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Heaven::Provider::Capistrano do
+describe Heaven::Provider::DefaultProvider do
 
-  let(:valid_git_ref) { Heaven::Provider::Capistrano::VALID_GIT_REF }
+  let(:valid_git_ref) { Heaven::Provider::DefaultProvider::VALID_GIT_REF }
 
   describe "::VALID_GIT_REF" do
     it 'matches master' do
