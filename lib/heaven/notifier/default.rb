@@ -1,5 +1,6 @@
 module Heaven
   module Notifier
+    # The class that all notifiers inherit from
     class Default
       attr_accessor :payload
 
@@ -8,7 +9,7 @@ module Heaven
       end
 
       def deliver(message)
-        fail "Unable to deliver, write your own #deliver(message) method."
+        fail "Unable to deliver, write your own #deliver(#{message}) method."
       end
 
       def ascii_face
@@ -31,63 +32,63 @@ module Heaven
       end
 
       def green?
-        %w(pending success).include?(state)
+        %w{pending success}.include?(state)
       end
 
       def state
-        payload['state']
+        payload["deployment_status"]["state"]
       end
 
       def number
-        payload['id']
+        payload["deployment_status"]["id"]
       end
 
       def target_url
-        payload['target_url']
+        payload["deployment_status"]["target_url"]
       end
 
       def description
-        payload['description']
+        payload["deployment_status"]["description"]
       end
 
       def deployment
-        payload['deployment']
+        payload["deployment"]
       end
 
       def environment
-        deployment['environment']
+        deployment["environment"]
       end
 
       def sha
-        deployment['sha'][0..7]
+        deployment["sha"][0..7]
       end
 
       def ref
-        deployment['ref']
+        deployment["ref"]
       end
 
       def deployment_number
-        deployment['id']
+        deployment["id"]
       end
 
       def deployment_payload
-        @deployment_payload ||= deployment['payload']
+        @deployment_payload ||= deployment["payload"]
       end
 
       def chat_user
-        deployment_payload['notify']['user'] || "unknown"
+        deployment_payload["notify"]["user"] || "unknown"
       end
 
       def chat_room
-        deployment_payload['notify']['room']
+        deployment_payload["notify"]["room"]
       end
 
       def repo_name
-        deployment_payload['name'] || payload['repository']['name']
+        deployment_payload["name"] || payload["repository"]["name"]
       end
 
       def repo_url(path = "")
-        payload['repository']['html_url'] + path
+        payload["repository"]["html_url"] + path
       end
 
       def repository_link(path = "")
@@ -97,13 +98,13 @@ module Heaven
       def default_message
         message = user_link
         case state
-        when 'success'
+        when "success"
           message << "'s #{environment} deployment of #{repository_link} is done! "
-        when 'failure'
+        when "failure"
           message << "'s #{environment} deployment of #{repository_link} failed. "
-        when 'error'
+        when "error"
           message << "'s #{environment} deployment of #{repository_link} has errors. "
-        when 'pending'
+        when "pending"
           message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
         else
           puts "Unhandled deployment state, #{state}"

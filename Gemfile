@@ -1,5 +1,5 @@
-ruby '2.1.2'
-source 'https://rubygems.org'
+ruby "2.1.2"
+source "https://rubygems.org"
 
 gem "rails",    "~>4.1.0"
 gem "resque"
@@ -26,6 +26,7 @@ group :development, :test do
   gem "sqlite3"
   gem "webmock"
   gem "simplecov", "0.7.1"
+  gem "rubocop"
   gem "rspec-rails"
 end
 

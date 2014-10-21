@@ -1,10 +1,10 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Deployment do
-  let(:payload) { fixture_data('deployment') }
-  let!(:data) { JSON.parse(payload)['payload'] }
+  let(:payload) { fixture_data("deployment") }
+  let!(:data) { JSON.parse(payload)["payload"] }
 
-  let!(:create_data) {
+  let!(:create_data) do
     {
       :custom_payload  => JSON.dump(data),
       :environment     => "production",
@@ -15,7 +15,7 @@ describe Deployment do
       :ref             => "master",
       :sha             => "f24b8008"
     }
-  }
+  end
 
   it "works with dynamic finders" do
     deployment = Deployment.create create_data
@@ -23,7 +23,7 @@ describe Deployment do
   end
 
   it "#latest_for_name_with_owner" do
-    present = [ ]
+    present = []
     Deployment.create create_data
     present << Deployment.create(create_data)
 

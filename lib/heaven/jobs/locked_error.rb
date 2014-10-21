@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # An error that's raised when two deployments trigger simultaneously
     class LockedError
       @queue = :deployment_statuses
 
@@ -11,7 +12,7 @@ module Heaven
       end
 
       def self.perform(guid, payload)
-        provider = ::Provider::DefaultProvider.new(guid, payload)
+        provider = Heaven::Provider::DefaultProvider.new(guid, payload)
         provider.status.description = "Already deploying."
         provider.status.error!
 
