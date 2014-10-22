@@ -3,7 +3,6 @@ module Heaven
   module Provider
     # The capistrano provider.
     class Capistrano < DefaultProvider
-
       def initialize(guid, payload)
         super
         @name = "capistrano"

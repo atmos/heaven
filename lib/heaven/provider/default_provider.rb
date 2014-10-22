@@ -53,7 +53,7 @@ module Heaven
       end
 
       def name
-        custom_payload_name || name_with_owner
+        name_with_owner
       end
 
       def name_with_owner
@@ -61,11 +61,11 @@ module Heaven
       end
 
       def sha
-        data["deployment"]["sha"][0..7]
+        deployment_data["sha"][0..7]
       end
 
       def ref
-        deploy_ref = data["deployment"]["ref"]
+        deploy_ref = deployment_data["ref"]
         unless deploy_ref =~ VALID_GIT_REF
           fail "Invalid git reference #{deploy_ref.inspect}"
         end
@@ -73,11 +73,11 @@ module Heaven
       end
 
       def environment
-        data["deployment"]["environment"]
+        deployment_data["environment"]
       end
 
       def description
-        data["deployment"]["description"] || "Deploying from #{Heaven::VERSION}"
+        deployment_data["description"] || "Deploying from #{Heaven::VERSION}"
       end
 
       def repository_url
@@ -95,8 +95,12 @@ module Heaven
         uri.to_s
       end
 
+      def deployment_data
+        data["deployment"] || data
+      end
+
       def custom_payload
-        @custom_payload ||= data["deployment"]["payload"]
+        @custom_payload ||= deployment_data["payload"]
       end
 
       def custom_payload_name
