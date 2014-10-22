@@ -14,14 +14,20 @@ module ApiClient
     ENV["GITHUB_CLIENT_SECRET"] || "<unknown-client-secret>"
   end
 
+  def github_api_endpoint
+    ENV["OCTOKIT_API_ENDPOINT"] || "https://api.github.com/"
+  end
+
   def api
-    @api ||= Octokit::Client.new(:access_token => github_token)
+    @api ||= Octokit::Client.new(:access_token => github_token,
+                                 :api_endpoint => github_api_endpoint)
   end
 
   def oauth_client_api
     @oauth_client_api ||= Octokit::Client.new(
       :client_id     => github_client_id,
-      :client_secret => github_client_secret
+      :client_secret => github_client_secret,
+      :api_endpoint  => github_api_endpoint
     )
   end
 end

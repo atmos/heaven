@@ -11,7 +11,11 @@ module WebhookValidations
   end
 
   def valid_incoming_webhook_address?
-    Validator.new(request.ip).valid?
+    if Octokit.api_endpoint == "https://api.github.com/"
+      Validator.new(request.ip).valid?
+    else
+      true
+    end
   end
 
   # A class to validate if a given ip is coming from GitHub.
