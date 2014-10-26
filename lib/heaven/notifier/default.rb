@@ -1,8 +1,13 @@
+require "heaven/comparison/default"
+
 module Heaven
   module Notifier
     # The class that all notifiers inherit from
     class Default
+      include ApiClient
+
       attr_accessor :payload
+      attr_writer :comparison
 
       def initialize(payload)
         @payload = JSON.parse(payload)
@@ -29,6 +34,10 @@ module Heaven
 
       def pending?
         state == "pending"
+      end
+
+      def success?
+        state == "success"
       end
 
       def green?
@@ -63,6 +72,10 @@ module Heaven
         deployment["environment"]
       end
 
+      def task
+        deployment["task"]
+      end
+
       def sha
         deployment["sha"][0..7]
       end
@@ -91,6 +104,10 @@ module Heaven
         deployment_payload["name"] || payload["repository"]["name"]
       end
 
+      def name_with_owner
+        payload["repository"]["full_name"]
+      end
+
       def repo_url(path = "")
         payload["repository"]["html_url"] + path
       end
@@ -115,8 +132,34 @@ module Heaven
         end
       end
 
+      def changes
+        Heaven::Comparison::Default.new(comparison).changes(5)
+      end
+
+      def comparison
+        @comparison ||= api.compare(name_with_owner, last_known_revision, sha).as_json
+      end
+
+      def last_known_revision
+        Heaven.redis.get("#{name_with_owner}-production-revision")
+      end
+
+      def record_revision
+        Heaven.redis.set("#{name_with_owner}-#{environment}-revision", sha)
+      end
+
       def post!
         deliver(default_message)
+
+        return unless success? && deploy?
+
+        deliver(changes) if deliver_changes?
+
+        record_revision
+      end
+
+      def deliver_changes?
+        change_delivery_enabled? && last_known_revision.present?
       end
 
       def user_link
