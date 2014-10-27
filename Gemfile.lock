@@ -238,6 +238,8 @@ DEPENDENCIES
   campfiyah
   capistrano (= 2.9.0)
   dpl (= 1.5.7)
+  faraday
+  faraday_middleware
   flowdock
   foreman
   hipchat

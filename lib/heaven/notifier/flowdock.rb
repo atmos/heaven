@@ -2,65 +2,38 @@ module Heaven
   module Notifier
     # A notifier for flowdock
     class Flowdock < Notifier::Default
+
       def deliver(message)
         Rails.logger.info "flowdock: #{message}"
-        if autodeploy?
-          if %w(success failure error).include?(state)
-            deliver_to_inbox(message)
-          else
-            Rails.logger.info "Skipping autodeploymessage for state #{state}"
-          end
-        else
-          deliver_to_chat(message)
+        if flow_token.nil?
+          Rails.logger.error "Could not find flow token for flow #{chat_room}"
+          return
+        end
+        response = thread_client.post '/messages', {
+          flow_token: flow_token,
+          event: 'activity',
+          external_id: flowdock_thread_id,
+          thread: thread_data,
+          title: activity_title,
+          author: activity_author,
+        }
+        if state == 'pending' && !autodeploy?
+          answer_to_chat(response.body['thread_id'])
         end
       end
 
-      def deliver_to_chat(message)
+      def answer_to_chat(deployment_thread_id)
+        flow = auth_client.get('/flows/find', {id: chat_room})
         params = {
-          content: message,
-          tags: tags
+          content: "Deployment started: #{thread_url(flow, deployment_thread_id)}"
         }
         if !thread_id.blank?
           params[:thread_id] = thread_id
         elsif !message_id.blank?
           params[:message_id] = message_id
         end
-        if use_push_api?
-          flow.push_to_chat(params)
-        else
-          params[:flow] = chat_room
-          client.chat_message(params)
-        end
-      end
-
-      def deliver_to_inbox(message)
-        if use_push_api?
-          # TODO
-        else
-          api_token = client.get('/flows/find', id: chat_room).try(:[], "api_token")
-          if api_token.blank?
-            Rails.logger.error 'Could not fetch flow api token'
-          else
-            ::Flowdock::Flow.new(
-              api_token: api_token,
-              source: 'Heaven deployment',
-              from: {name: 'Heaven', address: push_api_email}
-            ).push_to_team_inbox(
-              subject: push_api_subject,
-              content: push_api_content,
-              tags: tags,
-              link: output_link
-            )
-          end
-        end
-      end
-
-      def flow
-        @flow ||= ::Flowdock::Flow.new(api_token: flowdock_flow_api_token, external_user_name: flowdock_external_user_name)
-      end
-
-      def client
-        @client ||= ::Flowdock::Client.new(api_token: flowdock_user_api_token)
+        params[:flow] = chat_room
+        auth_client.chat_message(params)
       end
 
       def thread_id
@@ -71,87 +44,87 @@ module Heaven
         deployment_payload["notify"]["message_id"]
       end
 
-      def repository_link(path = "")
-        "#{repo_name}#{maybe_ref} (#{repo_url(path)})"
-      end
-
-      def user_link
-        "@#{chat_user}"
-      end
-
       def output_link
         target_url
       end
 
       def tags
-        ['deploy', environment, flowdock_project_name, state].compact
-      end
-
-      def flowdock_project_name
-        deployment_payload["config"]["flowdock_project_name"] || repo_name
-      end
-
-      def maybe_ref
-        if ref == repo_default_branch then '' else "/#{ref}" end
-      end
-
-      def default_message
-        case state
-        when "success"
-          "Deployment done! Output: #{output_link}"
-        when "failure"
-          "Deployment failed. Output: #{output_link}"
-        when "error"
-          "Deployment has errors. Output: #{output_link}"
-        when "pending"
-          "Deployment of #{repository_link("/tree/#{ref}")} to #{environment} started."
-        else
-          puts "Unhandled deployment state, #{state}"
-        end
-      end
-
-      def push_api_subject
-        case state
-        when "success"
-          "#{flowdock_project_name} deployed with ref #{ref} on #{environment}"
-        when "error"
-          "Error deploying #{flowdock_project_name} to #{environment}"
-        when "failure"
-          "Failed deploying #{flowdock_project_name} to #{environment}"
-        else
-          puts "Unhandled deployment state, #{state}"
-        end
+        ['deploy', environment, repo_name, state].compact
       end
 
       def push_api_content
         "<p>#{deployment['description']}</p>"
       end
 
-      def push_api_email
-        if %(success pending).include?(state)
-          'build+ok@flowdock.com'
-        else
-          'build+fail@flowdock.com'
+      def thread_client
+        @thread_client ||= Faraday.new ::Flowdock::FLOWDOCK_API_URL do |connection|
+          connection.request :json
+          connection.response :json, content_type: /\bjson$/
+          connection.use Faraday::Response::RaiseError
+          connection.use Faraday::Response::Logger, Rails.logger if Rails.logger.debug?
+          connection.adapter Faraday.default_adapter
         end
       end
 
-      private
-
-      def use_push_api?
-        flowdock_user_api_token.blank?
-      end
-
-      def flowdock_flow_api_token
-        ENV["FLOWDOCK_FLOW_API_TOKEN"]
-      end
-
-      def flowdock_external_user_name
-        ENV["FLOWDOCK_EXTERNAL_USER_NAME"]
+      def auth_client
+        @auth_client ||= ::Flowdock::Client.new(api_token: flowdock_user_api_token)
       end
 
       def flowdock_user_api_token
         ENV["FLOWDOCK_USER_API_TOKEN"]
       end
+
+      def flow_token
+        JSON.parse(ENV["FLOWDOCK_FLOW_TOKENS"])[chat_room]
+      rescue JSON::ParseError => e
+        Rails.logger.error 'Failed parsing FLOWDOCK_FLOW_TOKENS'
+        nil
+      end
+
+      def thread_data
+        {
+          title: "Deployment ##{deployment_number} of #{repo_name} to #{environment}",
+          body: "<p>#{deployment['description']}</p>",
+          external_url: target_url,
+          status: {
+            value: state,
+            color: thread_status_color
+          },
+          fields: [
+            {label: "Deployment", value: deployment_number},
+            {label: "Application", value: repo_name},
+            {label: "Repository", value: "<a href='#{repo_url}'>#{payload['repository']['full_name']}</a>"},
+            {label: "Environment", value: environment},
+            {label: "Branch", value: "<a href='#{repo_url("/tree/#{ref}")}'>#{ref}</a>"},
+            {label: "Sha", value: "<a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"}
+          ]
+        }
+      end
+
+      def activity_title
+        case state
+        when "success"
+          "#{repo_name} deployed with ref #{ref} to #{environment}."
+        when "error"
+          "Error deploying #{repo_name} to #{environment}."
+        when "failure"
+          "Failed deploying #{repo_name} to #{environment}."
+        when "pending"
+          "Started deploying #{repo_name} to #{environment}."
+        else
+          puts "Unhandled deployment state, #{state}"
+        end
+      end
+
+      def activity_author
+        {
+          name: ENV['FLOWDOCK_USER_NAME'] || 'Heaven',
+          avatar: ENV['FLOWDOCK_USER_AVATAR'],
+          email: ENV['FLOWDOCK_USER_EMAIL'] || build_status_email
+        }
+      end
+
+      private
 
       def repo_default_branch
         payload["repository"]["default_branch"]
@@ -161,6 +134,34 @@ module Heaven
         deployment["description"].start_with?("Auto-Deployed")
       end
 
+      def flowdock_thread_id
+        "heaven:deployment:#{payload['repository']['full_name'].gsub('/', ':')}:#{deployment_number}"
+      end
+
+      def thread_url(flow, id)
+        "#{flow['web_url']}/threads/#{id}"
+      end
+
+      def build_status_email
+        if %(success pending).include?(state)
+          'build+ok@flowdock.com'
+        else
+          'build+fail@flowdock.com'
+        end
+      end
+
+      def thread_status_color
+        case state
+        when "success"
+          "green"
+        when "error", "failure"
+          "red"
+        when "pending"
+          "yellow"
+        else
+          nil
+        end
+      end
     end
   end
 end
