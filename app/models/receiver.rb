@@ -44,6 +44,8 @@ class Receiver
 
       if locker.lock?
         Resque.enqueue(Heaven::Jobs::EnvironmentLock, lock_params)
+      elsif locker.unlock?
+        Resque.enqueue(Heaven::Jobs::EnvironmentUnlock, lock_params)
       elsif Heaven::Jobs::Deployment.locked?(guid, payload)
         Rails.logger.info "Deployment locked for: #{Heaven::Jobs::Deployment.identifier(guid, payload)}"
         Resque.enqueue(Heaven::Jobs::LockedError, guid, payload)
