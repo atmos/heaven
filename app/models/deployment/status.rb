@@ -14,31 +14,52 @@ class Deployment
       @description = "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
+    def self.testing?
+      !!@testing
+    end
+
+    def self.testing=(value)
+      @testing = value
+    end
+
+    def self.deliveries
+      @deliveries ||= []
+    end
+
     def url
       "https://api.github.com/repos/#{nwo}/deployments/#{number}"
     end
 
     def payload
-      { "target_url"  => output, "description" => description }
+      { 'target_url' => output, 'description' => description }
     end
 
     def pending!
-      api.create_deployment_status(url, "pending", payload)
+      create_status(status: 'pending', completed: false)
     end
 
     def success!
-      api.create_deployment_status(url, "success", payload)
-      @completed = true
+      create_status(status: 'success')
     end
 
     def failure!
-      api.create_deployment_status(url, "failure", payload)
-      @completed = true
+      create_status(status: 'failure')
     end
 
     def error!
-      api.create_deployment_status(url, "error", payload)
-      @completed = true
+      create_status(status: 'error')
+    end
+
+    private
+
+    def create_status(status:, completed: true)
+      if self.class.testing?
+        self.class.deliveries << payload.merge('status' => status)
+      else
+        api.create_deployment_status(url, status, payload)
+      end
+
+      @completed = completed
     end
   end
 end

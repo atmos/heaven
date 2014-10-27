@@ -30,6 +30,21 @@ RSpec.configure do |config|
     Resque.inline = true
   end
 
+  config.around do |example|
+    original = Heaven.redis
+    Heaven.redis = Redis.new(url: 'redis://localhost:6379/3')
+    example.run
+    Heaven.redis.flushall
+    Heaven.redis = original
+  end
+
+  config.around do |example|
+    original = Deployment::Status.testing?
+    Deployment::Status.testing = true
+    example.run
+    Deployment::Status.testing = original
+  end
+
   def fixture_data(name)
     File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
   end

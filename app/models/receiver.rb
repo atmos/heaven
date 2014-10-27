@@ -40,7 +40,11 @@ class Receiver
 
   def run!
     if event == "deployment"
-      if Heaven::Jobs::Deployment.locked?(guid, payload)
+      locker = EnvironmentLocker.new(lock_params)
+
+      if locker.lock?
+        Resque.enqueue(Heaven::Jobs::EnvironmentLock, lock_params)
+      elsif Heaven::Jobs::Deployment.locked?(guid, payload)
         Rails.logger.info "Deployment locked for: #{Heaven::Jobs::Deployment.identifier(guid, payload)}"
         Resque.enqueue(Heaven::Jobs::LockedError, guid, payload)
       else
@@ -52,6 +56,18 @@ class Receiver
       Resque.enqueue(Heaven::Jobs::Status, guid, payload)
     else
       Rails.logger.info "Unhandled event type, #{event}."
+    end
+  end
+
+  private
+
+  def lock_params
+    {}.tap do |hash|
+      hash[:name_with_owner] = data['name']
+      hash[:environment]     = data['environment']
+      hash[:actor]           = data['sender']['login']
+      hash[:deployment_id]   = data['id']
+      hash[:task]            = data['task']
     end
   end
 end
