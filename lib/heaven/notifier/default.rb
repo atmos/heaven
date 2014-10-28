@@ -132,7 +132,7 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Default.new(comparison).changes
+        Heaven::Comparison::Default.new(comparison).changes(5)
       end
 
       def comparison

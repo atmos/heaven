@@ -1,19 +1,18 @@
 require "spec_helper"
 require "heaven/comparison/default"
+require "support/helpers/comparison_helper"
 
 describe "Heaven::Comparison::Default" do
+  include ComparisonHelper
+
   let(:comparison) do
     {
+      :html_url => "https://github.com/org/repo/compare/sha...sha",
       :total_commits => 1,
-      :commits => [{
-        :sha => "sha",
-        :commit => {
-          :message => "Commit message"
-        },
-        :author => {
-          :login => "login"
-        }
-      }],
+      :commits => [
+        build_commit_hash("Commit message #123"),
+        build_commit_hash("Another commit")
+      ],
       :files => [{
         :additions => 1,
         :deletions => 2,
@@ -35,7 +34,22 @@ describe "Heaven::Comparison::Default" do
           Total Commits: 1
           2 Additions, 4 Deletions, 6 Changes
 
-          sha by login: Commit message
+          sha by login: Another commit
+          sha by login: Commit message #123
+        CHANGES
+      )
+    end
+
+    it "accepts a commit list limit" do
+      formatter  = Heaven::Comparison::Default.new(comparison)
+
+      expect(formatter.changes(1)).to eq(
+        <<-CHANGES.strip_heredoc.strip
+          Total Commits: 1
+          2 Additions, 4 Deletions, 6 Changes
+
+          sha by login: Another commit
+          And 1 more commit... https://github.com/org/repo/compare/sha...sha
         CHANGES
       )
     end

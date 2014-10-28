@@ -10,11 +10,19 @@ module Heaven
         @comparison = comparison.with_indifferent_access
       end
 
-      def changes
+      def changes(limit = nil)
         header  = changes_header
-        commits = formatted_commits(comparison[:commits])
+        commits = comparison[:commits].reverse
 
-        [header, commits].join("\n")
+        commit_list = formatted_commits(limit ? commits.take(limit) : commits)
+
+        parts = [header, commit_list]
+
+        if limit && limit < commits.length
+          parts << n_more_commits_link(commits.length - limit)
+        end
+
+        parts.join("\n")
       end
 
       private
@@ -26,6 +34,10 @@ module Heaven
         CHANGES
       end
 
+      def n_more_commits_link(number)
+        "And #{number} more #{"commit".pluralize(number)}... #{comparison[:html_url]}"
+      end
+
       def total_commits
         comparison[:total_commits]
       end
@@ -35,7 +47,7 @@ module Heaven
       end
 
       def formatted_commits(commits)
-        commits.reverse.map do |commit|
+        commits.map do |commit|
           "#{commit[:sha]} by #{commit[:author][:login]}: #{commit_message(commit[:commit])}"
         end
       end

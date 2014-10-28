@@ -24,6 +24,10 @@ module Heaven
         "[compare](#{comparison[:html_url]})"
       end
 
+      def n_more_commits_link(number)
+        "[And #{number} more #{"commit".pluralize(number)}...](#{comparison[:html_url]})"
+      end
+
       def formatted_commits(commits)
         commits.reverse.map do |commit|
           "#{sha_link(commit)} by #{author_link(commit[:author])}: #{commit_message(commit[:commit])}"
