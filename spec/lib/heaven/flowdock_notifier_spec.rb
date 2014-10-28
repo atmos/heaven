@@ -48,7 +48,8 @@ describe "Heaven::Notifier::Flowdock" do
           name: "Heaven test",
           avatar: "http://example.com/imaginary.jpg",
           email: "heaven.invalid@example.com"
-        }
+        },
+        tags: ['deploy', 'production', 'my-robot', 'pending']
       })
     ).to_return(status: 201, headers: {"Content-Type" => "application/json"}, body: '{"thread_id":"generated_thread"}')
     # Stub final chat message
@@ -95,7 +96,8 @@ describe "Heaven::Notifier::Flowdock" do
           name: "Heaven test",
           avatar: "http://example.com/imaginary.jpg",
           email: "heaven.invalid@example.com"
-        }
+        },
+        tags: ['deploy', 'production', 'my-robot', 'success']
       })
     ).to_return(status: 201, headers: {"Content-Type" => "application/json"}, body: '{"thread_id":"generated_thread"}')
     n.deliver(n.default_message)
@@ -132,7 +134,8 @@ describe "Heaven::Notifier::Flowdock" do
           name: "Heaven test",
           avatar: "http://example.com/imaginary.jpg",
           email: "heaven.invalid@example.com"
-        }
+        },
+        tags: ['deploy', 'production', 'my-robot', 'failure']
       })
     ).to_return(status: 201, headers: {"Content-Type" => "application/json"}, body: '{"thread_id":"generated_thread"}')
     n.deliver(n.default_message)

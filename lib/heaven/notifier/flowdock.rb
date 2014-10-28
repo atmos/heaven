@@ -16,6 +16,7 @@ module Heaven
           thread: thread_data,
           title: activity_title,
           author: activity_author,
+          tags: tags
         }
         if state == 'pending' && !autodeploy?
           answer_to_chat(response.body['thread_id'])
