@@ -1,4 +1,4 @@
-require 'heaven/comparison/default'
+require "heaven/comparison/default"
 
 module Heaven
   module Notifier
@@ -150,11 +150,11 @@ module Heaven
       def post!
         deliver(default_message)
 
-        if success? && task == 'deploy'
-          deliver(changes) if last_known_revision.present?
+        return unless success? && task == "deploy"
 
-          record_revision
-        end
+        deliver(changes) if last_known_revision.present?
+
+        record_revision
       end
 
       def user_link

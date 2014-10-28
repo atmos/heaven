@@ -1,7 +1,8 @@
-require 'heaven/comparison/default'
+require "heaven/comparison/default"
 
 module Heaven
   module Comparison
+    # Formats a comparison between two commits
     class Linked < Default
       attr_reader :name_with_owner
 

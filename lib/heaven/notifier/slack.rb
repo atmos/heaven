@@ -1,4 +1,4 @@
-require 'heaven/comparison/linked'
+require "heaven/comparison/linked"
 
 module Heaven
   module Notifier

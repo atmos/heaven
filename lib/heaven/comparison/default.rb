@@ -1,7 +1,8 @@
-require 'active_support/core_ext/hash/indifferent_access'
+require "active_support/core_ext/hash/indifferent_access"
 
 module Heaven
   module Comparison
+    # Formats a comparison between two commits
     class Default
       attr_reader :comparison
 
