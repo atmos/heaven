@@ -15,12 +15,6 @@ class Deployment
     end
 
     class << self
-      attr_writer :testing
-
-      def testing?
-        @testing.present?
-      end
-
       def deliveries
         @deliveries ||= []
       end
@@ -53,7 +47,7 @@ class Deployment
     private
 
     def create_status(status:, completed: true)
-      if self.class.testing?
+      if Heaven.testing?
         self.class.deliveries << payload.merge("status" => status)
       else
         api.create_deployment_status(url, status, payload)

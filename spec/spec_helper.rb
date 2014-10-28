@@ -38,13 +38,6 @@ RSpec.configure do |config|
     Heaven.redis = original
   end
 
-  config.around do |example|
-    original = Deployment::Status.testing?
-    Deployment::Status.testing = true
-    example.run
-    Deployment::Status.testing = original
-  end
-
   def fixture_data(name)
     File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
   end
@@ -62,3 +55,5 @@ RSpec.configure do |config|
     }
   end
 end
+
+Heaven.testing = true

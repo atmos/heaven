@@ -1,30 +1,34 @@
 module Heaven
   REDIS_PREFIX = "heaven:#{Rails.env}"
 
-  def self.redis=(value)
-    @redis = value
-  end
+  class << self
+    attr_writer :testing, :redis
 
-  def self.redis
-    @redis ||= if ENV['REDIS_PROVIDER']
-                 Redis.new(:url => ENV[ENV['REDIS_PROVIDER']])
-               elsif ENV["REDISCLOUD_URL"]
-                 Redis.new(:url => ENV['REDISCLOUD_URL'])
-               elsif ENV["OPENREDIS_URL"]
-                 Redis.new(:url => ENV['OPENREDIS_URL'])
-               elsif ENV["BOXEN_REDIS_URL"]
-                 Redis.new(:url => ENV['BOXEN_REDIS_URL'])
-               else
-                 Redis.new
-               end
+    def testing?
+      @testing.present?
+    end
 
-    Resque.redis = Redis::Namespace.new("#{REDIS_PREFIX}:resque", :redis => @redis)
-    @redis
-  end
+    def redis
+      @redis ||= if ENV['REDIS_PROVIDER']
+                   Redis.new(:url => ENV[ENV['REDIS_PROVIDER']])
+                 elsif ENV["REDISCLOUD_URL"]
+                   Redis.new(:url => ENV['REDISCLOUD_URL'])
+                 elsif ENV["OPENREDIS_URL"]
+                   Redis.new(:url => ENV['OPENREDIS_URL'])
+                 elsif ENV["BOXEN_REDIS_URL"]
+                   Redis.new(:url => ENV['BOXEN_REDIS_URL'])
+                 else
+                   Redis.new
+                 end
 
-  def self.redis_reconnect!
-    @redis = nil
-    redis
+      Resque.redis = Redis::Namespace.new("#{REDIS_PREFIX}:resque", :redis => @redis)
+      @redis
+    end
+
+    def redis_reconnect!
+      @redis = nil
+      redis
+    end
   end
 end
 
