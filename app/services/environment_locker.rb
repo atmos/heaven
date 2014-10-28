@@ -1,7 +1,7 @@
 class EnvironmentLocker
-  LOCK_TASK     = 'deploy:lock'
-  UNLOCK_TASK   = 'deploy:unlock'
-  UNKNOWN_ACTOR = 'Unknown'
+  LOCK_TASK     = "deploy:lock"
+  UNLOCK_TASK   = "deploy:unlock"
+  UNKNOWN_ACTOR = "Unknown"
 
   attr_reader :name_with_owner, :environment, :actor, :task
   attr_writer :redis
@@ -44,6 +44,6 @@ class EnvironmentLocker
   end
 
   def redis_key
-    [name_with_owner, environment, 'lock'].join('-')
+    [name_with_owner, environment, "lock"].join("-")
   end
 end

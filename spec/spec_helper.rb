@@ -32,7 +32,7 @@ RSpec.configure do |config|
 
   config.around do |example|
     original = Heaven.redis
-    Heaven.redis = Redis.new(url: 'redis://localhost:6379/3')
+    Heaven.redis = Redis.new(:url => "redis://localhost:6379/3")
     example.run
     Heaven.redis.flushall
     Heaven.redis = original

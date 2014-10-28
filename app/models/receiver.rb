@@ -67,11 +67,11 @@ class Receiver
 
   def lock_params
     {}.tap do |hash|
-      hash[:name_with_owner] = data['name']
-      hash[:environment]     = data['environment']
-      hash[:actor]           = data['sender']['login']
-      hash[:deployment_id]   = data['id']
-      hash[:task]            = data['task']
+      hash[:name_with_owner] = data["name"]
+      hash[:environment]     = data["environment"]
+      hash[:actor]           = data["sender"]["login"]
+      hash[:deployment_id]   = data["id"]
+      hash[:task]            = data["task"]
     end
   end
 end
