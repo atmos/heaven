@@ -77,7 +77,7 @@ module Heaven
 
       def flow_token
         JSON.parse(ENV["FLOWDOCK_FLOW_TOKENS"])[chat_room]
-      rescue JSON::ParseError => e
+      rescue JSON::ParserError => e
         Rails.logger.error 'Failed parsing FLOWDOCK_FLOW_TOKENS'
         nil
       end
