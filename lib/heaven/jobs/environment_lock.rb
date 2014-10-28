@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # A job for unlocking the environment
     class EnvironmentLock
       @queue = :locks
 

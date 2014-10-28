@@ -14,16 +14,16 @@ class Deployment
       @description = "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
-    def self.testing?
-      !!@testing
-    end
+    class << self
+      attr_writer :testing
 
-    def self.testing=(value)
-      @testing = value
-    end
+      def testing?
+        @testing.present?
+      end
 
-    def self.deliveries
-      @deliveries ||= []
+      def deliveries
+        @deliveries ||= []
+      end
     end
 
     def url

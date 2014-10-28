@@ -1,3 +1,4 @@
+# A class for lock/unlocking a repo's environment
 class EnvironmentLocker
   LOCK_TASK     = "deploy:lock"
   UNLOCK_TASK   = "deploy:unlock"

@@ -1,5 +1,6 @@
 module Heaven
   module Jobs
+    # An error returned when a repo's environment is locked
     class EnvironmentLockedError
       @queue = :locks
 
