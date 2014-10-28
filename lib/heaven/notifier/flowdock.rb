@@ -92,7 +92,7 @@ module Heaven
             color: thread_status_color
           },
           fields: [
-            {label: "Deployment", value: deployment_number},
+            {label: "Deployment", value: deployment_number.to_s},
             {label: "Application", value: repo_name},
             {label: "Repository", value: "<a href='#{repo_url}'>#{payload['repository']['full_name']}</a>"},
             {label: "Environment", value: environment},

@@ -35,7 +35,7 @@ describe "Heaven::Notifier::Flowdock" do
             color: "yellow"
           },
           fields: [
-            {label: "Deployment", value: 123456},
+            {label: "Deployment", value: "123456"},
             {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
             {label: "Environment", value: "production"},
@@ -83,7 +83,7 @@ describe "Heaven::Notifier::Flowdock" do
             color: "green"
           },
           fields: [
-            {label: "Deployment", value: 11627},
+            {label: "Deployment", value: "11627"},
             {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
             {label: "Environment", value: "production"},
@@ -121,7 +121,7 @@ describe "Heaven::Notifier::Flowdock" do
             color: "red"
           },
           fields: [
-            {label: "Deployment", value: 123456},
+            {label: "Deployment", value: "123456"},
             {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
             {label: "Environment", value: "production"},
