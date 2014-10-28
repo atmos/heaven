@@ -120,8 +120,8 @@ module Heaven
       def activity_author
         {
           name: ENV['FLOWDOCK_USER_NAME'] || 'Heaven',
-          avatar: ENV['FLOWDOCK_USER_AVATAR'],
-          email: ENV['FLOWDOCK_USER_EMAIL'] || build_status_email
+          avatar: ENV['FLOWDOCK_USER_AVATAR'] || build_status_avatar,
+          email: ENV['FLOWDOCK_USER_EMAIL'] || 'build@flowdock.com'
         }
       end
 
@@ -143,11 +143,11 @@ module Heaven
         "#{flow['web_url']}/threads/#{id}"
       end
 
-      def build_status_email
+      def build_status_avatar
         if %(success pending).include?(state)
-          'build+ok@flowdock.com'
+          'https://d2ph5hv9wbwvla.cloudfront.net/heaven/build_ok.png'
         else
-          'build+fail@flowdock.com'
+          'https://d2ph5hv9wbwvla.cloudfront.net/heaven/build_fail.png'
         end
       end
 
