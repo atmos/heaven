@@ -3,6 +3,8 @@ module Heaven
     # A notifier for flowdock
     class Flowdock < Notifier::Default
 
+      include ApiClient
+
       def deliver(message)
         Rails.logger.info "flowdock: #{message}"
         if flow_token.nil?
@@ -83,7 +85,14 @@ module Heaven
       end
 
       def thread_data
-        {
+        deployed_sha = fetch_previous_deployment
+        previous_deployment_link = if deployed_sha.nil?
+          "No previous deployments"
+        else
+          diff_link = "<a href='#{repo_url("/compare/#{deployed_sha}...#{sha}")}'>Show diff</a>"
+          "<a href='#{repo_url("/commits/#{deployed_sha}")}'>#{deployed_sha}</a> (#{diff_link})"
+        end
+        data = {
           title: "Deployment ##{deployment_number} of #{repo_name} to #{environment}",
           body: "<p>#{deployment['description']}</p>",
           external_url: target_url,
@@ -96,10 +105,12 @@ module Heaven
             {label: "Branch", value: "<a href='#{repo_url("/tree/#{ref}")}'>#{ref}</a>"},
             {label: "Sha", value: "<a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"},
             {label: "Environment", value: environment},
+            {label: "Previous deployment", value: previous_deployment_link},
             {label: "Application", value: repo_name},
             {label: "Deployment", value: deployment_number.to_s}
           ]
         }
+        data
       end
 
       def activity_title
@@ -123,6 +134,32 @@ module Heaven
           avatar: ENV['FLOWDOCK_USER_AVATAR'] || build_status_avatar,
           email: ENV['FLOWDOCK_USER_EMAIL'] || 'build@flowdock.com'
         }
+      end
+
+      def fetch_previous_deployment(page = 1)
+        deployments = api.deployments(
+          payload['repository']['full_name'],
+          environment: environment,
+          page: page,
+          accept: 'application/vnd.github.cannonball-preview+json'
+        )
+        if deployments.length == 0
+          nil
+        else
+          successfull = deployments.detect do |deployment|
+            deployment.id < deployment_number &&
+              api.deployment_statuses(deployment.url, accept: 'application/vnd.github.cannonball-preview+json').
+                any? { |status| status.state == 'success' }
+          end
+          if successfull.nil?
+            fetch_last_deployment(page + 1)
+          else
+            successfull.sha[0..7]
+          end
+        end
+      rescue Octokit::Error => e
+        Rails.logger.error "Error with github api: e.to_s"
+        nil
       end
 
       private

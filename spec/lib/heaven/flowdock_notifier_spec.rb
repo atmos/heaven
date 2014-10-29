@@ -15,6 +15,8 @@ describe "Heaven::Notifier::Flowdock" do
     stub_request(:get, "https://#{ENV['FLOWDOCK_USER_API_TOKEN']}:@api.flowdock.com/v1/flows/find?id=example").
       with(:headers => {'Accept'=>'application/json', 'Content-Type'=>'application/json'}).
       to_return(:status => 200, :body => '{"web_url":"https://www.flowdock.com/app/example/main"}', :headers => {"Content-Type" => "application/json"})
+    stub_request(:get, "https://api.github.com/repos/atmos/my-robot/deployments?environment=production&page=1").
+      to_return(:status => 200, :body => "[]", :headers => {'Content-Type' => 'application/json'})
   end
 
   it "handles pending notifications" do
@@ -39,6 +41,7 @@ describe "Heaven::Notifier::Flowdock" do
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
             {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
             {label: "Environment", value: "production"},
+            {label: "Previous deployment", value: 'No previous deployments'},
             {label: "Application", value: "my-robot"},
             {label: "Deployment", value: "123456"}
           ]
@@ -87,6 +90,7 @@ describe "Heaven::Notifier::Flowdock" do
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
             {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
             {label: "Environment", value: "production"},
+            {label: "Previous deployment", value: 'No previous deployments'},
             {label: "Application", value: "my-robot"},
             {label: "Deployment", value: "11627"}
           ]
@@ -125,6 +129,7 @@ describe "Heaven::Notifier::Flowdock" do
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
             {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
             {label: "Environment", value: "production"},
+            {label: "Previous deployment", value: 'No previous deployments'},
             {label: "Application", value: "my-robot"},
             {label: "Deployment", value: "123456"}
           ]
