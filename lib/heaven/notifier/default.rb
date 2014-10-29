@@ -19,14 +19,10 @@ module Heaven
 
       def ascii_face
         case state
-        when "pending"
-          "•̀.̫•́✧"
-        when "success"
-          "(◕‿◕)"
-        when "failure"
-          "ಠﭛಠ"
-        when "error"
-          "¯_(ツ)_/¯"
+        when "pending" then "•̀.̫•́✧"
+        when "success" then "(◕‿◕)"
+        when "failure" then "ಠﭛಠ"
+        when "error"   then "¯_(ツ)_/¯"
         else
           "٩◔̯◔۶"
         end
@@ -38,6 +34,14 @@ module Heaven
 
       def success?
         state == "success"
+      end
+
+      def deploy?
+        task == "deploy"
+      end
+
+      def change_delivery_enabled?
+        ENV["DELIVER_CHANGES"]
       end
 
       def green?
