@@ -51,7 +51,7 @@ class Receiver
 
   def run!
     if event == "deployment"
-      run_deployment
+      run_deployment!
     elsif event == "deployment_status"
       Resque.enqueue(Heaven::Jobs::DeploymentStatus, payload)
     elsif event == "status"
