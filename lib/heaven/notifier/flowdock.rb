@@ -92,12 +92,12 @@ module Heaven
             color: thread_status_color
           },
           fields: [
-            {label: "Deployment", value: deployment_number.to_s},
-            {label: "Application", value: repo_name},
             {label: "Repository", value: "<a href='#{repo_url}'>#{payload['repository']['full_name']}</a>"},
-            {label: "Environment", value: environment},
             {label: "Branch", value: "<a href='#{repo_url("/tree/#{ref}")}'>#{ref}</a>"},
-            {label: "Sha", value: "<a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"}
+            {label: "Sha", value: "<a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"},
+            {label: "Environment", value: environment},
+            {label: "Application", value: repo_name},
+            {label: "Deployment", value: deployment_number.to_s}
           ]
         }
       end

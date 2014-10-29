@@ -35,12 +35,12 @@ describe "Heaven::Notifier::Flowdock" do
             color: "yellow"
           },
           fields: [
-            {label: "Deployment", value: "123456"},
-            {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
-            {label: "Environment", value: "production"},
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
-            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"}
+            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
+            {label: "Environment", value: "production"},
+            {label: "Application", value: "my-robot"},
+            {label: "Deployment", value: "123456"}
           ]
         },
         title: "Started deploying my-robot to production.",
@@ -83,12 +83,12 @@ describe "Heaven::Notifier::Flowdock" do
             color: "green"
           },
           fields: [
-            {label: "Deployment", value: "11627"},
-            {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
-            {label: "Environment", value: "production"},
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
-            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"}
+            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
+            {label: "Environment", value: "production"},
+            {label: "Application", value: "my-robot"},
+            {label: "Deployment", value: "11627"}
           ]
         },
         title: "my-robot deployed with ref break-up-notifiers to production.",
@@ -121,12 +121,12 @@ describe "Heaven::Notifier::Flowdock" do
             color: "red"
           },
           fields: [
-            {label: "Deployment", value: "123456"},
-            {label: "Application", value: "my-robot"},
             {label: "Repository", value: "<a href='https://github.com/atmos/my-robot'>atmos/my-robot</a>"},
-            {label: "Environment", value: "production"},
             {label: "Branch", value: "<a href='https://github.com/atmos/my-robot/tree/break-up-notifiers'>break-up-notifiers</a>"},
-            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"}
+            {label: "Sha", value: "<a href='https://github.com/atmos/my-robot/commits/daf81923c94f7513ac840fa4fcc0dfcc11f32f74'>daf81923</a>"},
+            {label: "Environment", value: "production"},
+            {label: "Application", value: "my-robot"},
+            {label: "Deployment", value: "123456"}
           ]
         },
         title: "Failed deploying my-robot to production.",
