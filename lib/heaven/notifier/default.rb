@@ -149,19 +149,19 @@ module Heaven
       end
 
       def last_known_revision
-        Heaven.redis.get("#{name_with_owner}-production-revision")
-      end
+        deployment = Deployment.where(
+          status: 'success',
+          environment: environment,
+          name_with_owner: name_with_owner
+        ).last
 
-      def record_revision
-        Heaven.redis.set("#{name_with_owner}-#{environment}-revision", sha)
+        deployment.sha if deployment
       end
 
       def post!
         deliver(default_message)
 
         deliver(changes) if deliver_changes?
-
-        record_revision
       end
 
       def deliver_changes?
