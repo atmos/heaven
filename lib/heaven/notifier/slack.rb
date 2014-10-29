@@ -35,7 +35,7 @@ module Heaven
           message << "'s #{environment} deployment of #{repository_link} has errors. #{ascii_face} "
           message << description unless description =~ /Deploying from Heaven/
         when "pending"
-          message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
+          message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment} (#{compare_link})"
         else
           puts "Unhandled deployment state, #{state}"
         end
@@ -47,6 +47,10 @@ module Heaven
 
       def changes
         Heaven::Comparison::Linked.new(comparison, name_with_owner).changes
+      end
+
+      def compare_link
+        "[compare](#{comparison[:html_url]})"
       end
 
       def slack_token

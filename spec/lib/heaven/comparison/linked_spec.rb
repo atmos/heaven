@@ -31,7 +31,7 @@ describe "Heaven::Comparison::Linked" do
 
       expect(formatter.changes).to eq(
         <<-CHANGES.strip_heredoc.strip
-          Total Commits: 1 ([compare](https://github.com/org/repo/compare/sha...sha))
+          Total Commits: 1
           2 Additions, 4 Deletions, 6 Changes
 
           [sha](https://github.com/org/repo/commit/sha) by [login](https://github.com/login): Commit message [#123](https://github.com/org/repo/issues/123)
@@ -45,7 +45,7 @@ describe "Heaven::Comparison::Linked" do
 
       expect(formatter.changes(1)).to eq(
         <<-CHANGES.strip_heredoc.strip
-          Total Commits: 1 ([compare](https://github.com/org/repo/compare/sha...sha))
+          Total Commits: 1
           2 Additions, 4 Deletions, 6 Changes
 
           [sha](https://github.com/org/repo/commit/sha) by [login](https://github.com/login): Another commit

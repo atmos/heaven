@@ -7,6 +7,7 @@ module Heaven
       include ApiClient
 
       attr_accessor :payload
+      attr_writer :comparison
 
       def initialize(payload)
         @payload = JSON.parse(payload)

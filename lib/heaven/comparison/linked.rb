@@ -15,13 +15,9 @@ module Heaven
 
       def changes_header
         <<-CHANGES.strip_heredoc
-          Total Commits: #{total_commits} (#{compare_link})
+          Total Commits: #{total_commits}
           #{file_sum(:additions)} Additions, #{file_sum(:deletions)} Deletions, #{file_sum(:changes)} Changes
         CHANGES
-      end
-
-      def compare_link
-        "[compare](#{comparison[:html_url]})"
       end
 
       def n_more_commits_link(number)
