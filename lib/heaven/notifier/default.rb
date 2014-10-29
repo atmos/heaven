@@ -40,6 +40,14 @@ module Heaven
         state == "success"
       end
 
+      def deploy?
+        task == "deploy"
+      end
+
+      def change_delivery_enabled?
+        ENV["DELIVER_CHANGES"]
+      end
+
       def green?
         %w{pending success}.include?(state)
       end
@@ -151,11 +159,16 @@ module Heaven
       def post!
         deliver(default_message)
 
-        return unless success? && task == "deploy"
-
-        deliver(changes) if last_known_revision.present?
+        deliver(changes) if deliver_changes?
 
         record_revision
+      end
+
+      def deliver_changes?
+        change_delivery_enabled? &&
+          deploy? &&
+          success? &&
+          last_known_revision.present?
       end
 
       def user_link
