@@ -21,7 +21,7 @@ class Deployment
     end
 
     def url
-      "https://api.github.com/repos/#{nwo}/deployments/#{number}"
+      "#{Octokit.api_endpoint}repos/#{nwo}/deployments/#{number}"
     end
 
     def payload
