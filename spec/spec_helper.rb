@@ -30,6 +30,14 @@ RSpec.configure do |config|
     Resque.inline = true
   end
 
+  config.around do |example|
+    original = Heaven.redis.client.db
+    Heaven.redis.select(15)
+    example.run
+    Heaven.redis.flushall
+    Heaven.redis.select(original)
+  end
+
   def fixture_data(name)
     File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
   end
@@ -47,3 +55,5 @@ RSpec.configure do |config|
     }
   end
 end
+
+Heaven.testing = true

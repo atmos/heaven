@@ -40,6 +40,8 @@ class Receiver
 
   def run!
     if event == "deployment"
+      return if LockReceiver.new(lock_params).run!
+
       if Heaven::Jobs::Deployment.locked?(guid, payload)
         Rails.logger.info "Deployment locked for: #{Heaven::Jobs::Deployment.identifier(guid, payload)}"
         Resque.enqueue(Heaven::Jobs::LockedError, guid, payload)

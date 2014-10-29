@@ -12,7 +12,7 @@ module Heaven
         data = JSON.parse(payload)
         if data["payload"] && data["payload"]["name"]
           name = data["payload"]["name"]
-          return "#{name}-#{data["environment"]}"
+          return "#{name}-#{data["environment"]}-deployment"
         end
         guid
       end
