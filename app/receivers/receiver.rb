@@ -39,7 +39,7 @@ class Receiver
   end
 
   def run_deployment!
-    return if LockReceiver.new(lock_params).run!
+    return if LockReceiver.new(data).run!
 
     if Heaven::Jobs::Deployment.locked?(guid, payload)
       Rails.logger.info "Deployment locked for: #{Heaven::Jobs::Deployment.identifier(guid, payload)}"
