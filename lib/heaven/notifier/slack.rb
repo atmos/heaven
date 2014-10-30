@@ -46,7 +46,7 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes
+        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(COMMIT_CHANGE_LIMIT)
       end
 
       def compare_link

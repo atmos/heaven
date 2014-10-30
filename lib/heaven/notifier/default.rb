@@ -4,6 +4,8 @@ module Heaven
   module Notifier
     # The class that all notifiers inherit from
     class Default
+      COMMIT_CHANGE_LIMIT = ENV["COMMIT_CHANGE_LIMIT"] ? ENV["COMMIT_CHANGE_LIMIT"].to_i : nil
+
       include ApiClient
 
       attr_accessor :payload
@@ -137,7 +139,7 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Default.new(comparison).changes(5)
+        Heaven::Comparison::Default.new(comparison).changes(COMMIT_CHANGE_LIMIT)
       end
 
       def comparison
