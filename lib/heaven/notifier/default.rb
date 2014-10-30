@@ -149,13 +149,7 @@ module Heaven
       end
 
       def last_known_revision
-        deployment = Deployment.where(
-          status: 'success',
-          environment: environment,
-          name_with_owner: name_with_owner
-        ).last
-
-        deployment.sha if deployment
+        Deployment.last_known_revision(name_with_owner, environment)
       end
 
       def post!
