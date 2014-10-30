@@ -27,7 +27,7 @@ describe "Heaven::Notifier::Flowdock" do
       body: JSON.generate({
         flow_token: "example_token",
         event: "activity",
-        external_id: "heaven:deployment:atmos:my-robot:123456",
+        external_thread_id: "heaven:deployment:atmos:my-robot:123456",
         thread: {
           title: "Deployment #123456 of my-robot to production",
           body: "<p>Deploying from hubot-deploy-v0.6.0</p>",
@@ -76,7 +76,7 @@ describe "Heaven::Notifier::Flowdock" do
       body: JSON.generate({
         flow_token: "example_token",
         event: "activity",
-        external_id: "heaven:deployment:atmos:my-robot:11627",
+        external_thread_id: "heaven:deployment:atmos:my-robot:11627",
         thread: {
           title: "Deployment #11627 of my-robot to production",
           body: "<p>Deploying from hubot-deploy-v0.6.0</p>",
@@ -115,7 +115,7 @@ describe "Heaven::Notifier::Flowdock" do
       body: JSON.generate({
         flow_token: "example_token",
         event: "activity",
-        external_id: "heaven:deployment:atmos:my-robot:123456",
+        external_thread_id: "heaven:deployment:atmos:my-robot:123456",
         thread: {
           title: "Deployment #123456 of my-robot to production",
           body: "<p>Deploying from hubot-deploy-v0.6.0</p>",

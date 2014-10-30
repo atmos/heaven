@@ -14,7 +14,7 @@ module Heaven
         response = thread_client.post '/messages', {
           flow_token: flow_token,
           event: 'activity',
-          external_id: flowdock_thread_id,
+          external_thread_id: flowdock_thread_id,
           thread: thread_data,
           title: activity_title,
           author: activity_author,
