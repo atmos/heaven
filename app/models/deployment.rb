@@ -4,16 +4,6 @@ class Deployment < ActiveRecord::Base
 
   belongs_to :repository
 
-  def self.last_known_revision(name_with_owner, environment)
-    deployment = self.where(
-      :status => "success",
-      :environment => environment,
-      :name_with_owner => name_with_owner
-    ).order("updated_at DESC").first
-
-    deployment.sha if deployment
-  end
-
   def self.latest_for_name_with_owner(name_with_owner)
     sets = self.select(:name, :environment)
       .where(:name_with_owner => name_with_owner)
