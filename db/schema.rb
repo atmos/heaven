@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029190533) do
+ActiveRecord::Schema.define(version: 20140728040201) do
 
   create_table "deployments", force: true do |t|
     t.text     "custom_payload"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20141029190533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "repository_id"
-    t.string   "state"
   end
 
   create_table "repositories", force: true do |t|
