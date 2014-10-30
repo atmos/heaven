@@ -6,7 +6,7 @@ class Deployment < ActiveRecord::Base
 
   def self.last_known_revision(name_with_owner, environment)
     deployment = self.where(
-      :status => "success",
+      :state => "success",
       :environment => environment,
       :name_with_owner => name_with_owner
     ).order("updated_at DESC").first
