@@ -10,6 +10,7 @@ Heaven currently supports [capistrano][15], [fabric][10], and [heroku][22] deplo
 * [Installation](/doc/installation.md)
 * [Deployment Providers](/doc/providers.md)
 * [Deployment Notifications](/doc/notifications.md)
+* [Environment Locking](/doc/locking.md)
 
 # Launch on Heroku
 
