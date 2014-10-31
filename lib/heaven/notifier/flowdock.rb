@@ -85,13 +85,6 @@ module Heaven
       end
 
       def thread_data
-        deployed_sha = fetch_previous_deployment
-        previous_deployment_link = if deployed_sha.nil?
-          "No previous deployments"
-        else
-          diff_link = "<a href='#{repo_url("/compare/#{deployed_sha}...#{sha}")}'>Show diff</a>"
-          "<a href='#{repo_url("/commits/#{deployed_sha}")}'>#{deployed_sha}</a> (#{diff_link})"
-        end
         data = {
           title: "Deployment ##{deployment_number} of #{repo_name} to #{environment}",
           body: "<p>#{deployment['description']}</p>",
@@ -102,15 +95,24 @@ module Heaven
           },
           fields: [
             {label: "Repository", value: "<a href='#{repo_url}'>#{payload['repository']['full_name']}</a>"},
-            {label: "Branch", value: "<a href='#{repo_url("/tree/#{ref}")}'>#{ref}</a>"},
-            {label: "Sha", value: "<a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"},
+            {label: "Deployment", value: "#{deployment_number} (<a href='#{target_url}'>output</a>)"},
+            {label: "Deployed ref", value: "<a href='#{repo_url("/tree/#{ref}")}'>#{ref}</a> @ <a href='#{repo_url("/commits/#{deployment['sha']}")}'>#{sha}</a>"},
             {label: "Environment", value: environment},
             {label: "Previous deployment", value: previous_deployment_link},
-            {label: "Application", value: repo_name},
-            {label: "Deployment", value: deployment_number.to_s}
+            {label: "Application", value: repo_name}
           ]
         }
         data
+      end
+
+      def previous_deployment_link
+        deployed_sha = fetch_previous_deployment
+        if deployed_sha.nil?
+          "No previous deployments"
+        else
+          diff_link = "<a href='#{repo_url("/compare/#{deployed_sha}...#{sha}")}'>Show diff</a>"
+          "<a href='#{repo_url("/commits/#{deployed_sha}")}'>#{deployed_sha}</a> (#{diff_link})"
+        end
       end
 
       def activity_title
