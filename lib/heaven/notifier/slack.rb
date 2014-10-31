@@ -50,7 +50,7 @@ module Heaven
       end
 
       def compare_link
-        "([compare](#{comparison["html_url"]}))" if comparison
+        "([compare](#{comparison["html_url"]}))" if last_known_revision
       end
 
       def slack_token
