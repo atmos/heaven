@@ -2,6 +2,8 @@ require "spec_helper"
 
 describe "Heaven::Notifier::Slack" do
   it "handles pending notifications" do
+    Heaven.redis.set("atmos/my-robot-production-revision", "sha")
+
     n = Heaven::Notifier::Slack.new(fixture_data("deployment-pending"))
     n.comparison = {
       "html_url" => "https://github.com/org/repo/compare/sha...sha"
