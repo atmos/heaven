@@ -1,10 +1,12 @@
+require "heaven/comparison/linked"
+
 module Heaven
   module Notifier
     # A notifier for Slack
     class Slack < Notifier::Default
       def deliver(message)
         output_message   = ""
-        filtered_message = ::Slack::Notifier::LinkFormatter.format(message)
+        filtered_message = slack_formatted(message)
 
         Rails.logger.info "slack: #{filtered_message}"
         Rails.logger.info "message: #{message}"
@@ -33,10 +35,22 @@ module Heaven
           message << "'s #{environment} deployment of #{repository_link} has errors. #{ascii_face} "
           message << description unless description =~ /Deploying from Heaven/
         when "pending"
-          message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment}"
+          message << " is deploying #{repository_link("/tree/#{ref}")} to #{environment} #{compare_link}"
         else
           puts "Unhandled deployment state, #{state}"
         end
+      end
+
+      def slack_formatted(message)
+        ::Slack::Notifier::LinkFormatter.format(message)
+      end
+
+      def changes
+        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(COMMIT_CHANGE_LIMIT)
+      end
+
+      def compare_link
+        "([compare](#{comparison["html_url"]}))" if comparison
       end
 
       def slack_token
