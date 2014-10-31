@@ -53,6 +53,16 @@ end
 | FLOWDOCK_FLOW_API_TOKEN | The flow api token to for the flow to send messages to. |
 | FLOWDOCK_EXTERNAL_USER_NAME | Name that appears as the message sender.    |
 
+## Commit Change Notifications
+
+Successful deployments to any environment are always compared with the last
+successful deployment to the production environment.
+
+| Environmental Variables |                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| HEAVEN_NOTIFIER_DISPLAY_COMMITS       | Add to send a list of commit changes after a succesful deployment. |
+| HEAVEN_NOTIFIER_DISPLAY_COMMITS_LIMIT | Limit the number of commits listed in the notification.            |
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
