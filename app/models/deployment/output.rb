@@ -30,7 +30,7 @@ class Deployment
     end
 
     def url
-      "https://gist.github.com/#{gist.id}"
+      gist.html_url
     end
 
     private
