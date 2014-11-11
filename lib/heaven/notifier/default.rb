@@ -147,7 +147,7 @@ module Heaven
       end
 
       def last_known_revision
-        Heaven.redis.get("#{name_with_owner}-production-revision")
+        Heaven.redis.get("#{name_with_owner}-#{environment}-revision")
       end
 
       def record_revision
