@@ -38,17 +38,6 @@ module Heaven
           execute_and_log(deploy_command)
         end
       end
-
-      def notify
-        output.stderr = File.read(stderr_file)
-        output.stdout = File.read(stdout_file)
-        output.update
-        if last_child.success?
-          status.success!
-        else
-          status.failure!
-        end
-      end
     end
   end
 end
