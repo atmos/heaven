@@ -1,3 +1,4 @@
+# An object representing when auto-deployment should occur
 class AutoDeployment
   include ApiClient
 
@@ -33,17 +34,16 @@ class AutoDeployment
 
   def create_deployment
     description = "Heaven auto deploy triggered by a commit status change"
-    api.create_deployment(name_with_owner, sha, :payload => updated_payload, :description => description )
+    api.create_deployment(name_with_owner, sha, :payload => updated_payload, :description => description)
   end
 
   def execute
-    if combined_status_green?
-      if ahead?
-        Rails.logger.info "Trying to deploy #{sha}"
-        create_deployment
-      else
-        Rails.logger.info "#{sha} isn't ahead of #{deployment.sha} and in the #{default_branch}"
-      end
+    return unless combined_status_green?
+    if ahead?
+      Rails.logger.info "Trying to deploy #{sha}"
+      create_deployment
+    else
+      Rails.logger.info "#{sha} isn't ahead of #{deployment.sha} and in the #{default_branch}"
     end
   end
 end

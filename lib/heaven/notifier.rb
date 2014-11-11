@@ -1,10 +1,11 @@
-require 'heaven/notifier/default'
-require 'heaven/notifier/campfire'
-require 'heaven/notifier/hipchat'
-require 'heaven/notifier/flowdock'
-require 'heaven/notifier/slack'
+require "heaven/notifier/default"
+require "heaven/notifier/campfire"
+require "heaven/notifier/hipchat"
+require "heaven/notifier/flowdock"
+require "heaven/notifier/slack"
 
 module Heaven
+  # The Notifier module
   module Notifier
     def self.for(payload)
       if slack?
@@ -21,15 +22,15 @@ module Heaven
     end
 
     def self.slack?
-      !!ENV['SLACK_TOKEN']
+      !ENV["SLACK_TOKEN"].nil?
     end
 
     def self.hipchat?
-      !!ENV['HIPCHAT_TOKEN']
+      !ENV["HIPCHAT_TOKEN"].nil?
     end
 
     def self.flowdock?
-      !!ENV['FLOWDOCK_FLOW_API_TOKEN']
+      !ENV["FLOWDOCK_FLOW_API_TOKEN"].nil?
     end
   end
 end

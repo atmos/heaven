@@ -1,8 +1,12 @@
+# Top-level class for Deployments.
 class Deployment
+  # A GitHub DeploymentStatus.
   class Status
     include ApiClient
 
-    attr_accessor :description, :number, :nwo, :output
+    attr_accessor :description, :number, :nwo, :output, :completed
+    alias_method :completed?, :completed
+
     def initialize(nwo, number)
       @nwo         = nwo
       @number      = number
@@ -10,35 +14,46 @@ class Deployment
       @description = "Deploying from Heaven v#{Heaven::VERSION}"
     end
 
+    class << self
+      def deliveries
+        @deliveries ||= []
+      end
+    end
+
     def url
-      "https://api.github.com/repos/#{nwo}/deployments/#{number}"
+      "#{Octokit.api_endpoint}repos/#{nwo}/deployments/#{number}"
     end
 
     def payload
-      { 'target_url'  => output, 'description' => description }
+      { "target_url" => output, "description" => description }
     end
 
     def pending!
-      api.create_deployment_status(url, 'pending', payload)
+      create_status(:status => "pending", :completed => false)
     end
 
     def success!
-      api.create_deployment_status(url, "success", payload)
-      @completed = true
+      create_status(:status => "success")
     end
 
     def failure!
-      api.create_deployment_status(url, "failure", payload)
-      @completed = true
+      create_status(:status => "failure")
     end
 
     def error!
-      api.create_deployment_status(url, "error", payload)
-      @completed = true
+      create_status(:status => "error")
     end
 
-    def completed?
-      @completed
+    private
+
+    def create_status(status:, completed: true)
+      if Heaven.testing?
+        self.class.deliveries << payload.merge("status" => status)
+      else
+        api.create_deployment_status(url, status, payload)
+      end
+
+      @completed = completed
     end
   end
 end

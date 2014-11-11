@@ -1,3 +1,4 @@
+# Top-level class for Deployments.
 class Deployment
   # Private: Setup ssh and netrc in a deployment specific directory
   #
@@ -22,54 +23,55 @@ class Deployment
     end
 
     private
-      def netrc_config
-        "#{root}/.netrc"
+
+    def netrc_config
+      "#{root}/.netrc"
+    end
+
+    def ssh_directory
+      "#{root}/.ssh"
+    end
+
+    def ssh_config
+      "#{ssh_directory}/config"
+    end
+
+    def ssh_key
+      "#{ssh_directory}/id_rsa"
+    end
+
+    def ssh_private_key
+      ENV["DEPLOYMENT_PRIVATE_KEY"] || ""
+    end
+
+    def setup_ssh
+      FileUtils.mkdir_p ssh_directory
+      FileUtils.chmod_R 0700, ssh_directory
+
+      File.open(ssh_key, "w", 0600) do |fp|
+        fp.puts(ssh_private_key.split('\n'))
       end
 
-      def ssh_directory
-        "#{root}/.ssh"
-      end
-
-      def ssh_config
-        "#{ssh_directory}/config"
-      end
-
-      def ssh_key
-        "#{ssh_directory}/id_rsa"
-      end
-
-      def ssh_private_key
-        ENV["DEPLOYMENT_PRIVATE_KEY"] || ""
-      end
-
-      def setup_ssh
-        FileUtils.mkdir_p ssh_directory
-        FileUtils.chmod_R 0700, ssh_directory
-
-        File.open(ssh_key, "w", 0600) do |fp|
-          fp.puts(ssh_private_key.split('\n'))
-        end
-
-        File.open(ssh_config, "w", 0600) do |fp|
-          fp.puts <<-EOF
+      File.open(ssh_config, "w", 0600) do |fp|
+        fp.puts <<-EOF
 StrictHostKeyChecking no
 UserKnownHostsFile /dev/null
 ForwardAgent yes
 Host all
-     Hostname *
-     IdentityFile #{ssh_key}
-     EOF
-        end
+   Hostname *
+   IdentityFile #{ssh_key}
+   EOF
       end
+    end
 
-      def setup_netrc
-        File.open(netrc_config, "w", 0600) do |fp|
-          fp.puts <<-EOF
+    def setup_netrc
+      File.open(netrc_config, "w", 0600) do |fp|
+        fp.puts <<-EOF
 machine github.com
 username #{github_token}
 password x-oauth-basic
 EOF
-        end
       end
     end
+  end
 end

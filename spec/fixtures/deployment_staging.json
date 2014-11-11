@@ -15,6 +15,24 @@
     }
   },
   "description": null,
+  "deployment": {
+    "id": 721,
+    "ref": "feature-1",
+    "sha": "9be5c2b9c34c1f8beb0cec30bb0c875d098f45ef",
+    "name": "atmos/my-robot",
+    "environment": "staging",
+    "payload": {
+      "task": "deploy",
+      "config": {
+        "provider": "heroku",
+        "repository": "hubot/hubot",
+        "environments": ["production", "staging"],
+        "heroku_name": "hubot-production",
+        "heroku_staging_name": "hubot-staging"
+      }
+    },
+    "description": null
+  },
   "repository": {
     "id": 16650088,
     "name": "my-robot",

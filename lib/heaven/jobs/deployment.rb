@@ -1,18 +1,18 @@
 module Heaven
   module Jobs
+    # A class for kicking off deployment processes
     class Deployment
       extend Resque::Plugins::LockTimeout
 
       @queue = :deployments
-      @lock_timeout = Integer(ENV['DEPLOYMENT_TIMEOUT'] || '300')
+      @lock_timeout = Integer(ENV["DEPLOYMENT_TIMEOUT"] || "300")
 
       # Only allow one deployment per-environment at a time
       def self.redis_lock_key(guid, payload)
         data = JSON.parse(payload)
-        if payload = data['payload']
-          if name = payload['name']
-            return "#{name}-#{data['environment']}"
-          end
+        if data["payload"] && data["payload"]["name"]
+          name = data["payload"]["name"]
+          return "#{name}-#{data["environment"]}-deployment"
         end
         guid
       end
@@ -29,8 +29,8 @@ module Heaven
       end
 
       def self.perform(guid, payload)
-        provider = ::Provider.from(guid, payload)
-        provider.run!
+        provider = Heaven::Provider.from(guid, payload)
+        provider.run! if provider
       end
     end
   end

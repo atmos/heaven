@@ -1,4 +1,6 @@
+# Top-level class for Deployments.
 class Deployment
+  # All of the process output from a deployment
   class Output
     include ApiClient
     attr_accessor :gist, :guid, :name, :number, :stderr, :stdout
@@ -28,33 +30,34 @@ class Deployment
     end
 
     def url
-      "https://gist.github.com/#{gist.id}"
+      gist.html_url
     end
 
     private
-      def create_params
-        {
-          :files       => { :stdout => {:content => "Deployment #{number} pending" } },
-          :public      => false,
-          :description => "Heaven number #{number} for #{name}"
-        }
+
+    def create_params
+      {
+        :files       => { :stdout => { :content => "Deployment #{number} pending" } },
+        :public      => false,
+        :description => "Heaven number #{number} for #{name}"
+      }
+    end
+
+    def update_params
+      params = {
+        :files  => {},
+        :public => false
+      }
+
+      unless stderr.empty?
+        params[:files].merge!(:stderr => { :content => stderr })
       end
 
-      def update_params
-        params = {
-          :files  => { },
-          :public => false
-        }
-
-        unless stderr.empty?
-          params[:files].merge!(:stderr => { :content => stderr })
-        end
-
-        unless stdout.empty?
-          params[:files].merge!(:stdout => { :content => stdout })
-        end
-
-        params
+      unless stdout.empty?
+        params[:files].merge!(:stdout => { :content => stdout })
       end
+
+      params
+    end
   end
 end
