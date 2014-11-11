@@ -5,6 +5,7 @@ module Heaven
       @queue = :locks
 
       def self.perform(lock_params)
+        lock_params.symbolize_keys!
         locker = EnvironmentLocker.new(lock_params)
 
         status = ::Deployment::Status.new(lock_params[:name_with_owner], lock_params[:deployment_id])
