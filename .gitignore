@@ -18,3 +18,7 @@ vendor/gems
 public/assets
 release.sh
 coverage
+
+# Ignore vagrant & cookbooks
+.vagrant/
+/cookbooks/*
