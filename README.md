@@ -2,7 +2,7 @@
 
 Heaven is an API that integrates with GitHub's [Deployment API][1]. It receives [deployment events][5] from GitHub and pushes code to your servers.
 
-Heaven currently supports [capistrano][15], [fabric][10], and [heroku][22] deployments. It also has a notification system for broadcasting  [deployment status events][6] to chat services(e.g., [campfire][7],[hipchat][8], [SlackHQ][9], and [Flowdock][21]).  It can be hosted on heroku for a few dollars a month.
+Heaven currently supports [Capistrano][15], [Fabric][10], and [Heroku][22] deployments. It also has a notification system for broadcasting  [deployment status events][6] to chat services(e.g. [Campfire][7], [Hipchat][8], [SlackHQ][9], and [Flowdock][21]).  It can be hosted on Heroku for a few dollars a month.
 
 # Documentation
 
