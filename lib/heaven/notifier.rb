@@ -30,7 +30,7 @@ module Heaven
     end
 
     def self.flowdock?
-      !ENV["FLOWDOCK_FLOW_API_TOKEN"].nil?
+      !ENV["FLOWDOCK_USER_API_TOKEN"].nil?
     end
   end
 end
