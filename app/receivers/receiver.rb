@@ -5,9 +5,9 @@ class Receiver
   attr_accessor :event, :guid, :data
 
   def initialize(event, guid, data)
-    @guid      = guid
-    @event     = event
-    @data   = data
+    @guid  = guid
+    @event = event
+    @data  = data
   end
 
   def self.perform(event, guid, data)
