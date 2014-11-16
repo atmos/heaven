@@ -27,8 +27,6 @@ describe "receiving GitHub hooks", :request do
   end
 
   it "handles deployment events from valid hosts" do
-    pending "ugh"
-
     github_event("deployment")
 
     post "/events", fixture_data("deployment"), request_env
