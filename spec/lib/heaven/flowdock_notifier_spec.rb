@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe "Heaven::Notifier::Flowdock" do
+  include FixtureHelper
 
   before :all do
     ENV["FLOWDOCK_USER_API_TOKEN"] = "acdcabbacd01234567890"
@@ -156,13 +157,13 @@ describe "Heaven::Notifier::Flowdock" do
   end
 
   def fixture_data_with_flowdock_notify(file)
-    raw_data = JSON.parse(fixture_data(file))
+    raw_data = decoded_fixture_data(file)
     raw_data["deployment"]["payload"]["notify"] = {
       :adapter => "flowdock",
       :room => "example",
       :user => "chat_user",
       :thread_id => "original_thread"
     }
-    JSON.generate(raw_data)
+    raw_data
   end
 end

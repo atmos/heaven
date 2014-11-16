@@ -20,8 +20,10 @@ end
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include ApiHelper
+  config.include MetaHelper
 
   config.before :type => :request do
     send_and_accept_json
+    stub_meta
   end
 end

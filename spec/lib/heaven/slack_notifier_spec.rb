@@ -1,10 +1,14 @@
 require "spec_helper"
 
 describe "Heaven::Notifier::Slack" do
+  include FixtureHelper
+
   it "handles pending notifications" do
     Heaven.redis.set("atmos/my-robot-production-revision", "sha")
 
-    n = Heaven::Notifier::Slack.new(fixture_data("deployment-pending"))
+    data = decoded_fixture_data("deployment-pending")
+
+    n = Heaven::Notifier::Slack.new(data)
     n.comparison = {
       "html_url" => "https://github.com/org/repo/compare/sha...sha"
     }
@@ -20,7 +24,9 @@ describe "Heaven::Notifier::Slack" do
   end
 
   it "handles successful deployment statuses" do
-    n = Heaven::Notifier::Slack.new(fixture_data("deployment-success"))
+    data = decoded_fixture_data("deployment-success")
+
+    n = Heaven::Notifier::Slack.new(data)
 
     result = [
       "[#11627](https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c) ",
@@ -32,7 +38,9 @@ describe "Heaven::Notifier::Slack" do
   end
 
   it "handles failure deployment statuses" do
-    n = Heaven::Notifier::Slack.new(fixture_data("deployment-failure"))
+    data = decoded_fixture_data("deployment-failure")
+
+    n = Heaven::Notifier::Slack.new(data)
 
     result = [
       "[#123456](https://gist.github.com/fa77d9fb1fe41c3bb3a3ffb2c) ",

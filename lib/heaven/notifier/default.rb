@@ -9,11 +9,11 @@ module Heaven
 
       include ApiClient
 
-      attr_accessor :payload
+      attr_accessor :data
       attr_writer :comparison
 
-      def initialize(payload)
-        @payload = JSON.parse(payload)
+      def initialize(data)
+        @data = data
       end
 
       def deliver(message)
@@ -52,7 +52,7 @@ module Heaven
       end
 
       def deployment_status_data
-        payload["deployment_status"] || payload
+        data["deployment_status"] || data
       end
 
       def state
@@ -72,7 +72,7 @@ module Heaven
       end
 
       def deployment
-        payload["deployment"]
+        data["deployment"]
       end
 
       def environment
@@ -108,15 +108,15 @@ module Heaven
       end
 
       def repo_name
-        deployment_payload["name"] || payload["repository"]["name"]
+        deployment_payload["name"] || data["repository"]["name"]
       end
 
       def name_with_owner
-        payload["repository"]["full_name"]
+        data["repository"]["full_name"]
       end
 
       def repo_url(path = "")
-        payload["repository"]["html_url"] + path
+        data["repository"]["html_url"] + path
       end
 
       def repository_link(path = "")

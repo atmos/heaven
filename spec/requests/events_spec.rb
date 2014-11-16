@@ -1,7 +1,8 @@
-require "spec_helper"
 require "request_spec_helper"
 
 describe "receiving GitHub hooks", :request do
+  include FixtureHelper
+
   before do
     stub_gists
     stub_deploy_statuses

@@ -37,10 +37,6 @@ RSpec.configure do |config|
     Heaven.redis.flushall
     Heaven.redis.select(original)
   end
-
-  def fixture_data(name)
-    File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.json"))
-  end
 end
 
 Heaven.testing = true

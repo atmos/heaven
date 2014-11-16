@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Receiver do
+  include FixtureHelper
+
   context "production environment" do
     let(:payload) { fixture_data("deployment") }
     let!(:data) { JSON.parse(payload)["payload"] }
