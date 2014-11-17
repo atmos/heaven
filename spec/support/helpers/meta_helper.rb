@@ -13,8 +13,4 @@ module MetaHelper
     stub_request(:get, get_url).with(request_params)
       .to_return(:status => 200, :body => double("hooks" => ["192.30.252.0/22"]))
   end
-
-  ::RSpec.configure do |config|
-    config.include self
-  end
 end
