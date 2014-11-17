@@ -17,7 +17,6 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 ENV["DEPLOYMENT_PRIVATE_KEY"] = "private\nkey\n"
 
 RSpec.configure do |config|
-  config.include MetaHelper
   config.include GistHelper
   config.include DeploymentStatusHelper
 
@@ -30,8 +29,6 @@ RSpec.configure do |config|
   config.before do
     ENV["GITHUB_CLIENT_ID"]     = "<unknown-client-id>"
     ENV["GITHUB_CLIENT_SECRET"] = "<unknown-client-secret>"
-
-    stub_meta
     Resque.inline = true
   end
 

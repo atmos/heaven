@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe WebhookValidations do
+  include MetaHelper
+
+  before { stub_meta }
+
   class WebhookValidationsTester
     class Request
       def initialize(ip)
