@@ -10,34 +10,35 @@ require "heaven/provider/bundler_capistrano"
 module Heaven
   # A dispatcher for provider identification
   module Provider
+    PROVIDERS ||= {
+      "heroku"             => HerokuHeavenProvider,
+      "capistrano"         => Capistrano,
+      "fabric"             => Fabric,
+      "elastic_beanstalk"  => ElasticBeanstalk,
+      "bundler_capistrano" => BundlerCapistrano
+    }
+
     def self.from(guid, data)
       klass = provider_class_for(data)
       klass.new(guid, data) if klass
     end
 
     def self.provider_class_for(data)
-      case provider_name_for(data)
-      when "heroku"
-        Provider::HerokuHeavenProvider
-      when "capistrano"
-        Provider::Capistrano
-      when "fabric"
-        Provider::Fabric
-      when "elastic_beanstalk"
-        Provider::ElasticBeanstalk
-      when "bundler_capistrano"
-        Provider::BundlerCapistrano
-      else
-        Rails.logger.info "No deployment system for #{provider_name_for(data)}"
-      end
+      name     = provider_name_for(data)
+      provider = PROVIDERS[name]
+
+      Rails.logger.info "No deployment system for #{name}" unless provider
+
+      provider
     end
 
     def self.provider_name_for(data)
-      if data && data["deployment"]["payload"]
-        if data["deployment"]["payload"]["config"]
-          return data["deployment"]["payload"]["config"]["provider"]
-        end
-      end
+      return unless data &&
+                    data.key?("deployment") &&
+                    data["deployment"].key?("payload") &&
+                    data["deployment"]["payload"].key?("config")
+
+      data["deployment"]["payload"]["config"]["provider"]
     end
   end
 end
