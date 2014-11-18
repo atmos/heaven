@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
       render :json => {}, :status => :created
     else
-      render :json => {}, :status => :not_found
+      render :json => {}, :status => :unprocessable_entity
     end
   end
 

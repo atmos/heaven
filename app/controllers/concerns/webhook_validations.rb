@@ -6,7 +6,7 @@ module WebhookValidations
     if valid_incoming_webhook_address?
       true
     else
-      render :json => {}, :status => :not_found
+      render :json => {}, :status => :forbidden
     end
   end
 

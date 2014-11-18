@@ -9,13 +9,21 @@ describe "Receiving GitHub hooks", :request do
   end
 
   describe "POST /events" do
-    it "404s on events from invalid hosts" do
+    it "returns a forbidden error to invalid hosts" do
       github_event("ping")
 
       post "/events", fixture_data("ping"), request_env("74.125.239.105")
 
-      expect(last_response).to be_not_found
-      expect(last_response.status).to eql(404)
+      expect(last_response).to be_forbidden
+      expect(last_response.status).to eql(403)
+    end
+
+    it "returns a unprocessable error for invalid events" do
+      github_event("invalid")
+
+      post "/events", "{}", request_env
+
+      expect(last_response.status).to eql(422)
     end
 
     it "handles ping events from valid hosts" do
