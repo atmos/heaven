@@ -6,7 +6,7 @@ describe "Heaven::Notifier::Default" do
 
     expect(notifier.change_delivery_enabled?).to be_false
 
-    ENV["DELIVER_CHANGES"] = "true"
+    ENV["HEAVEN_NOTIFIER_DISPLAY_COMMITS"] = "true"
 
     notifier = Heaven::Notifier::Default.new("{}")
 
