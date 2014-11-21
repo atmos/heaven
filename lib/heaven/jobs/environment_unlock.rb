@@ -5,6 +5,7 @@ module Heaven
       @queue = :locks
 
       def self.perform(lock_params)
+        lock_params.symbolize_keys!
         locker = EnvironmentLocker.new(lock_params)
         locker.unlock!
 

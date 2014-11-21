@@ -1,0 +1,3 @@
+if ENV['FLOWDOCK_API_URL']
+  ::Flowdock::FLOWDOCK_API_URL = ENV['FLOWDOCK_API_URL']
+end
