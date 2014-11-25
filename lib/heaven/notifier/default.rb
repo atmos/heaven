@@ -4,7 +4,8 @@ module Heaven
   module Notifier
     # The class that all notifiers inherit from
     class Default
-      COMMIT_CHANGE_LIMIT = ENV["COMMIT_CHANGE_LIMIT"] ? ENV["COMMIT_CHANGE_LIMIT"].to_i : nil
+      DISPLAY_COMMITS_KEY       = "HEAVEN_NOTIFIER_DISPLAY_COMMITS"
+      DISPLAY_COMMITS_LIMIT_KEY = "HEAVEN_NOTIFIER_DISPLAY_COMMITS_LIMIT"
 
       include ApiClient
 
@@ -43,7 +44,7 @@ module Heaven
       end
 
       def change_delivery_enabled?
-        ENV["DELIVER_CHANGES"]
+        ENV.key?(DISPLAY_COMMITS_KEY)
       end
 
       def green?
@@ -139,7 +140,11 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Default.new(comparison).changes(COMMIT_CHANGE_LIMIT)
+        Heaven::Comparison::Default.new(comparison).changes(commit_change_limit)
+      end
+
+      def commit_change_limit
+        ENV.key?(DISPLAY_COMMITS_LIMIT_KEY) ? ENV[DISPLAY_COMMITS_LIMIT_KEY].to_i : nil
       end
 
       def comparison

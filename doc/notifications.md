@@ -56,6 +56,16 @@ end
 | FLOWDOCK_USER_EMAIL | (Optional) An email address for the above user. Defaults to dummy `build@flowdock.com`. |
 | FLOWDOCK_USER_AVATAR | (Optional) A url to an image that is shown for the above user as an avatar. By default a success and failure icon are used depending on the build status. |
 
+## Commit Change Notifications
+
+Successful deployments to any environment are always compared with the last
+successful deployment to the production environment.
+
+| Environmental Variables |                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| HEAVEN_NOTIFIER_DISPLAY_COMMITS       | Add to send a list of commit changes after a succesful deployment. |
+| HEAVEN_NOTIFIER_DISPLAY_COMMITS_LIMIT | Limit the number of commits listed in the notification.            |
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
