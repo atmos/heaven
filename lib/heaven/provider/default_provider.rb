@@ -49,7 +49,7 @@ module Heaven
       end
 
       def number
-        data["id"]
+        deployment_data["id"]
       end
 
       def name

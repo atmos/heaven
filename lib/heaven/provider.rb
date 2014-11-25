@@ -34,9 +34,9 @@ module Heaven
 
     def self.provider_name_for(payload)
       data = JSON.parse(payload)
-      if data && data["payload"]
-        if data["payload"]["config"]
-          return data["payload"]["config"]["provider"]
+      if data && data["deployment"]["payload"]
+        if data["deployment"]["payload"]["config"]
+          return data["deployment"]["payload"]["config"]["provider"]
         end
       end
     end
