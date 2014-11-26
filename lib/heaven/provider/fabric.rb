@@ -9,7 +9,7 @@ module Heaven
       end
 
       def task
-        data["task"] || "deploy"
+        deployment_data["task"] || "deploy"
       end
 
       def deploy_command_format
