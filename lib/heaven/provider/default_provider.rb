@@ -146,6 +146,19 @@ module Heaven
         Integer(ENV["DEPLOYMENT_TIMEOUT"] || "300")
       end
 
+      def update_output
+        output.stderr = File.read(stderr_file)
+        output.stdout = File.read(stdout_file)
+
+        output.update
+      end
+
+      def notify
+        update_output
+
+        last_child.success? ? status.success! : status.failure!
+      end
+
       def run!
         Timeout.timeout(timeout) do
           setup
@@ -157,6 +170,7 @@ module Heaven
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
       ensure
+        update_output
         status.failure! unless completed?
       end
     end

@@ -27,8 +27,14 @@ module LocalLogFile
 
   def execute_and_log(cmds, env = {})
     @last_child = POSIX::Spawn::Child.new(env.merge("HOME" => working_directory), *cmds)
+
     log_stdout(last_child.out)
     log_stderr(last_child.err)
+
+    unless last_child.success?
+      fail StandardError "Task failed: #{cmds.join(" ")}"
+    end
+
     last_child
   end
 end
