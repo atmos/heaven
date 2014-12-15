@@ -147,8 +147,8 @@ module Heaven
       end
 
       def update_output
-        output.stderr = File.read(stderr_file)
-        output.stdout = File.read(stdout_file)
+        output.stderr = File.read(stderr_file) if File.exists?(stderr_file)
+        output.stdout = File.read(stdout_file) if File.exists?(stdout_file)
 
         output.update
       end
