@@ -32,7 +32,7 @@ module LocalLogFile
     log_stderr(last_child.err)
 
     unless last_child.success?
-      fail StandardError "Task failed: #{cmds.join(" ")}"
+      fail StandardError, "Task failed: #{cmds.join(" ")}"
     end
 
     last_child

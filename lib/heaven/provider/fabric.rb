@@ -28,14 +28,14 @@ module Heaven
           log "Fetching the latest code"
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
-          deploy_command = deploy_command_format % {
+          deploy_string = deploy_command_format % {
             :environment => environment,
             :task => task,
             :ref => ref
           }
 
-          log "Executing fabric: #{deploy_command}"
-          execute_and_log(deploy_command)
+          log "Executing fabric: #{deploy_string}"
+          execute_and_log([deploy_string])
         end
       end
     end
