@@ -46,23 +46,19 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(COMMIT_CHANGE_LIMIT)
+        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(commit_change_limit)
       end
 
       def compare_link
         "([compare](#{comparison["html_url"]}))" if last_known_revision
       end
 
-      def slack_token
-        ENV["SLACK_TOKEN"]
-      end
-
-      def slack_subdomain
-        ENV["SLACK_SUBDOMAIN"] || "unknown"
+      def slack_webhook_url
+        ENV["SLACK_WEBHOOK_URL"]
       end
 
       def slack_account
-        @slack_account ||= ::Slack::Notifier.new(slack_subdomain, slack_token)
+        @slack_account ||= ::Slack::Notifier.new(slack_webhook_url)
       end
     end
   end

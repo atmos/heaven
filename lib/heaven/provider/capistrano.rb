@@ -13,7 +13,7 @@ module Heaven
       end
 
       def task
-        name = data["task"] || "deploy"
+        name = deployment_data["task"] || "deploy"
         unless name =~ /deploy(?:\:[\w+:]+)?/
           fail "Invalid capistrano taskname: #{name.inspect}"
         end
@@ -32,20 +32,9 @@ module Heaven
           log "Fetching the latest code"
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
-          deploy_string = [cap_path, environment, "-s", "branch=#{ref}", task]
-          log "Executing capistrano: #{deploy_string.join(" ")}"
-          execute_and_log(deploy_string)
-        end
-      end
-
-      def notify
-        output.stderr = File.read(stderr_file)
-        output.stdout = File.read(stdout_file)
-        output.update
-        if last_child.success?
-          status.success!
-        else
-          status.failure!
+          deploy_command = [cap_path, environment, "-s", "branch=#{ref}", task]
+          log "Executing capistrano: #{deploy_command.join(" ")}"
+          execute_and_log(deploy_command)
         end
       end
     end

@@ -22,7 +22,7 @@ module Heaven
     end
 
     def self.slack?
-      !ENV["SLACK_TOKEN"].nil?
+      !ENV["SLACK_WEBHOOK_URL"].nil?
     end
 
     def self.hipchat?

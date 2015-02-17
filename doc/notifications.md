@@ -23,8 +23,7 @@ end
 
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
-| SLACK_TOKEN             | A Slack API token from [incoming-webhook][21] section of Slack|
-| SLACK_SUBDOMAIN         | This subdomain for the slack chat. For example https://atmos.slack.com would be 'atmos'|
+| SLACK_WEBHOOK_URL       | A Slack Webhook URL from [incoming-webhook][21] section of Slack|
 
 ## Campfire
 
