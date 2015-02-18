@@ -9,7 +9,7 @@ module Heaven
 
       # Only allow one deployment per-environment at a time
       def self.redis_lock_key(guid, data)
-        deployment_data = JSON.parse(payload)["deployment"]
+        deployment_data = data["deployment"]
         if deployment_data["payload"] && deployment_data["payload"]["name"]
           name = deployment_data["payload"]["name"]
           return "#{name}-#{deployment_data["environment"]}-deployment"
