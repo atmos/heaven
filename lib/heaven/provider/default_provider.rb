@@ -6,21 +6,17 @@ module Heaven
       include ApiClient
       include LocalLogFile
 
-      attr_accessor :credentials, :guid, :last_child, :name, :payload
+      attr_accessor :credentials, :guid, :last_child, :name, :data
 
       # See http://stackoverflow.com/questions/12093748/how-do-i-check-for-valid-git-branch-names
       # and http://linux.die.net/man/1/git-check-ref-format
       VALID_GIT_REF = %r{\A(?!/)(?!.*(?:/\.|//|@\{|\\|\.\.))[\040-\176&&[^ ~\^:?*\[]]+(?<!\.lock|/|\.)\z}
 
-      def initialize(guid, payload)
+      def initialize(guid, data)
         @guid        = guid
         @name        = "unknown"
-        @payload     = payload
+        @data        = data
         @credentials = ::Deployment::Credentials.new(working_directory)
-      end
-
-      def data
-        @data ||= JSON.parse(payload)
       end
 
       def output

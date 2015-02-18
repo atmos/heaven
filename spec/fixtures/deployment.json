@@ -6,7 +6,8 @@
   "environment": "production",
   "payload": {
     "config": {
-      "heroku_name":"zero-fucks-hubot"
+      "heroku_name":"zero-fucks-hubot",
+      "provider":"heroku"
     }
   },
   "description": null,

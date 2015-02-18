@@ -53,7 +53,7 @@
       "repos_url": "https://api.github.com/users/charliesome/repos",
       "events_url": "https://api.github.com/users/charliesome/events{/privacy}",
       "received_events_url": "https://api.github.com/users/charliesome/received_events",
-      "type": "User",
+      "type": "User"
     },
     "committer": {
       "login": "charliesome",
@@ -71,7 +71,7 @@
       "repos_url": "https://api.github.com/users/charliesome/repos",
       "events_url": "https://api.github.com/users/charliesome/events{/privacy}",
       "received_events_url": "https://api.github.com/users/charliesome/received_events",
-      "type": "User",
+      "type": "User"
     },
     "parents": [
       {
@@ -107,7 +107,7 @@
       "repos_url": "https://api.github.com/users/atmos/repos",
       "events_url": "https://api.github.com/users/atmos/events{/privacy}",
       "received_events_url": "https://api.github.com/users/atmos/received_events",
-      "type": "User",
+      "type": "User"
     },
     "private": true,
     "html_url": "https://github.com/atmos/my-robot",
@@ -188,6 +188,6 @@
     "repos_url": "https://api.github.com/users/hubot/repos",
     "events_url": "https://api.github.com/users/hubot/events{/privacy}",
     "received_events_url": "https://api.github.com/users/hubot/received_events",
-    "type": "User",
+    "type": "User"
   }
 }

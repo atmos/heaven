@@ -1,4 +1,4 @@
-module Statuses
+module DeploymentStatusHelper
   class StubDeploymentRel
     attr_reader :nwo, :number, :type
     def initialize(nwo, number, type)

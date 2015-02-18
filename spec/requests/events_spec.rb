@@ -1,37 +1,56 @@
-require "spec_helper"
+require "request_spec_helper"
 
-describe "receiving GitHub hooks" do
+describe "Receiving GitHub hooks", :request do
+  include FixtureHelper
+
   before do
     stub_gists
     stub_deploy_statuses
   end
 
-  it "404s on events from invalid hosts" do
-    post "/events", fixture_data("ping"), default_headers("ping", "74.125.239.105")
+  describe "POST /events" do
+    it "returns a forbidden error to invalid hosts" do
+      github_event("ping")
 
-    expect(response).to be_not_found
-    expect(response.status).to eql(404)
-  end
+      post "/events", fixture_data("ping"), request_env("74.125.239.105")
 
-  it "handles ping events from valid hosts" do
-    post "/events", fixture_data("ping"), default_headers("ping")
+      expect(last_response).to be_forbidden
+      expect(last_response.status).to eql(403)
+    end
 
-    expect(response).to be_success
-    expect(response.status).to eql(201)
-  end
+    it "returns a unprocessable error for invalid events" do
+      github_event("invalid")
 
-  it "handles deployment events from valid hosts" do
-    pending "ugh"
-    post "/events", fixture_data("deployment"), default_headers("deployment")
+      post "/events", "{}", request_env
 
-    expect(response).to be_success
-    expect(response.status).to eql(201)
-  end
+      expect(last_response.status).to eql(422)
+    end
 
-  it "handles deployment status events from valid hosts" do
-    post "/events", fixture_data("deployment-success"), default_headers("deployment_status")
+    it "handles ping events from valid hosts" do
+      github_event("ping")
 
-    expect(response).to be_success
-    expect(response.status).to eql(201)
+      post "/events", fixture_data("ping"), request_env
+
+      expect(last_response).to be_successful
+      expect(last_response.status).to eql(201)
+    end
+
+    it "handles deployment events from valid hosts" do
+      github_event("deployment")
+
+      post "/events", fixture_data("deployment"), request_env
+
+      expect(last_response).to be_successful
+      expect(last_response.status).to eql(201)
+    end
+
+    it "handles deployment status events from valid hosts" do
+      github_event("deployment_status")
+
+      post "/events", fixture_data("deployment-success"), request_env
+
+      expect(last_response).to be_successful
+      expect(last_response.status).to eql(201)
+    end
   end
 end
