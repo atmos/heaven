@@ -50,7 +50,7 @@ module Heaven
       end
 
       def repo_default_branch
-        payload["repository"]["default_branch"]
+        data["repository"]["default_branch"]
       end
 
       def autodeploy?
@@ -77,7 +77,7 @@ module Heaven
 
       def thread_fields
         [
-          { :label => "Repository", :value => "<a href='#{repo_url}'>#{payload["repository"]["full_name"]}</a>" },
+          { :label => "Repository", :value => "<a href='#{repo_url}'>#{data["repository"]["full_name"]}</a>" },
           { :label => "Deployment", :value => "#{deployment_number} (<a href='#{target_url}'>output</a>)" },
           {
             :label => "Deployed ref",
@@ -110,7 +110,7 @@ module Heaven
 
       def fetch_previous_deployment(page = 1)
         deployments = api.deployments(
-          payload["repository"]["full_name"],
+          data["repository"]["full_name"],
           :environment => environment,
           :page => page,
           :accept => "application/vnd.github.cannonball-preview+json"
