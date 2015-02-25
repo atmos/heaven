@@ -134,7 +134,7 @@ module Heaven
       private
 
       def flowdock_thread_id
-        "heaven:deployment:#{payload["repository"]["full_name"].gsub("/", ":")}:#{deployment_number}"
+        "heaven:deployment:#{data["repository"]["full_name"].gsub("/", ":")}:#{deployment_number}"
       end
 
       def thread_url(flow, id)
