@@ -74,7 +74,7 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 
 ## Capistrano
 
-Capistrano gives you a distrubted task management system over ssh. The heaven provider gives you support for three options in capistrano.
+Capistrano gives you a distributed task management system over ssh. The heaven provider gives you support for three options in capistrano.
 
 ### Options
 
