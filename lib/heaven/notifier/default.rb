@@ -123,6 +123,10 @@ module Heaven
         "[#{repo_name}](#{repo_url(path)})"
       end
 
+      def octokit_web_endpoint
+        ENV["OCTOKIT_WEB_ENDPOINT"] || "https://github.com/"
+      end
+
       def default_message
         message = user_link
         case state
@@ -174,7 +178,7 @@ module Heaven
       end
 
       def user_link
-        "[#{chat_user}](https://github.com/#{chat_user})"
+        "[#{chat_user}](#{octokit_web_endpoint}#{chat_user})"
       end
 
       def output_link(link_title = "deployment")
