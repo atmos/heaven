@@ -4,6 +4,7 @@ module Heaven
     # The super class provider, all providers inherit from this.
     class DefaultProvider
       include ApiClient
+      include DeploymentTimeout
       include LocalLogFile
 
       attr_accessor :credentials, :guid, :last_child, :name, :data
@@ -138,10 +139,6 @@ module Heaven
                           :sha             => sha)
       end
 
-      def timeout
-        Integer(ENV["DEPLOYMENT_TIMEOUT"] || "300")
-      end
-
       def update_output
         output.stderr = File.read(stderr_file) if File.exist?(stderr_file)
         output.stdout = File.read(stdout_file) if File.exist?(stdout_file)
@@ -157,11 +154,16 @@ module Heaven
 
       def run!
         Timeout.timeout(timeout) do
+          start_deployment_timeout!
           setup
           execute unless Rails.env.test?
           notify
           record
         end
+      rescue POSIX::Spawn::TimeoutExceeded, Timeout::Error => e
+        Rails.logger.info e.message
+        Rails.logger.info e.backtrace
+        outuput.stderr += "\n\nDEPLOYMENT TIMED OUT AFTER #{timeout} SECONDS"
       rescue StandardError => e
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
