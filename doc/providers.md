@@ -22,6 +22,8 @@ end
 
 Jobs will timeout if they don't complete in 300 seconds. If you really need more than that you can configure the timeout by setting the `DEPLOYMENT_TIMEOUT` environmental variable to the number of seconds you'd like to increase it to.
 
+Heaven runs most of the deployment tasks in a child process, that by default does not die when the deployment timeouts. To enable terminating the deployment child processes, set `TERMINATE_CHILD_PROCESS_ON_TIMEOUT` to `1`.
+
 ## Heroku
 
 The heroku provider uses the [build and release API][13]. It requests an [archive link][14] from GitHub and passes that on to heroku. It polls the API every few seconds until the heroku build api completes.
