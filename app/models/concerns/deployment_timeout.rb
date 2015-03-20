@@ -2,23 +2,23 @@
 module DeploymentTimeout
   extend ActiveSupport::Concern
 
-  included do
-    attr_reader :start_time
-  end
-
   def timeout
     Integer(ENV["DEPLOYMENT_TIMEOUT"] || "300")
   end
 
-  def time_elapsed
-    ((start_time || Time.now) - Time.now).ceil
+  def deployment_time_elapsed
+    (Time.now - deployment_start_time).ceil
   end
 
-  def time_remaining
-    timeout - time_elapsed
+  def deployment_time_remaining
+    timeout - deployment_time_elapsed
   end
 
-  def start_deploy_timeout!
-    @start_time = Time.now
+  def deployment_start_time
+    @deployment_start_time || Time.now
+  end
+
+  def start_deployment_timeout!
+    @deployment_start_time = Time.now
   end
 end

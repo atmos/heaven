@@ -42,6 +42,14 @@ module LocalLogFile
   end
 
   def execute_options
-    { :timeout => time_remaining }
+    if terminate_child_process_on_timeout
+      { :timeout => deployment_time_remaining - 2 }
+    else
+      {}
+    end
+  end
+
+  def terminate_child_process_on_timeout
+    ENV["TERMINATE_CHILD_PROCESS_ON_TIMEOUT"] == "1"
   end
 end

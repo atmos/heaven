@@ -154,12 +154,16 @@ module Heaven
 
       def run!
         Timeout.timeout(timeout) do
-          start_deploy_timeout!
+          start_deployment_timeout!
           setup
           execute unless Rails.env.test?
           notify
           record
         end
+      rescue Spawn::TimeoutExceeded, Timeout::Error => e
+        Rails.logger.info e.message
+        Rails.logger.info e.backtrace
+        outuput.stderr += "\n\nDEPLOYMENT TIMED OUT AFTER #{timeout} SECONDS"
       rescue StandardError => e
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
