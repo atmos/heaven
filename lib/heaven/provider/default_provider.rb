@@ -160,7 +160,7 @@ module Heaven
           notify
           record
         end
-      rescue Spawn::TimeoutExceeded, Timeout::Error => e
+      rescue POSIX::Spawn::TimeoutExceeded, Timeout::Error => e
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
         outuput.stderr += "\n\nDEPLOYMENT TIMED OUT AFTER #{timeout} SECONDS"
