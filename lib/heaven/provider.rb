@@ -5,6 +5,7 @@ require "heaven/provider/fabric"
 require "heaven/provider/elastic_beanstalk"
 require "heaven/provider/dpl"
 require "heaven/provider/bundler_capistrano"
+require "heaven/provider/ansible"
 
 # The top-level Heaven module
 module Heaven
@@ -15,7 +16,8 @@ module Heaven
       "capistrano"         => Capistrano,
       "fabric"             => Fabric,
       "elastic_beanstalk"  => ElasticBeanstalk,
-      "bundler_capistrano" => BundlerCapistrano
+      "bundler_capistrano" => BundlerCapistrano,
+      "ansible"            => Ansible
     }
 
     def self.from(guid, data)
