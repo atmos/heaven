@@ -13,7 +13,6 @@ module Heaven
       end
 
       def execute
-        log "Deployment DATA from lazywei: #{deployment_data.inspect}"
         return execute_and_log(["/usr/bin/true"]) if Rails.env.test?
 
         unless File.exist?(checkout_directory)
@@ -21,14 +20,22 @@ module Heaven
           execute_and_log(["git", "clone", clone_url, checkout_directory])
         end
 
+
         Dir.chdir(checkout_directory) do
           log "Fetching the latest code"
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
-          # deploy_string = [cap_path, environment, "-s", "branch=#{ref}", task]
-          deploy_string = ["ansible-playbook", "-i", "#{ansible_root}/hosts",
-                           "#{ansible_root}/site.yml", "--verbose",
-                           "--extra-vars", "guardian_git_rev=#{ref}"]
+
+          ansible_hosts_file = "#{ansible_root}/hosts"
+          ansible_site_file = "#{ansible_root}/site.yml"
+          ansible_extra_vars = [
+            "heaven_deploy_sha=#{sha}",
+            "ansible_ssh_private_key_file=#{working_directory}/.ssh/id_rsa"
+          ].join(" ")
+
+          deploy_string = ["ANSIBLE_HOST_KEY_CHECKING=false",
+                           "ansible-playbook", "-i", ansible_hosts_file, ansible_site_file,
+                           "--verbose", "--extra-vars", ansible_extra_vars]
           log "Executing ansible: #{deploy_string.join(" ")}"
           execute_and_log(deploy_string)
         end
