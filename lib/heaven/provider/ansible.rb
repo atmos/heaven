@@ -33,11 +33,10 @@ module Heaven
             "ansible_ssh_private_key_file=#{working_directory}/.ssh/id_rsa"
           ].join(" ")
 
-          deploy_string = ["ANSIBLE_HOST_KEY_CHECKING=false",
-                           "ansible-playbook", "-i", ansible_hosts_file, ansible_site_file,
-                           "--verbose", "--extra-vars", "'#{ansible_extra_vars}'"]
+          deploy_string = ["ansible-playbook", "-i", ansible_hosts_file, ansible_site_file,
+                           "--verbose", "--extra-vars", "'#{ansible_extra_vars}'", "-vvvv"]
           log "Executing ansible: #{deploy_string.join(" ")}"
-          execute_and_log(deploy_string)
+          execute_and_log(deploy_string, { "ANSIBLE_HOST_KEY_CHECKING" => 'false' })
         end
       end
     end
