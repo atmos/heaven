@@ -35,7 +35,7 @@ module Heaven
 
           deploy_string = ["ANSIBLE_HOST_KEY_CHECKING=false",
                            "ansible-playbook", "-i", ansible_hosts_file, ansible_site_file,
-                           "--verbose", "--extra-vars", ansible_extra_vars]
+                           "--verbose", "--extra-vars", "'#{ansible_extra_vars}'"]
           log "Executing ansible: #{deploy_string.join(" ")}"
           execute_and_log(deploy_string)
         end
