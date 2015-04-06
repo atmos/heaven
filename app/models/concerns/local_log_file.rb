@@ -29,6 +29,11 @@ module LocalLogFile
   end
 
   def execute_and_log(cmds, env = {})
+    # Don't add single/double quotes around to any cmd in cmds.
+    # For example,
+    #   cmds = ["my_command", "'foo=bar lazy=true'"] will fail
+    # The correct way is
+    #   cmds = ["my_command", "foo=bar lazy=true"]
     @last_child = POSIX::Spawn::Child.new(env.merge("HOME" => working_directory), *cmds, execute_options)
 
     log_stdout(last_child.out)
