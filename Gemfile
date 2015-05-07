@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails",    "~>4.2.0"
+gem "rails",    "~>4.2.1"
 gem "resque"
 gem "resque-lock-timeout"
 gem "octokit"
@@ -32,7 +32,6 @@ end
 
 group :development do
   gem "pry"
-  gem "sqlite3", "1.3.10"
   gem "foreman"
   gem "meta_request"
   gem "better_errors"
