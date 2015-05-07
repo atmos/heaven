@@ -18,3 +18,4 @@ vendor/gems
 public/assets
 release.sh
 coverage
+.ruby-version
