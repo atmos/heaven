@@ -27,5 +27,3 @@ Heaven::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 end
-
-WebMock.allow_net_connect!
