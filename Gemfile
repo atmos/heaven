@@ -1,7 +1,7 @@
 ruby "2.1.2"
 source "https://rubygems.org"
 
-gem "rails",    "~>4.2.0"
+gem "rails",    "~>4.2.1"
 gem "resque"
 gem "resque-lock-timeout"
 gem "octokit"
@@ -23,9 +23,8 @@ gem "campfiyah"
 gem "slack-notifier"
 gem "flowdock"
 
-group :development, :test do
-  gem "pry"
-  gem "sqlite3"
+group :test do
+  gem "sqlite3", "1.3.10"
   gem "webmock"
   gem "simplecov", "0.7.1"
   gem "rubocop"
@@ -33,6 +32,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "pry"
   gem "foreman"
   gem "meta_request"
   gem "better_errors"
