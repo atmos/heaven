@@ -163,7 +163,7 @@ module Heaven
       rescue POSIX::Spawn::TimeoutExceeded, Timeout::Error => e
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
-        outuput.stderr += "\n\nDEPLOYMENT TIMED OUT AFTER #{timeout} SECONDS"
+        output.stderr += "\n\nDEPLOYMENT TIMED OUT AFTER #{timeout} SECONDS"
       rescue StandardError => e
         Rails.logger.info e.message
         Rails.logger.info e.backtrace
