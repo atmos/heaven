@@ -29,12 +29,9 @@ module Heaven
 
       def deployment_command
         script = custom_payload_config.try(:[], "deploy_script")
-        unless script
-          fail "No deploy script configured."
-        end
-        unless script =~ /\A([\w-]+\/)*[\w-]+(\.\w+)?\Z/
-          fail "Only deploy scripts from the repo are allowed."
-        end
+        fail "No deploy script configured." unless script
+        fail "Only deploy scripts from the repo are allowed." unless script =~ /\A([\w-]+\/)*[\w-]+(\.\w+)?\Z/
+        fail "Deploy script #{path} not found or not executable" unless File.executable?("./" + script)
         "./" + script
       end
 
