@@ -247,3 +247,11 @@ applications.
 [19]: https://devcenter.heroku.com/articles/releases
 [20]: https://github.com/atmos/hubot-deploy
 [21]: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html
+
+## Shell provider
+
+Shell provider lets you run an arbitrary script from the repo to perform the deployment. The script receives `BRANCH`, `SHA`, `DEPLOY_TASK` and `DEPLOY_ENV` environment variables when executing. This is ideal provider if your deployment consists only of for example asset compilation and upload to S3.
+
+### Required Configuration
+
+No configuration required in heaven. You must add `"deploy_script"` key to your `apps.json` configuration that must point to an executable file inside the repository.

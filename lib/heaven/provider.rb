@@ -17,7 +17,8 @@ module Heaven
       "fabric"             => Fabric,
       "elastic_beanstalk"  => ElasticBeanstalk,
       "bundler_capistrano" => BundlerCapistrano,
-      "ansible"            => Ansible
+      "ansible"            => Ansible,
+      "shell"              => Shell
     }
 
     def self.from(guid, data)
