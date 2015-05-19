@@ -21,7 +21,7 @@ module Heaven
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
           log "Executing script: #{deployment_command}"
-          execute_and_log(deployment_command, deployment_environment)
+          execute_and_log([deployment_command], deployment_environment)
         end
       end
 
