@@ -32,7 +32,7 @@ module Heaven
         unless script
           fail "No deploy script configured."
         end
-        unless script ~= /\A\w+(\/\w+)*\Z/
+        unless script =~ /\A([\w-]+\/)*[\w-]+(\.\w+)?\Z/
           fail "Only deploy scripts from the repo are allowed."
         end
         "./" + script
