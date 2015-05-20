@@ -1,7 +1,7 @@
 module Heaven
   # Top-level module for providers.
   module Provider
-    # The capistrano provider.
+    # The shell provider.
     class Shell < DefaultProvider
       def initialize(guid, payload)
         super
