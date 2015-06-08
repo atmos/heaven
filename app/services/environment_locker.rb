@@ -1,8 +1,8 @@
 # A class for lock/unlocking a repo's environment
 class EnvironmentLocker
-  LOCK_TASK     = "deploy:lock"
-  UNLOCK_TASK   = "deploy:unlock"
-  UNKNOWN_ACTOR = "Unknown"
+  LOCK_TASK     = "lock".freeze
+  UNLOCK_TASK   = "unlock".freeze
+  UNKNOWN_ACTOR = "Unknown".freeze
 
   attr_reader :name_with_owner, :environment, :actor, :task
   attr_writer :redis
@@ -15,11 +15,12 @@ class EnvironmentLocker
   end
 
   def lock?
-    task == LOCK_TASK
+    
+    task == "#{prefix}:#{LOCK_TASK}"
   end
 
   def unlock?
-    task == UNLOCK_TASK
+    task == "#{prefix}:#{UNLOCK_TASK}"
   end
 
   def lock!
@@ -46,5 +47,9 @@ class EnvironmentLocker
 
   def redis_key
     [name_with_owner, environment, "lock"].join("-")
+  end
+  
+  def prefix
+    ENV['HUBOT_DEPLOY_PREFIX'] || 'deploy'
   end
 end
