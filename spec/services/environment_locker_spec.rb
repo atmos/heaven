@@ -19,13 +19,13 @@ describe EnvironmentLocker do
       expect(locker.lock?).to be_true
     end
 
-    it "allows a custom prefix" do
-      ENV['HUBOT_DEPLOY_PREFIX'] = 'ship'
+    context "with hubot deploy prefix" do
+      before { stub_const("ENV", "HUBOT_DEPLOY_PREFIX" => "ship") }
 
-      locker = EnvironmentLocker.new(lock_params.merge(:task => "ship:lock"))
-      locker.redis = redis
-
-      expect(locker.lock?).to be_true
+      it "is true if the task is ship:lock" do
+        locker = EnvironmentLocker.new(lock_params.merge(:task => "ship:lock"))
+        expect(locker.lock?).to be_true
+      end
     end
   end
 
@@ -37,13 +37,13 @@ describe EnvironmentLocker do
       expect(locker.unlock?).to be_true
     end
 
-    it "allows a custom prefix" do
-      ENV['HUBOT_DEPLOY_PREFIX'] = 'ship'
+    context "with hubot deploy prefix" do
+      before { stub_const("ENV", "HUBOT_DEPLOY_PREFIX" => "ship") }
 
-      locker = EnvironmentLocker.new(lock_params.merge(:task => "ship:unlock"))
-      locker.redis = redis
-
-      expect(locker.lock?).to be_true
+      it "is true if the task is ship:unlock" do
+        locker = EnvironmentLocker.new(lock_params.merge(:task => "ship:unlock"))
+        expect(locker.unlock?).to be_true
+      end
     end
   end
 

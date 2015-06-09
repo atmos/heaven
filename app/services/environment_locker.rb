@@ -15,7 +15,6 @@ class EnvironmentLocker
   end
 
   def lock?
-    
     task == "#{prefix}:#{LOCK_TASK}"
   end
 
@@ -48,8 +47,8 @@ class EnvironmentLocker
   def redis_key
     [name_with_owner, environment, "lock"].join("-")
   end
-  
+
   def prefix
-    ENV['HUBOT_DEPLOY_PREFIX'] || 'deploy'
+    ENV["HUBOT_DEPLOY_PREFIX"] || "deploy"
   end
 end
