@@ -14,8 +14,8 @@ module Heaven
         output_message << "##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
           :channel     => "##{chat_room}",
-          :username    => "hubot",
-          :icon_url    => "https://octodex.github.com/images/labtocat.png",
+          :username    => slack_bot_name,
+          :icon_url    => slack_bot_icon,
           :attachments => [{
             :text    => filtered_message,
             :color   => green? ? "good" : "danger",
@@ -55,6 +55,14 @@ module Heaven
 
       def slack_webhook_url
         ENV["SLACK_WEBHOOK_URL"]
+      end
+
+      def slack_bot_name
+        ENV["SLACK_BOT_NAME"] || "hubot"
+      end
+
+      def slack_bot_icon
+        ENV["SLACK_BOT_ICON"] || "https://octodex.github.com/images/labtocat.png"
       end
 
       def slack_account

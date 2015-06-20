@@ -24,6 +24,8 @@ end
 | Environmental Variables |                                                 |
 |-------------------------|-------------------------------------------------|
 | SLACK_WEBHOOK_URL       | A Slack Webhook URL from [incoming-webhook][21] section of Slack|
+| SLACK_BOT_NAME          | The name to post to Slack as. Defaults to `hubot`|
+| SLACK_BOT_ICON          | The icon to use for the notification. Defaults to `https://octodex.github.com/images/labtocat.png`|
 
 ## Campfire
 
