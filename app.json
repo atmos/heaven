@@ -49,8 +49,8 @@
     }
   },
   "formation": [
-    { "process": "web",    "quantity": 1, "size": "1X" },
-    { "process": "worker", "quantity": 2, "size": "1X" }
+    { "process": "web",    "quantity": 1 },
+    { "process": "worker", "quantity": 2 }
   ],
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
