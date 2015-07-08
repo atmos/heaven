@@ -15,7 +15,7 @@
   "website": "http://github.com/atmos/heaven",
   "repository": "https://github.com/atmos/heaven",
   "success_url": "/resque",
-  "addons": ["heroku-postgresql:hobby-dev", "rediscloud"],
+  "addons": ["heroku-postgresql:hobby-dev", "heroku-redis"],
   "env": {
     "GITHUB_TOKEN": {
       "description": "A personal OAuth token from GitHub with repo scope."
@@ -46,6 +46,10 @@
     "HEROKU_API_KEY": {
       "description": "A direct authorization token from heroku. Optional.",
       "required": false
+    },
+    "REDIS_PROVIDER": {
+      "description": "Redis config var to use",
+      "value": "REDIS_URL"
     }
   },
   "formation": [
