@@ -34,7 +34,6 @@
       "description": "The maximum amount of time a deployment can take in seconds.",
       "value": "300"
     },
-    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
     "RAILS_ENV": {
       "description": "This is what the RAILS_ENV unix environmental variable is set to.",
       "value": "production"
@@ -58,5 +57,9 @@
   ],
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
-  }
+  },
+  "buildpacks": [
+    { "url": "https://github.com/heroku/heroku-buildpack-ruby.git" },
+    { "url": "https://github.com/heroku/heroku-buildpack-python.git" }
+  ]
 }
