@@ -179,6 +179,16 @@ end
     |                       |                     |
 ```
 
+## Bundler Capistrano
+
+Bundler enabled Capistrano deployment lets you deploy using Capistrano in a fresh bundler environment. The provider will install the gems from your project's `:deployment` and `:heaven` groups and use that environment to run Capistrano. The same configuration applies for Bundler Capistrano than for Capistrano provider. One caveat:
+
+The provider passes the ref being deployed to capistrano in an environment variable `BRANCH`. In your `Capfile`, you'll need to add:
+
+```ruby
+set :branch, (ENV['BRANCH'] || fetch(:branch, 'master'))
+```
+
 ## Fabric
 
 Fabric enables distributed task management system over ssh. The heaven provider gives you support for three options.
