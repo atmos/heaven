@@ -28,13 +28,15 @@ module LocalLogFile
     File.open(stderr_file, "a") { |f| f.write(err.force_encoding("utf-8")) }
   end
 
-  def execute_and_log(cmds, env = {})
+  def execute_and_log(cmds, env = {}, input = nil)
     # Don't add single/double quotes around to any cmd in cmds.
     # For example,
     #   cmds = ["my_command", "'foo=bar lazy=true'"] will fail
     # The correct way is
     #   cmds = ["my_command", "foo=bar lazy=true"]
-    @last_child = POSIX::Spawn::Child.new(env.merge("HOME" => working_directory), *cmds, execute_options)
+    options = execute_options
+    options[:input] = input
+    @last_child = POSIX::Spawn::Child.new(env.merge("HOME" => working_directory), *cmds, options)
 
     log_stdout(last_child.out)
     log_stderr(last_child.err)
