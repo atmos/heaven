@@ -12,7 +12,7 @@ describe Heaven::Provider::Dpl do
     end
 
     it "returns heroku_name" do
-      expect(deployment.app_name).to eq(data["payload"]["config"]["heroku_name"])
+      expect(deployment.app_name).to eq(data["deployment"]["payload"]["config"]["heroku_name"])
     end
   end
 
@@ -25,7 +25,7 @@ describe Heaven::Provider::Dpl do
     end
 
     it "returns heroku_staging_name" do
-      expect(deployment.app_name).to eq(data["payload"]["config"]["heroku_staging_name"])
+      expect(deployment.app_name).to eq(data["deployment"]["payload"]["config"]["heroku_staging_name"])
     end
   end
 end
