@@ -20,8 +20,12 @@ module Heaven
         ENV["HIPCHAT_ROOM"] || "Developers"
       end
 
+      def hipchat_server
+        ENV["HIPCHAT_SERVER"] || "https://api.hipchat.com"
+      end
+
       def hipchat_client
-        @hipchat_client ||= ::HipChat::Client.new(hipchat_token)
+        @hipchat_client ||= ::HipChat::Client.new(hipchat_token, server_url: hipchat_server)
       end
 
       def repository_link(path = "")
