@@ -25,7 +25,7 @@ module Heaven
       end
 
       def hipchat_client
-        @hipchat_client ||= ::HipChat::Client.new(hipchat_token, server_url: hipchat_server)
+        @hipchat_client ||= ::HipChat::Client.new(hipchat_token, :server_url => hipchat_server)
       end
 
       def repository_link(path = "")
