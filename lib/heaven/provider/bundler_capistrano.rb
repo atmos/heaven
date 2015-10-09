@@ -22,7 +22,14 @@ module Heaven
           log "Fetching the latest code"
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
+          token = ENV['BUNDLE_PRIVATE_TOKEN']
+          source = ENV['BUNDLE_PRIVATE_SOURCE']
           Bundler.with_clean_env do
+            if !token.nil? && !source.nil?
+              bundler_config_string = ["bundle", "config", source, token]
+              log "Adding bundler token"
+              execute_and_log(bundler_config_string)
+            end
             bundler_string = ["bundle", "install", "--without", ignored_groups.join(" ")]
             log "Executing bundler: #{bundler_string.join(" ")}"
             execute_and_log(bundler_string)
