@@ -23,7 +23,7 @@ module Heaven
       end
 
       def unpacked_directory
-        @unpacked_directory ||= archive_path.chomp('.tar.gz')
+        @unpacked_directory ||= archive_path.chomp(".tar.gz")
       end
 
       def execute
