@@ -11,7 +11,7 @@ module Heaven
       end
 
       def archive_name
-        "#{name}-#{sha}.tar.gz"
+        "#{name_without_owner}-#{sha}.tar.gz"
       end
 
       def archive_link
@@ -23,7 +23,7 @@ module Heaven
       end
 
       def unpacked_directory
-        @unpacked_directory ||= archive_path.chomp(".tar.gz")
+        @unpacked_directory ||= "#{working_directory}/#{name_with_owner.gsub("/", "-")}-#{full_sha}"
       end
 
       def execute
@@ -31,12 +31,12 @@ module Heaven
 
         unless File.exist?(archive_path)
           log "Downloading #{archive_link} into #{archive_path}"
-          execute_and_log(["curl", "-L", archive_link, ">", archive_path])
+          execute_and_log(["curl", "-sL", archive_link, "-o", archive_path])
         end
 
         unless Dir.exist?(unpacked_directory)
           log "Unpacking tarball"
-          execute_and_log(["tar", "xzf", archive_path])
+          execute_and_log(["tar", "-C", working_directory, "-xzf", archive_path])
         end
 
         Dir.chdir(unpacked_directory) do

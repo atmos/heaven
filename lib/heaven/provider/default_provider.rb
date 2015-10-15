@@ -57,8 +57,16 @@ module Heaven
         data["repository"]["full_name"]
       end
 
+      def name_without_owner
+        data["repository"]["name"]
+      end
+
       def sha
         deployment_data["sha"][0..7]
+      end
+
+      def full_sha
+        deployment_data["sha"]
       end
 
       def ref
