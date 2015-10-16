@@ -71,7 +71,7 @@ IndentationWidth:
 
 MethodLength:
   CountComments: false  # count full line comments?
-  Max: 20
+  Max: 25
   Severity: error
 
 Alias:
