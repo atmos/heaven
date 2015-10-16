@@ -189,6 +189,11 @@ The provider passes the ref being deployed to capistrano in an environment varia
 set :branch, (ENV['BRANCH'] || fetch(:branch, 'master'))
 ```
 
+| Environmental Variables     |                                                                                                 |
+|-----------------------------|-------------------------------------------------------------------------------------------------|
+| BUNDLER_PRIVATE_SOURCE      | Private gem source. _Optional._                                                                 |
+| BUNDLER_PRIVATE_CREDENTIALS | Private gem source credentials. Can be a token or a username:password combination. _Optional._  |
+
 ## Fabric
 
 Fabric enables distributed task management system over ssh. The heaven provider gives you support for three options.

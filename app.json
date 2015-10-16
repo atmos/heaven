@@ -49,6 +49,14 @@
     "REDIS_PROVIDER": {
       "description": "Redis config var to use",
       "value": "REDIS_URL"
+    },
+    "BUNDLER_PRIVATE_SOURCE": {
+      "description": "Private gem source. Optional.",
+      "required": false
+    },
+    "BUNDLER_PRIVATE_CREDENTIALS": {
+      "description": "Private gem source credentials. Optional.",
+      "required": false
     }
   },
   "formation": [
