@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(version: 20150904161019) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "repository_id"
-    t.integer  "environment_id",  null: false
-    t.string   "sender"
-    t.string   "avatar_url"
+    t.integer  "environment_id",    null: false
+    t.string   "sender_login"
+    t.string   "sender_avatar_url"
   end
 
   add_index "deployments", ["created_at"], name: "index_deployments_on_created_at"

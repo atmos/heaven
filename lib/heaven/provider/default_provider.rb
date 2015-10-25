@@ -61,12 +61,8 @@ module Heaven
         data["repository"]["name"]
       end
 
-      def sender_login
-        data["sender"]["login"]
-      end
-
-      def sender_avatar_url
-        data["sender"]["avatar_url"]
+      def sender
+        data["sender"]
       end
 
       def sha
@@ -153,8 +149,8 @@ module Heaven
                           :output            => output.url,
                           :ref               => ref,
                           :sha               => sha,
-                          :sender_login      => sender_login,
-                          :sender_avatar_url => sender_avatar_url)
+                          :sender_login      => sender["login"],
+                          :sender_avatar_url => sender["avatar_url"])
       end
 
       def update_output

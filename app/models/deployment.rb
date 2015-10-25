@@ -1,6 +1,7 @@
 # A record of a deployment processes
 class Deployment < ActiveRecord::Base
-  validates :name, :name_with_owner, :environment, :repository, presence: true
+  validates :name, :name_with_owner, :environment, :repository,
+    :presence => true
 
   belongs_to :environment
   belongs_to :repository
@@ -16,7 +17,7 @@ class Deployment < ActiveRecord::Base
         :environment_id  => deployment.environment_id,
         :name_with_owner => name_with_owner
       }
-      Deployment.where(params).order("created_at desc").limit(1)
+      Deployment.where(params).order(arel_table[:created_at].desc).limit(1)
     end.flatten
   end
 

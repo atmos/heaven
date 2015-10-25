@@ -6,9 +6,9 @@ describe Deployment do
   let(:payload) { fixture_data("deployment") }
   let!(:data) { JSON.parse(payload)["payload"] }
 
-  let(:repository) { Repository.where(owner: "atmos", name: "heaven").first_or_create! }
-  let(:production) { Environment.where(name: "production").first_or_create! }
-  let(:staging) { Environment.where(name: "staging").first_or_create! }
+  let(:repository) { Repository.create(:owner => "atmos", :name => "heaven") }
+  let(:production) { Environment.create(:name => "production") }
+  let(:staging)    { Environment.create(:name => "staging") }
 
   let!(:create_data) do
     {
