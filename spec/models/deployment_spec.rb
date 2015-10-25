@@ -6,10 +6,15 @@ describe Deployment do
   let(:payload) { fixture_data("deployment") }
   let!(:data) { JSON.parse(payload)["payload"] }
 
+  let(:repository) { Repository.where(owner: "atmos", name: "heaven").first_or_create! }
+  let(:production) { Environment.where(name: "production").first_or_create! }
+  let(:staging) { Environment.where(name: "staging").first_or_create! }
+
   let!(:create_data) do
     {
       :custom_payload  => JSON.dump(data),
-      :environment     => "production",
+      :repository      => repository,
+      :environment     => production,
       :guid            => SecureRandom.uuid,
       :name            => "hubot",
       :name_with_owner => "github/hubot",
@@ -34,7 +39,7 @@ describe Deployment do
 
     Deployment.create create_data.merge(:name_with_owner => "atmos/heaven")
 
-    present << Deployment.create(create_data.merge(:environment => "staging"))
+    present << Deployment.create(create_data.merge(:environment => staging))
 
     deployments = Deployment.latest_for_name_with_owner("github/hubot")
 

@@ -61,6 +61,14 @@ module Heaven
         data["repository"]["name"]
       end
 
+      def sender_login
+        data["sender"]["login"]
+      end
+
+      def sender_avatar_url
+        data["sender"]["avatar_url"]
+      end
+
       def sha
         deployment_data["sha"][0..7]
       end
@@ -137,14 +145,16 @@ module Heaven
       end
 
       def record
-        Deployment.create(:custom_payload  => JSON.dump(custom_payload),
-                          :environment     => environment,
-                          :guid            => guid,
-                          :name            => name,
-                          :name_with_owner => name_with_owner,
-                          :output          => output.url,
-                          :ref             => ref,
-                          :sha             => sha)
+        Deployment.create(:custom_payload    => JSON.dump(custom_payload),
+                          :environment       => environment,
+                          :guid              => guid,
+                          :name              => name,
+                          :name_with_owner   => name_with_owner,
+                          :output            => output.url,
+                          :ref               => ref,
+                          :sha               => sha,
+                          :sender_login      => sender_login,
+                          :sender_avatar_url => sender_avatar_url)
       end
 
       def update_output
