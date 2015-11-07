@@ -5,12 +5,12 @@ module Heaven
       attr_reader :comparison
 
       def initialize(comparison)
-        @comparison = comparison.with_indifferent_access
+        @comparison = comparison
       end
 
       def changes(limit = nil)
         header  = changes_header
-        commits = comparison[:commits].reverse
+        commits = comparison.commits.reverse
 
         commit_list = formatted_commits(limit ? commits.take(limit) : commits)
 
@@ -33,25 +33,25 @@ module Heaven
       end
 
       def n_more_commits_link(number)
-        "And #{number} more #{"commit".pluralize(number)}... #{comparison[:html_url]}"
+        "And #{number} more #{"commit".pluralize(number)}... #{comparison.html_url}"
       end
 
       def total_commits
-        comparison[:total_commits]
+        comparison.total_commits
       end
 
       def file_sum(key)
-        comparison[:files].map { |f| f[key] }.reduce(&:+) || 0
+        comparison.files.map { |f| f[key] }.reduce(&:+) || 0
       end
 
       def formatted_commits(commits)
         commits.map do |commit|
-          "#{commit[:sha][0..7]} by #{commit[:author][:login]}: #{commit_message(commit[:commit])}"
+          "#{commit.sha[0..7]} by #{commit.author.login}: #{commit_message(commit.commit)}"
         end
       end
 
       def commit_message(commit)
-        commit[:message].split("\n").first
+        commit.message.split("\n").first
       end
     end
   end

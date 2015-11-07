@@ -1,15 +1,15 @@
 module ComparisonHelper
-  def build_commit_hash(message)
-    {
+  def build_commit_double(message)
+    double(
       :sha => "sha",
-      :commit => {
+      :commit => double(
         :message => message
-      },
-      :author => {
+      ),
+      :author => double(
         :login => "login",
         :html_url => "https://github.com/login"
-      },
+      ),
       :html_url => "https://github.com/org/repo/commit/sha"
-    }
+    )
   end
 end
