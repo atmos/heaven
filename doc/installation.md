@@ -19,7 +19,6 @@ Everything should have been configured via the heroku template.
 | GITHUB_CLIENT_ID        | The client id of the OAuth application.         |
 | GITHUB_CLIENT_SECRET    | The client secret of the OAuth application.     |
 | GITHUB_TEAM_ID          | A GitHub team id to restrict resque access to.  |
-| BUILDPACK_URL           | Heroku support for multiple runtimes. [Link][20] |
 | RAILS_SECRET_KEY_BASE   | The secret key for signing session cookies. This should be unique per domain.               |
 | OCTOKIT_API_ENDPOINT    | The full url to the GitHub API for enterprise installs. Optional. e.g. https://enterprise.myorg.com/api/v3 |
 | OCTOKIT_WEB_ENDPOINT    | The full url to the GitHub UI for enterprise installs. Optional. e.g. https://enterprise.myorg.com/ |
