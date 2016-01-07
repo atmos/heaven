@@ -15,14 +15,19 @@ module Heaven
           Rails.logger.error "Could not find flow token for flow #{chat_room}"
           return
         end
-        response = thread_client.post "/messages",
-          :flow_token => flow_token,
-          :event => "activity",
-          :external_thread_id => flowdock_thread_id,
-          :thread => thread_data,
-          :title => activity_title,
-          :author => activity_author,
-          :tags => tags
+        response = thread_client.post do |req|
+          req.url "/messages",
+          req.body = {
+            :flow_token => flow_token,
+            :event => "activity",
+            :external_thread_id => flowdock_thread_id,
+            :thread => thread_data,
+            :title => activity_title,
+            :author => activity_author,
+            :tags => tags
+          }
+          req.headers["X-flowdock-wait-for-message"] = "true"
+        end
         return if state != "pending" || autodeploy?
         answer_to_chat(response.body["thread_id"])
       end
