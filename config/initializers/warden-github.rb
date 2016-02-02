@@ -5,7 +5,7 @@ Warden::GitHub::Rails.setup do |config|
                            :client_secret => ENV['GITHUB_CLIENT_SECRET'],
                            :scope         => ["read:org"]
 
-  config.add_team :employees, ENV['GITHUB_TEAM_ID'] || '<unknown-team-id>'
+  config.add_team :employees, ENV['GITHUB_TEAM_ID'] if ENV['GITHUB_TEAM_ID'].present?
 
   config.default_scope = :user
 end
