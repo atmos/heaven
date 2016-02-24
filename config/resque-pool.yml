@@ -1,0 +1,2 @@
+---
+  '*': <%= Integer(ENV["WORKER_CONCURRENCY"] || 2) %>
