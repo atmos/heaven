@@ -14,4 +14,4 @@ WORKDIR $WORK_DIR
 EXPOSE 80
 
 ENTRYPOINT ["bundle", "exec"]
-CMD ["unicorn" "-p" "80" "-c" "config/unicorn.rb"]
+CMD ["unicorn", "-p", "80", "-c", "config/unicorn.rb"]
