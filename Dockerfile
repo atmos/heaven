@@ -1,4 +1,4 @@
-FROM ruby:2.3
+FROM ruby:2.3.0
 MAINTAINER emdentec ltd. <docker@emdentec.com>
 
 ENV WORK_DIR /usr/lib/heaven
