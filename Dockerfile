@@ -6,6 +6,7 @@ ENV WORK_DIR /usr/lib/heaven
 RUN mkdir -p $WORK_DIR
 
 COPY Gemfile $WORK_DIR/Gemfile
+COPY Gemfile.lock $WORK_DIR/Gemfile.lock
 RUN cd $WORK_DIR && bundle install
 
 COPY . $WORK_DIR
