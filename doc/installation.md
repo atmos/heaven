@@ -33,6 +33,36 @@ Everything should have been configured via the heroku template.
 | HEROKU_API_KEY          | A [direct authorization][17] token from heroku  |
 | REDIS_PROVIDER          | If you use a different provider than OpenRedis, set this to the name of the env var with Redis' URL (e.g. `REDISTOGO_URL`) |
 
+## Launch using Docker
+
+```bash
+# create a network
+docker network create heaven
+
+# create a postgres container
+docker run --name heaven-postgres -d --net heaven -e POSTGRES_USER=heaven postgres:latest
+
+# create a redis container
+docker run --name heaven-redis -d --net heaven redis:latest
+
+# create a list of environment variables
+cat >env.list <<EOF
+DATABASE_URL=postgres://heaven@heaven-postgres/heaven
+GITHUB_TOKEN=xxx
+GITHUB_CLIENT_ID=xxx
+GITHUB_CLIENT_SECRET=xxx
+GITHUB_TEAM_ID=xxx
+REDIS_PROVIDER=REDIS_CONTAINER_URL
+REDIS_CONTAINER_URL=redis://heaven-redis:6379
+EOF
+
+# run the application container
+docker run --name heaven --net heaven --env-file ./env.list -d emdentec/heaven
+# run worker container
+docker run --name heaven-worker-1 --net heaven --env-file ./env.list emdentec/heaven "rake" "resque:work" "QUEUE=*"
+docker run --name heaven-worker-2 --net heaven --env-file ./env.list emdentec/heaven "rake" "resque:work" "QUEUE=*"
+```
+
 [1]: http://developer.github.com/v3/repos/deployments/
 [2]: https://github.com/blog/1778-webhooks-level-up
 [3]: https://github.com/resque/resque
