@@ -56,6 +56,9 @@ REDIS_PROVIDER=REDIS_CONTAINER_URL
 REDIS_CONTAINER_URL=redis://heaven-redis:6379
 EOF
 
+# migrate the database
+docker run --rm --net heaven --env-file ./env.list emdentec/heaven "rake" "db:migrate"
+
 # run the application container
 docker run --name heaven --net heaven --env-file ./env.list -d emdentec/heaven
 # run worker container
