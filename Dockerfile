@@ -1,6 +1,8 @@
 FROM ruby:2.3.0
 MAINTAINER emdentec ltd. <docker@emdentec.com>
 
+RUN mkdir -p /root/.ssh
+
 ENV WORK_DIR /usr/lib/heaven
 
 RUN mkdir -p $WORK_DIR
