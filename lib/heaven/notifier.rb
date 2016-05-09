@@ -14,10 +14,10 @@ module Heaven
         ::Heaven::Notifier::Hipchat.new(payload)
       elsif flowdock?
         ::Heaven::Notifier::Flowdock.new(payload)
-      elsif Rails.env.test?
-        # noop on posting
-      else
+      elsif campfire?
         ::Heaven::Notifier::Campfire.new(payload)
+      else
+        # noop on posting
       end
     end
 
@@ -31,6 +31,10 @@ module Heaven
 
     def self.flowdock?
       !ENV["FLOWDOCK_USER_API_TOKEN"].nil?
+    end
+
+    def self.campfire?
+      !ENV["CAMPFIRE_TOKEN"].nil?
     end
   end
 end
