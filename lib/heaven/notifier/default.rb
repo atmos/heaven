@@ -153,7 +153,7 @@ module Heaven
       end
 
       def comparison
-        @comparison ||= api.compare(name_with_owner, last_known_revision, sha).as_json
+        @comparison ||= api.compare(name_with_owner, last_known_revision, sha)
       end
 
       def last_known_revision

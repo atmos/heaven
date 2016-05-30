@@ -6,12 +6,12 @@ describe "Heaven::Comparison::Linked" do
   include ComparisonHelper
 
   let(:comparison) do
-    {
+    double(
       :html_url => "https://github.com/org/repo/compare/sha...sha",
       :total_commits => 1,
       :commits => [
-        build_commit_hash("Commit message #123"),
-        build_commit_hash("Another commit")
+        build_commit_double("Commit message #123"),
+        build_commit_double("Another commit")
       ],
       :files => [{
         :additions => 1,
@@ -22,7 +22,7 @@ describe "Heaven::Comparison::Linked" do
         :deletions => 2,
         :changes => 3
       }]
-    }.with_indifferent_access
+    )
   end
 
   describe "#changes" do

@@ -7,7 +7,7 @@ module Heaven
       attr_reader :name_with_owner
 
       def initialize(comparison, name_with_owner)
-        @comparison      = comparison.with_indifferent_access
+        @comparison      = comparison
         @name_with_owner = name_with_owner
       end
 
@@ -21,12 +21,12 @@ module Heaven
       end
 
       def n_more_commits_link(number)
-        "[And #{number} more #{"commit".pluralize(number)}...](#{comparison[:html_url]})"
+        "[And #{number} more #{"commit".pluralize(number)}...](#{comparison.html_url})"
       end
 
       def formatted_commits(commits)
         commits.reverse.map do |commit|
-          "#{sha_link(commit)} by #{author_link(commit[:author])}: #{commit_message(commit[:commit])}"
+          "#{sha_link(commit)} by #{author_link(commit.author)}: #{commit_message(commit.commit)}"
         end
       end
 
@@ -35,11 +35,11 @@ module Heaven
       end
 
       def sha_link(commit)
-        "[#{commit[:sha][0..7]}](#{commit[:html_url]})"
+        "[#{commit.sha[0..7]}](#{commit.html_url})"
       end
 
       def author_link(author)
-        "[#{author[:login]}](#{author[:html_url]})"
+        "[#{author.login}](#{author.html_url})"
       end
     end
   end

@@ -132,10 +132,6 @@ module Heaven
         warn "Heaven Provider(#{name}) didn't implement execute"
       end
 
-      def notify
-        warn "Heaven Provider(#{name}) didn't implement notify"
-      end
-
       def record
         Deployment.create(:custom_payload  => JSON.dump(custom_payload),
                           :environment     => environment,
