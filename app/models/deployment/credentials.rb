@@ -1,10 +1,6 @@
 # Top-level class for Deployments.
 class Deployment
-  # Private: Setup ssh and netrc in a deployment specific directory
-  #
-  # This allows commands to be executed inside of the deployment directory with
-  # the HOME environmental variable changed. This makes git and ssh work
-  # without worrying about impacting other deployment processes.
+  # Set up ssh and netrc in the user's home directory
   class Credentials
     include ApiClient
 
