@@ -1,0 +1,25 @@
+version: "2"
+services:
+    redis:
+        image: redis
+        container_name: heaven_redis
+        networks:
+            - heaven
+    test:
+        build:
+            context: .
+        image: heaven/test
+        command: ["rake"]
+        environment:
+            RAILS_ENV: test
+            REDIS_PROVIDER: REDIS_CONTAINER_URL
+            REDIS_CONTAINER_URL: redis://heaven_redis
+        volumes:
+            - ./:/usr/lib/heaven
+        depends_on:
+            - redis
+        networks:
+            - heaven
+networks:
+    heaven:
+        driver: bridge
