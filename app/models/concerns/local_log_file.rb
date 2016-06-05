@@ -34,7 +34,7 @@ module LocalLogFile
     #   cmds = ["my_command", "'foo=bar lazy=true'"] will fail
     # The correct way is
     #   cmds = ["my_command", "foo=bar lazy=true"]
-    @last_child = POSIX::Spawn::Child.new(env.merge("HOME" => working_directory), *cmds, execute_options)
+    @last_child = POSIX::Spawn::Child.new(env, *cmds, execute_options)
 
     log_stdout(last_child.out)
     log_stderr(last_child.err)
