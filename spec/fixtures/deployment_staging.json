@@ -23,7 +23,8 @@
           "staging"
         ],
         "allowed_rooms": [],
-        "heroku_staging_name": "zero-fucks-hubot"
+        "heroku_staging_name": "zero-fucks-hubot",
+        "staging_url": "https://staging.my-robot.example.org"
       }
     },
     "environment": "staging",
