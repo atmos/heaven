@@ -4,7 +4,7 @@ class Deployment
   class Status
     include ApiClient
 
-    attr_accessor :description, :number, :nwo, :output, :completed
+    attr_accessor :description, :number, :nwo, :output, :completed, :environment_url
     alias_method :completed?, :completed
 
     def initialize(nwo, number)
@@ -25,7 +25,12 @@ class Deployment
     end
 
     def payload
-      { "target_url" => output, "description" => description }
+      {
+        "target_url" => output,
+        "description" => description,
+        "environment_url" => environment_url,
+        :accept => "application/vnd.github.ant-man-preview+json"
+      }
     end
 
     def pending!

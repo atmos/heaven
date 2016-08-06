@@ -116,11 +116,16 @@ module Heaven
         custom_payload && custom_payload["config"]
       end
 
+      def environment_url
+        custom_payload_config["#{environment}_url"] || ""
+      end
+
       def setup
         credentials.setup!
 
         output.create
         status.output = output.url
+        status.environment_url = environment_url
         status.pending!
       end
 

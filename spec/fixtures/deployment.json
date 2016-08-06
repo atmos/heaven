@@ -23,7 +23,8 @@
           "production"
         ],
         "allowed_rooms": [],
-        "heroku_name": "zero-fucks-hubot"
+        "heroku_name": "zero-fucks-hubot",
+        "production_url": "https://my-robot.example.org"
       }
     },
     "environment": "production",
