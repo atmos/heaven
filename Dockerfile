@@ -1,4 +1,4 @@
-FROM ruby:2.3.0
+FROM ruby:2.3.1
 MAINTAINER emdentec ltd. <docker@emdentec.com>
 
 RUN mkdir -p /root/.ssh
