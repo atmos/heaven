@@ -36,6 +36,7 @@ module LocalLogFile
     #   cmds = ["my_command", "foo=bar lazy=true"]
     @last_child = POSIX::Spawn::Child.new(env, *cmds, execute_options)
 
+    log_stdout("$ #{cmds.join(" ")}\n")
     log_stdout(last_child.out)
     log_stderr(last_child.err)
 
