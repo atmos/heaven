@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140728040201) do
 
-  create_table "deployments", force: true do |t|
+  create_table "deployments", force: :cascade do |t|
     t.text     "custom_payload"
     t.string   "environment",     default: "production"
     t.string   "guid"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140728040201) do
     t.integer  "repository_id"
   end
 
-  create_table "repositories", force: true do |t|
+  create_table "repositories", force: :cascade do |t|
     t.string   "owner"
     t.string   "name"
     t.boolean  "active",     default: true
