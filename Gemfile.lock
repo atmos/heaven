@@ -274,9 +274,3 @@ DEPENDENCIES
   warden-github-rails
   webmock
   yajl-ruby
-
-RUBY VERSION
-   ruby 2.2.6p396
-
-BUNDLED WITH
-   1.13.7
