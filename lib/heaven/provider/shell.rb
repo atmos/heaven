@@ -42,7 +42,11 @@ module Heaven
           "BRANCH" => ref,
           "SHA" => sha,
           "DEPLOY_ENV" => environment,
-          "DEPLOY_TASK" => task
+          "DEPLOY_TASK" => task,
+          "REPO_NAME" => name_with_owner,
+          "GITHUB_ARCHIVE_LINK" => api.archive_link(name_with_owner, :ref => sha),
+          "STAGING_APP_NAME" => custom_payload_config["staging_app_name"],
+          "PRODUCTION_APP_NAME" => custom_payload_config["production_app_name"]
         }
       end
 
