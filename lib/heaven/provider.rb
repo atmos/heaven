@@ -41,8 +41,14 @@ module Heaven
                     data.key?("deployment") &&
                     data["deployment"].key?("payload") &&
                     data["deployment"]["payload"].key?("config")
+      config = data["deployment"]["payload"]["config"]
 
-      data["deployment"]["payload"]["config"]["provider"]
+      if config["deployments"]
+        deployment = info.try(:[], data["deployment"]["payload"]["environment"])
+        deployment["provider"]
+      else
+        data["deployment"]["payload"]["config"]["provider"]
+      end
     end
   end
 end
