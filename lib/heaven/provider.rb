@@ -44,7 +44,7 @@ module Heaven
       config = data["deployment"]["payload"]["config"]
 
       if config["deployments"]
-        deployment = info.try(:[], data["deployment"]["payload"]["environment"])
+        deployment = config["deployments"].try(:[], data["deployment"]["environment"])
         deployment["provider"]
       else
         data["deployment"]["payload"]["config"]["provider"]

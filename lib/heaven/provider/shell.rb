@@ -39,7 +39,7 @@ module Heaven
 
       def deployment_environment
         deployments = custom_payload_config.try(:[], "deployments")
-        app_name = providers.try(:[], environment).try(:[], "app_name")
+        app_name = deployments.try(:[], environment).try(:[], "app_name")
 
         {
           "BRANCH" => ref,
