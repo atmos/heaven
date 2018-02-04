@@ -1,4 +1,4 @@
-ruby "2.3.1"
+ruby "2.3.6"
 source "https://rubygems.org"
 
 gem "rails",    "~>4.2.2"
