@@ -24,11 +24,15 @@ class LockReceiver
 
   def lock_params
     {}.tap do |hash|
-      hash[:name_with_owner] = data["name"]
-      hash[:environment]     = data["environment"]
-      hash[:actor]           = data["sender"]["login"]
-      hash[:deployment_id]   = data["id"]
-      hash[:task]            = data["task"]
+      hash[:name_with_owner] = data["repository"]["full_name"]
+      hash[:environment]     = deployment_data["environment"]
+      hash[:actor]           = deployment_data["creator"]["login"]
+      hash[:deployment_id]   = deployment_data["id"]
+      hash[:task]            = deployment_data["task"]
     end
+  end
+
+  def deployment_data
+    data["deployment"] || data
   end
 end

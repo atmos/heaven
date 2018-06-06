@@ -9,11 +9,11 @@ module Heaven
 
       include ApiClient
 
-      attr_accessor :payload
+      attr_accessor :data
       attr_writer :comparison
 
-      def initialize(payload)
-        @payload = JSON.parse(payload)
+      def initialize(data)
+        @data = data
       end
 
       def deliver(message)
@@ -52,7 +52,7 @@ module Heaven
       end
 
       def deployment_status_data
-        payload["deployment_status"] || payload
+        data["deployment_status"] || data
       end
 
       def state
@@ -72,7 +72,7 @@ module Heaven
       end
 
       def deployment
-        payload["deployment"]
+        data["deployment"]
       end
 
       def environment
@@ -100,7 +100,8 @@ module Heaven
       end
 
       def chat_user
-        deployment_payload["notify"]["user"] || "unknown"
+        deployment_payload["notify"]["user_name"] ||
+          deployment_payload["notify"]["user"] || "unknown"
       end
 
       def chat_room
@@ -108,19 +109,23 @@ module Heaven
       end
 
       def repo_name
-        deployment_payload["name"] || payload["repository"]["name"]
+        deployment_payload["name"] || data["repository"]["name"]
       end
 
       def name_with_owner
-        payload["repository"]["full_name"]
+        data["repository"]["full_name"]
       end
 
       def repo_url(path = "")
-        payload["repository"]["html_url"] + path
+        data["repository"]["html_url"] + path
       end
 
       def repository_link(path = "")
         "[#{repo_name}](#{repo_url(path)})"
+      end
+
+      def octokit_web_endpoint
+        ENV["OCTOKIT_WEB_ENDPOINT"] || "https://github.com/"
       end
 
       def default_message
@@ -174,7 +179,7 @@ module Heaven
       end
 
       def user_link
-        "[#{chat_user}](https://github.com/#{chat_user})"
+        "[#{chat_user}](#{octokit_web_endpoint}#{chat_user})"
       end
 
       def output_link(link_title = "deployment")

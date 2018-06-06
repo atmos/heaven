@@ -1,7 +1,16 @@
 Heaven::Application.routes.draw do
-  get  "/" => redirect("https://github.com/atmos/heaven")
+  get  "/" => redirect(ENV["ROOT_REDIRECT_URL"] || "https://github.com/atmos/heaven")
 
-  github_authenticate(:team => :employees) do
+  auth_opts =
+    if ENV["GITHUB_TEAM_ID"]
+        { :team => :employees }
+    elsif ENV["GITHUB_ORG"]
+        { :org => ENV["GITHUB_ORG"] }
+    else
+        { }
+    end
+
+  github_authenticate(auth_opts) do
     mount Resque::Server.new, :at => "/resque"
   end
 

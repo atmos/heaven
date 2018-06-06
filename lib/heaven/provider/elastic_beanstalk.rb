@@ -50,9 +50,8 @@ module Heaven
       end
 
       def notify
-        output.stderr = File.read(stderr_file).force_encoding("utf-8")
-        output.stdout = File.read(stdout_file).force_encoding("utf-8")
-        output.update
+        update_output
+
         status.success!
       end
 

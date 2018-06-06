@@ -22,6 +22,8 @@ end
 
 Jobs will timeout if they don't complete in 300 seconds. If you really need more than that you can configure the timeout by setting the `DEPLOYMENT_TIMEOUT` environmental variable to the number of seconds you'd like to increase it to.
 
+Heaven runs most of the deployment tasks in a child process, that by default does not die when the deployment timeouts. To enable terminating the deployment child processes, set `TERMINATE_CHILD_PROCESS_ON_TIMEOUT` to `1`.
+
 ## Heroku
 
 The heroku provider uses the [build and release API][13]. It requests an [archive link][14] from GitHub and passes that on to heroku. It polls the API every few seconds until the heroku build api completes.
@@ -74,7 +76,7 @@ The heroku provider uses the [build and release API][13]. It requests an [archiv
 
 ## Capistrano
 
-Capistrano gives you a distrubted task management system over ssh. The heaven provider gives you support for three options in capistrano.
+Capistrano gives you a distributed task management system over ssh. The heaven provider gives you support for three options in capistrano.
 
 ### Options
 
@@ -177,6 +179,21 @@ end
     |                       |                     |
 ```
 
+## Bundler Capistrano
+
+Bundler enabled Capistrano deployment lets you deploy using Capistrano in a fresh bundler environment. The provider will install the gems from your project's `:deployment` and `:heaven` groups and use that environment to run Capistrano. The same configuration applies for Bundler Capistrano than for Capistrano provider. One caveat:
+
+The provider passes the ref being deployed to capistrano in an environment variable `BRANCH`. In your `Capfile`, you'll need to add:
+
+```ruby
+set :branch, (ENV['BRANCH'] || fetch(:branch, 'master'))
+```
+
+| Environmental Variables     |                                                                                                 |
+|-----------------------------|-------------------------------------------------------------------------------------------------|
+| BUNDLER_PRIVATE_SOURCE      | Private gem source. _Optional._                                                                 |
+| BUNDLER_PRIVATE_CREDENTIALS | Private gem source credentials. Can be a token or a username:password combination. _Optional._  |
+
 ## Fabric
 
 Fabric enables distributed task management system over ssh. The heaven provider gives you support for three options.
@@ -245,3 +262,11 @@ applications.
 [19]: https://devcenter.heroku.com/articles/releases
 [20]: https://github.com/atmos/hubot-deploy
 [21]: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html
+
+## Shell provider
+
+Shell provider lets you run an arbitrary script from the repo to perform the deployment. The script receives `BRANCH`, `SHA`, `DEPLOY_TASK` and `DEPLOY_ENV` environment variables when executing. This is ideal provider if your deployment consists only of for example asset compilation and upload to S3.
+
+### Required Configuration
+
+No configuration required in heaven. You must add `"deploy_script"` key to your `apps.json` configuration that must point to an executable file inside the repository.

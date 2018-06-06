@@ -11,16 +11,22 @@ class EventsController < ApplicationController
 
     if valid_events.include?(event)
       request.body.rewind
-      data = request.body.read
 
-      Resque.enqueue(Receiver, event, delivery, data)
-      render :status => 201, :json => "{}"
+      Resque.enqueue(Receiver, event, delivery, event_params)
+
+      render :json => {}, :status => :created
     else
-      render :status => 404, :json => "{}"
+      render :json => {}, :status => :unprocessable_entity
     end
   end
 
   def valid_events
     %w{deployment deployment_status status ping}
+  end
+
+  private
+
+  def event_params
+    params.permit!
   end
 end

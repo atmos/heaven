@@ -1,37 +1,39 @@
 {
-  "id": 721,
-  "ref": "master",
-  "sha": "9be5c2b9c34c1f8beb0cec30bb0c875d098f45ef",
-  "name": "atmos/my-robot",
-  "environment": "production",
-  "payload": {
-    "config": {
-      "heroku_name":"zero-fucks-hubot"
-    }
-  },
-  "description": null,
   "deployment": {
-    "id": 721,
-    "ref": "master",
-    "sha": "9be5c2b9c34c1f8beb0cec30bb0c875d098f45ef",
-    "name": "atmos/my-robot",
-    "environment": "production",
+    "url": "https://api.github.com/repos/atmos/my-robot/deployments/1875476",
+    "id": 1875476,
+    "sha": "3c9f42c76ce057eaabc3762e3ec46dd830976963",
+    "ref": "heroku",
+    "task": "deploy",
     "payload": {
+      "name": "my-robot",
+      "hosts": "",
+      "notify": {
+        "room": "ops",
+        "user": "atmos",
+        "adapter": "slack",
+        "message_id": "unknown",
+        "thread_id": "unknown"
+      },
       "config": {
-        "heroku_name":"zero-fucks-hubot"
+        "provider": "heroku",
+        "auto_merge": true,
+        "repository": "atmos/my-robot",
+        "environments": [
+          "production"
+        ],
+        "allowed_rooms": [],
+        "heroku_name": "zero-fucks-hubot",
+        "production_url": "https://my-robot.example.org"
       }
     },
-    "description": null
-  },
-  "repository": {
-    "id": 16650088,
-    "name": "my-robot",
-    "full_name": "atmos/my-robot",
-    "owner": {
+    "environment": "production",
+    "description": "Deploying from hubot-deploy-v0.6.53",
+    "creator": {
       "login": "atmos",
       "id": 6626297,
-      "avatar_url": "https://identicons.github.com/86f5d368c1103c6a77ddb061e7727e46.png",
-      "gravatar_id": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/6626297?v=3",
+      "gravatar_id": "",
       "url": "https://api.github.com/users/atmos",
       "html_url": "https://github.com/atmos",
       "followers_url": "https://api.github.com/users/atmos/followers",
@@ -43,7 +45,35 @@
       "repos_url": "https://api.github.com/users/atmos/repos",
       "events_url": "https://api.github.com/users/atmos/events{/privacy}",
       "received_events_url": "https://api.github.com/users/atmos/received_events",
-      "type": "Organization",
+      "type": "User",
+      "site_admin": false
+    },
+    "created_at": "2015-09-24T03:36:33Z",
+    "updated_at": "2015-09-24T03:36:33Z",
+    "statuses_url": "https://api.github.com/repos/atmos/my-robot/deployments/1875476/statuses",
+    "repository_url": "https://api.github.com/repos/atmos/my-robot"
+  },
+  "repository": {
+    "id": 42524818,
+    "name": "my-robot",
+    "full_name": "atmos/my-robot",
+    "owner": {
+      "login": "atmos",
+      "id": 6626297,
+      "avatar_url": "https://avatars.githubusercontent.com/u/6626297?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/atmos",
+      "html_url": "https://github.com/atmos",
+      "followers_url": "https://api.github.com/users/atmos/followers",
+      "following_url": "https://api.github.com/users/atmos/following{/other_user}",
+      "gists_url": "https://api.github.com/users/atmos/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/atmos/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/atmos/subscriptions",
+      "organizations_url": "https://api.github.com/users/atmos/orgs",
+      "repos_url": "https://api.github.com/users/atmos/repos",
+      "events_url": "https://api.github.com/users/atmos/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/atmos/received_events",
+      "type": "User",
       "site_admin": false
     },
     "private": true,
@@ -74,7 +104,7 @@
     "commits_url": "https://api.github.com/repos/atmos/my-robot/commits{/sha}",
     "git_commits_url": "https://api.github.com/repos/atmos/my-robot/git/commits{/sha}",
     "comments_url": "https://api.github.com/repos/atmos/my-robot/comments{/number}",
-    "issue_comment_url": "https://api.github.com/repos/atmos/my-robot/issues/comments/{number}",
+    "issue_comment_url": "https://api.github.com/repos/atmos/my-robot/issues/comments{/number}",
     "contents_url": "https://api.github.com/repos/atmos/my-robot/contents/{+path}",
     "compare_url": "https://api.github.com/repos/atmos/my-robot/compare/{base}...{head}",
     "merges_url": "https://api.github.com/repos/atmos/my-robot/merges",
@@ -86,35 +116,35 @@
     "notifications_url": "https://api.github.com/repos/atmos/my-robot/notifications{?since,all,participating}",
     "labels_url": "https://api.github.com/repos/atmos/my-robot/labels{/name}",
     "releases_url": "https://api.github.com/repos/atmos/my-robot/releases{/id}",
-    "created_at": "2014-02-08T18:40:20Z",
-    "updated_at": "2014-02-20T00:00:11Z",
-    "pushed_at": "2014-02-16T02:00:37Z",
+    "created_at": "2015-09-15T14:32:13Z",
+    "updated_at": "2015-09-15T15:28:11Z",
+    "pushed_at": "2015-09-24T02:04:35Z",
     "git_url": "git://github.com/atmos/my-robot.git",
     "ssh_url": "git@github.com:atmos/my-robot.git",
     "clone_url": "https://github.com/atmos/my-robot.git",
     "svn_url": "https://github.com/atmos/my-robot",
     "homepage": null,
-    "size": 128,
+    "size": 4924,
     "stargazers_count": 0,
     "watchers_count": 0,
-    "language": "CoffeeScript",
+    "language": "Python",
     "has_issues": true,
     "has_downloads": true,
-    "has_wiki": true,
+    "has_wiki": false,
+    "has_pages": false,
     "forks_count": 0,
     "mirror_url": null,
-    "open_issues_count": 0,
+    "open_issues_count": 1,
     "forks": 0,
-    "open_issues": 0,
+    "open_issues": 1,
     "watchers": 0,
-    "default_branch": "master",
-    "master_branch": "master"
+    "default_branch": "develop"
   },
   "sender": {
     "login": "atmos",
-    "id": 38,
-    "avatar_url": "https://gravatar.com/avatar/a86224d72ce21cd9f5bee6784d4b06c7?d=https%3A%2F%2Fidenticons.github.com%2Fa5771bce93e200c36f7cd9dfd0e5deaa.png&r=x",
-    "gravatar_id": "a86224d72ce21cd9f5bee6784d4b06c7",
+    "id": 6626297,
+    "avatar_url": "https://avatars.githubusercontent.com/u/6626297?v=3",
+    "gravatar_id": "",
     "url": "https://api.github.com/users/atmos",
     "html_url": "https://github.com/atmos",
     "followers_url": "https://api.github.com/users/atmos/followers",
@@ -127,6 +157,6 @@
     "events_url": "https://api.github.com/users/atmos/events{/privacy}",
     "received_events_url": "https://api.github.com/users/atmos/received_events",
     "type": "User",
-    "site_admin": true
+    "site_admin": false
   }
 }

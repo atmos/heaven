@@ -2,15 +2,11 @@
 class CommitStatus
   include ApiClient
 
-  attr_accessor :guid, :payload
+  attr_accessor :guid, :data
 
-  def initialize(guid, payload)
-    @guid    = guid
-    @payload = payload
-  end
-
-  def data
-    @data ||= JSON.parse(payload)
+  def initialize(guid, data)
+    @guid = guid
+    @data = data
   end
 
   def successful?

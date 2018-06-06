@@ -9,7 +9,7 @@ module Heaven
       end
 
       def task
-        data["task"] || "deploy"
+        deployment_data["task"] || "deploy"
       end
 
       def deploy_command_format
@@ -28,25 +28,14 @@ module Heaven
           log "Fetching the latest code"
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
-          deploy_command = deploy_command_format % {
+          deploy_string = deploy_command_format % {
             :environment => environment,
             :task => task,
             :ref => ref
           }
 
-          log "Executing fabric: #{deploy_command}"
-          execute_and_log(deploy_command)
-        end
-      end
-
-      def notify
-        output.stderr = File.read(stderr_file)
-        output.stdout = File.read(stdout_file)
-        output.update
-        if last_child.success?
-          status.success!
-        else
-          status.failure!
+          log "Executing fabric: #{deploy_string}"
+          execute_and_log([deploy_string])
         end
       end
     end

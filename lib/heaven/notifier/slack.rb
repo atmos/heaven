@@ -14,8 +14,8 @@ module Heaven
         output_message << "##{deployment_number} - #{repo_name} / #{ref} / #{environment}"
         slack_account.ping "",
           :channel     => "##{chat_room}",
-          :username    => "Capybot",
-          :icon_url    => "https://s3-us-west-2.amazonaws.com/slack-files2/bot_icons/2014-06-17/2399828904_48.png",
+          :username    => slack_bot_name,
+          :icon_url    => slack_bot_icon,
           :attachments => [{
             :text    => filtered_message,
             :color   => green? ? "good" : "danger",
@@ -46,23 +46,27 @@ module Heaven
       end
 
       def changes
-        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(COMMIT_CHANGE_LIMIT)
+        Heaven::Comparison::Linked.new(comparison, name_with_owner).changes(commit_change_limit)
       end
 
       def compare_link
         "([compare](#{comparison["html_url"]}))" if last_known_revision
       end
 
-      def slack_token
-        ENV["SLACK_TOKEN"]
+      def slack_webhook_url
+        ENV["SLACK_WEBHOOK_URL"]
       end
 
-      def slack_subdomain
-        ENV["SLACK_SUBDOMAIN"] || "unknown"
+      def slack_bot_name
+        ENV["SLACK_BOT_NAME"] || "hubot"
+      end
+
+      def slack_bot_icon
+        ENV["SLACK_BOT_ICON"] || "https://octodex.github.com/images/labtocat.png"
       end
 
       def slack_account
-        @slack_account ||= ::Slack::Notifier.new(slack_subdomain, slack_token)
+        @slack_account ||= ::Slack::Notifier.new(slack_webhook_url)
       end
     end
   end

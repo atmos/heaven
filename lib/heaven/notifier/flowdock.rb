@@ -15,14 +15,19 @@ module Heaven
           Rails.logger.error "Could not find flow token for flow #{chat_room}"
           return
         end
-        response = thread_client.post "/messages",
-          :flow_token => flow_token,
-          :event => "activity",
-          :external_thread_id => flowdock_thread_id,
-          :thread => thread_data,
-          :title => activity_title,
-          :author => activity_author,
-          :tags => tags
+        response = thread_client.post do |req|
+          req.url "/messages",
+          req.body = {
+            :flow_token => flow_token,
+            :event => "activity",
+            :external_thread_id => flowdock_thread_id,
+            :thread => thread_data,
+            :title => activity_title,
+            :author => activity_author,
+            :tags => tags
+          }
+          req.headers["X-flowdock-wait-for-message"] = "true"
+        end
         return if state != "pending" || autodeploy?
         answer_to_chat(response.body["thread_id"])
       end
@@ -50,7 +55,7 @@ module Heaven
       end
 
       def repo_default_branch
-        payload["repository"]["default_branch"]
+        data["repository"]["default_branch"]
       end
 
       def autodeploy?
@@ -77,7 +82,7 @@ module Heaven
 
       def thread_fields
         [
-          { :label => "Repository", :value => "<a href='#{repo_url}'>#{payload["repository"]["full_name"]}</a>" },
+          { :label => "Repository", :value => "<a href='#{repo_url}'>#{data["repository"]["full_name"]}</a>" },
           { :label => "Deployment", :value => "#{deployment_number} (<a href='#{target_url}'>output</a>)" },
           {
             :label => "Deployed ref",
@@ -110,7 +115,7 @@ module Heaven
 
       def fetch_previous_deployment(page = 1)
         deployments = api.deployments(
-          payload["repository"]["full_name"],
+          data["repository"]["full_name"],
           :environment => environment,
           :page => page,
           :accept => "application/vnd.github.cannonball-preview+json"
@@ -134,7 +139,7 @@ module Heaven
       private
 
       def flowdock_thread_id
-        "heaven:deployment:#{payload["repository"]["full_name"].gsub("/", ":")}:#{deployment_number}"
+        "heaven:deployment:#{data["repository"]["full_name"].gsub("/", ":")}:#{deployment_number}"
       end
 
       def thread_url(flow, id)

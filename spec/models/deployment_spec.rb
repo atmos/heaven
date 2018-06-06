@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Deployment do
+  include FixtureHelper
+
   let(:payload) { fixture_data("deployment") }
   let!(:data) { JSON.parse(payload)["payload"] }
 
