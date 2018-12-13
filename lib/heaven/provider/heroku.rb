@@ -123,14 +123,15 @@ module Heaven
       end
 
       def notify
-        if build
-          output.stderr = build.stderr
-          output.stdout = build.stdout
-        else
-          output.stderr = "Unable to create a build"
-        end
+        # Endpoint with deploy output is now deprecated on heroku https://devcenter.heroku.com/changelog-items/1486
+        #if build
+        #  output.stderr = build.stderr
+        #  output.stdout = build.stdout
+        #else
+        #  output.stderr = "Unable to create a build"
+        #end
 
-        output.update
+        #output.update
         if build && build.success?
           status.success!
         else
