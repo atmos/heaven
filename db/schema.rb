@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140728040201) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "deployments", force: :cascade do |t|
     t.text     "custom_payload"
     t.string   "environment",     default: "production"
